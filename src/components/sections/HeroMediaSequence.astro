@@ -1,11 +1,7 @@
 ---
 /**
- * Hero + MediaExpand share one PrismGrid layer so the interactive grid
- * continues seamlessly into the second section (no duplicate React island).
- *
- * Sticky viewport-tall layer + CSS grid fallback: Astro islands use
- * `display: contents`, and an absolute full-zone grid over ~300vh was
- * collapsing / too heavy to paint. Sticky h-dvh keeps the grid visible.
+ * Hero + MediaExpand share one prism layer across both sections.
+ * Grid lines are pure CSS (always visible). React only paints hover cells.
  */
 import Hero from "./Hero.astro";
 import MediaExpand from "./MediaExpand.astro";
@@ -14,39 +10,36 @@ import PrismGrid from "../ui/PrismGrid";
 
 <div class="relative bg-brand-yellow" data-hero-prism-zone>
   <div
-    class="pointer-events-auto sticky top-0 z-[1] h-dvh w-full overflow-hidden"
+    class="pointer-events-none absolute inset-0 z-[1] min-h-full w-full"
     data-prism-grid-layer
     aria-hidden="true"
   >
-    <PrismGrid client:only="react" />
+    <!-- Stable fill target for the React island (astro-island = display:contents) -->
+    <div class="prism-grid-host absolute inset-0 h-full w-full">
+      <PrismGrid client:load />
+    </div>
   </div>
 
-  <!-- Soft exit into Process — above prism, below photo/content -->
   <div class="hero-prism-fade pointer-events-none absolute inset-x-0 bottom-0 z-[2]" aria-hidden="true"></div>
 
-  <!-- Pull content up over the sticky spacer so hero starts at top -->
-  <div class="relative z-10 -mt-[100dvh] pointer-events-none">
+  <div class="relative z-10 pointer-events-none">
     <Hero />
     <MediaExpand />
   </div>
 </div>
 
 <style>
-  /* Always-visible grid lines (React island only adds hover cells) */
+  /*
+   * Always-on grid — does not depend on React hydrate / DOM cell count.
+   * React PrismGrid sits on top with a transparent fill and only paints hover.
+   */
   [data-prism-grid-layer] {
     background-color: var(--color-brand-yellow);
     background-image:
-      linear-gradient(
-        to right,
-        rgb(26 26 26 / 0.18) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        rgb(26 26 26 / 0.18) 1px,
-        transparent 1px
-      );
+      linear-gradient(to right, rgb(26 26 26 / 0.16) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(26 26 26 / 0.16) 1px, transparent 1px);
     background-size: 40px 40px;
+    background-position: 0 0;
   }
 
   .hero-prism-fade {

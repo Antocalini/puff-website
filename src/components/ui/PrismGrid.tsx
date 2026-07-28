@@ -1,30 +1,16 @@
-// Prism Grid — Originkit
-// Adapted for Puff hero: yellow background + yellow hover palette.
+// Prism Grid — hover cells + fading trail.
+// Grid lines are CSS on [data-prism-grid-layer]. React paints lit + fading cells only.
 
 import {
-  useMemo,
   useRef,
   useState,
   useLayoutEffect,
   useCallback,
+  useMemo,
   type CSSProperties,
-  type PointerEvent,
 } from "react";
-import { motion } from "framer-motion";
 
-const PUFF_YELLOW_COLORS = {
-  paletteCount: 8,
-  color1: "#FFFFFF",
-  color2: "#FFF3A3",
-  color3: "#FFEB66",
-  color4: "#FFE566",
-  color5: "#FFD100",
-  color6: "#F5D76E",
-  color7: "#F0C400",
-  color8: "#E6BC00",
-};
-
-const DEFAULT_COLORS = [
+const PUFF_YELLOW_COLORS = [
   "#FFFFFF",
   "#FFF3A3",
   "#FFEB66",
@@ -35,7 +21,21 @@ const DEFAULT_COLORS = [
   "#E6BC00",
 ];
 
+const BOX_SIZE = 40;
+const OUT_DURATION_MS = 1000;
 const PERSPECTIVE = 1000;
+
+interface Cell {
+  id: number;
+  row: number;
+  col: number;
+  color: string;
+}
+
+interface BackgroundBoxesProps {
+  boxSize?: number;
+  style?: CSSProperties;
+}
 
 function screenToPlane(
   sx: number,
@@ -67,103 +67,101 @@ function screenToPlane(
   };
 }
 
-interface Cell {
-  id: number;
-  row: number;
-  col: number;
-  color: string;
-}
+/** Mount at opacity 1, then fade out — creates the prism trail (destello). */
+function FadingCell({
+  cell,
+  boxSize,
+  durationMs,
+  onDone,
+}: {
+  cell: Cell;
+  boxSize: number;
+  durationMs: number;
+  onDone: (id: number) => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
 
-interface Rotate {
-  x?: number;
-  y?: number;
-}
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
 
-interface ColorsProp {
-  paletteCount?: number;
-  [key: string]: string | number | undefined;
-}
+    el.style.opacity = "1";
+    el.style.transition = "none";
+    void el.offsetHeight;
+    el.style.transition = `opacity ${durationMs}ms linear`;
+    el.style.opacity = "0";
 
-interface BackgroundBoxesProps {
-  backgroundColor?: string;
-  boxSize?: number;
-  borderWidth?: number;
-  borderColor?: string;
-  rotate?: Rotate;
-  colors?: ColorsProp;
-  style?: CSSProperties;
+    const timer = window.setTimeout(() => onDone(cell.id), durationMs);
+    return () => window.clearTimeout(timer);
+  }, [cell.id, durationMs, onDone]);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        position: "absolute",
+        left: cell.col * boxSize,
+        top: cell.row * boxSize,
+        width: boxSize,
+        height: boxSize,
+        backgroundColor: cell.color,
+        pointerEvents: "none",
+      }}
+    />
+  );
 }
 
 export default function PrismGrid({
-  // Transparent so the CSS grid on [data-prism-grid-layer] shows through
-  backgroundColor = "transparent",
-  boxSize = 40,
-  borderWidth: _borderWidth = 2,
-  borderColor: _borderColor = "rgba(26,26,26,0.16)",
-  rotate = { x: 0, y: 0 },
-  colors: colorsProp = PUFF_YELLOW_COLORS,
+  boxSize = BOX_SIZE,
   style,
 }: BackgroundBoxesProps) {
-  const inDuration = 0;
-  const outDuration = 1;
-
   const containerRef = useRef<HTMLDivElement>(null);
-  const [rows, setRows] = useState(24);
-  const [cols, setCols] = useState(32);
+  const [cols, setCols] = useState(1);
+  const [rows, setRows] = useState(1);
+  const [lit, setLit] = useState<Cell | null>(null);
+  const [fading, setFading] = useState<Cell[]>([]);
+  const idRef = useRef(0);
+  const colors = useMemo(() => PUFF_YELLOW_COLORS, []);
 
-  const swingX = rotate?.x ?? 0;
-  const swingY = rotate?.y ?? 0;
+  const gridWidth = cols * boxSize;
+  const gridHeight = rows * boxSize;
 
-  const colors = useMemo(() => {
-    const entries: string[] = [];
-    if (colorsProp) {
-      const count = Math.max(1, Math.min(10, colorsProp.paletteCount || 6));
-      for (let i = 1; i <= count; i++) {
-        const value = colorsProp[`color${i}`];
-        if (typeof value === "string" && value.trim().length > 0) {
-          entries.push(value.trim());
-        }
-      }
-    }
-    if (entries.length === 0) return DEFAULT_COLORS;
-    return entries;
-  }, [colorsProp]);
-
-  const getRandomColor = () => {
-    if (colors.length === 0) return DEFAULT_COLORS[0] || "#FFD100";
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-
-  const calculateGrid = useCallback(() => {
+  const measure = useCallback(() => {
     const container = containerRef.current;
     if (!container) return;
-    const w = container.clientWidth || container.offsetWidth || 1;
-    const h = container.clientHeight || container.offsetHeight || 1;
+    const zone = container.closest("[data-hero-prism-zone]") as HTMLElement | null;
+    const w =
+      container.clientWidth || zone?.clientWidth || window.innerWidth || 1;
+    const h =
+      container.clientHeight || zone?.clientHeight || window.innerHeight || 1;
     setCols(Math.max(1, Math.ceil(w / boxSize)));
     setRows(Math.max(1, Math.ceil(h / boxSize)));
   }, [boxSize]);
 
   useLayoutEffect(() => {
-    calculateGrid();
+    measure();
     const container = containerRef.current;
+    const zone = container?.closest("[data-hero-prism-zone]") ?? null;
     const observer =
-      typeof ResizeObserver !== "undefined" && container
-        ? new ResizeObserver(() => calculateGrid())
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => measure())
         : null;
     if (container) observer?.observe(container);
-    window.addEventListener("resize", calculateGrid);
+    if (zone) observer?.observe(zone);
+    window.addEventListener("resize", measure);
+    const t1 = window.setTimeout(measure, 50);
+    const t2 = window.setTimeout(measure, 300);
     return () => {
       observer?.disconnect();
-      window.removeEventListener("resize", calculateGrid);
+      window.removeEventListener("resize", measure);
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
     };
-  }, [calculateGrid]);
+  }, [measure]);
 
-  const gridWidth = cols * boxSize;
-  const gridHeight = rows * boxSize;
-
-  const [lit, setLit] = useState<Cell | null>(null);
-  const [fading, setFading] = useState<Cell[]>([]);
-  const idRef = useRef(0);
+  const removeFading = useCallback((id: number) => {
+    setFading((f) => f.filter((c) => c.id !== id));
+  }, []);
 
   const leave = useCallback(() => {
     setLit((current) => {
@@ -172,15 +170,25 @@ export default function PrismGrid({
     });
   }, []);
 
-  const handlePointerMove = useCallback(
-    (event: PointerEvent<HTMLDivElement>) => {
+  const lightAtClient = useCallback(
+    (clientX: number, clientY: number) => {
       const container = containerRef.current;
       if (!container) return;
       const rect = container.getBoundingClientRect();
-      const sx = event.clientX - rect.left - rect.width / 2;
-      const sy = event.clientY - rect.top - rect.height / 2;
+      if (
+        clientX < rect.left ||
+        clientX > rect.right ||
+        clientY < rect.top ||
+        clientY > rect.bottom ||
+        rect.width < 2 ||
+        rect.height < 2
+      ) {
+        return leave();
+      }
 
-      const point = screenToPlane(sx, sy, swingX, swingY);
+      const sx = clientX - rect.left - rect.width / 2;
+      const sy = clientY - rect.top - rect.height / 2;
+      const point = screenToPlane(sx, sy, 0, 0);
       if (!point) return leave();
 
       const gx = point.x + gridWidth / 2;
@@ -190,26 +198,45 @@ export default function PrismGrid({
       if (col < 0 || col >= cols || row < 0 || row >= rows) return leave();
 
       setLit((current) => {
-        if (current && current.row === row && current.col === col) {
-          return current;
-        }
+        if (current && current.row === row && current.col === col) return current;
         if (current) setFading((f) => [...f, current]);
         return {
           id: ++idRef.current,
           row,
           col,
-          color: getRandomColor(),
+          color: colors[Math.floor(Math.random() * colors.length)] ?? "#FFD100",
         };
       });
     },
-    [swingX, swingY, gridWidth, gridHeight, boxSize, cols, rows, colors, leave],
+    [boxSize, cols, rows, gridWidth, gridHeight, colors, leave],
   );
 
   useLayoutEffect(() => {
-    if (fading.length === 0) return;
-    const timer = setTimeout(() => setFading((f) => f.slice(1)), outDuration * 1000);
-    return () => clearTimeout(timer);
-  }, [fading, outDuration]);
+    const isUiChrome = (el: Element | null) =>
+      Boolean(
+        el?.closest(
+          "a, button, input, textarea, select, label, [data-site-header], .nav-pill-3d, .hero-sticker-wrap, [data-hero-media]",
+        ),
+      );
+
+    const onMove = (event: PointerEvent) => {
+      const top = document.elementFromPoint(event.clientX, event.clientY);
+      if (isUiChrome(top)) {
+        leave();
+        return;
+      }
+      lightAtClient(event.clientX, event.clientY);
+    };
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("blur", leave);
+    document.documentElement.addEventListener("mouseleave", leave);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("blur", leave);
+      document.documentElement.removeEventListener("mouseleave", leave);
+    };
+  }, [lightAtClient, leave]);
 
   const cellStyle = (cell: Cell): CSSProperties => ({
     position: "absolute",
@@ -224,18 +251,15 @@ export default function PrismGrid({
   return (
     <div
       ref={containerRef}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={leave}
       style={{
         ...style,
-        // Absolute fill — Astro islands use `display: contents`, so % height
-        // collapses; the sticky layer parent must supply real dimensions.
         position: "absolute",
         inset: 0,
         width: "100%",
         height: "100%",
         overflow: "hidden",
-        backgroundColor,
+        backgroundColor: "transparent",
+        pointerEvents: "none",
       }}
     >
       <div
@@ -249,34 +273,25 @@ export default function PrismGrid({
       >
         <div
           style={{
-            transform: `translate(-50%, -50%) rotateY(${swingX}deg) rotateX(${swingY}deg)`,
+            transform: "translate(-50%, -50%)",
             position: "absolute",
             left: "50%",
             top: "50%",
             transformOrigin: "center center",
             width: `${gridWidth}px`,
             height: `${gridHeight}px`,
-            zIndex: 0,
           }}
         >
           {fading.map((cell) => (
-            <motion.div
+            <FadingCell
               key={cell.id}
-              initial={{ opacity: 1 }}
-              animate={{ opacity: 0 }}
-              transition={{ duration: outDuration }}
-              style={cellStyle(cell)}
+              cell={cell}
+              boxSize={boxSize}
+              durationMs={OUT_DURATION_MS}
+              onDone={removeFading}
             />
           ))}
-          {lit && (
-            <motion.div
-              key={lit.id}
-              initial={{ opacity: inDuration > 0 ? 0 : 1 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: inDuration }}
-              style={cellStyle(lit)}
-            />
-          )}
+          {lit ? <div key={lit.id} style={cellStyle(lit)} /> : null}
         </div>
       </div>
     </div>
