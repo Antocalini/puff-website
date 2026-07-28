@@ -1,0 +1,62 @@
+---
+/**
+ * Hero + MediaExpand share one PrismGrid layer so the interactive grid
+ * continues seamlessly into the second section (no duplicate React island).
+ *
+ * Sticky viewport-tall layer + CSS grid fallback: Astro islands use
+ * `display: contents`, and an absolute full-zone grid over ~300vh was
+ * collapsing / too heavy to paint. Sticky h-dvh keeps the grid visible.
+ */
+import Hero from "./Hero.astro";
+import MediaExpand from "./MediaExpand.astro";
+import PrismGrid from "../ui/PrismGrid";
+---
+
+<div class="relative bg-brand-yellow" data-hero-prism-zone>
+  <div
+    class="pointer-events-auto sticky top-0 z-[1] h-dvh w-full overflow-hidden"
+    data-prism-grid-layer
+    aria-hidden="true"
+  >
+    <PrismGrid client:only="react" />
+  </div>
+
+  <!-- Soft exit into Process — above prism, below photo/content -->
+  <div class="hero-prism-fade pointer-events-none absolute inset-x-0 bottom-0 z-[2]" aria-hidden="true"></div>
+
+  <!-- Pull content up over the sticky spacer so hero starts at top -->
+  <div class="relative z-10 -mt-[100dvh] pointer-events-none">
+    <Hero />
+    <MediaExpand />
+  </div>
+</div>
+
+<style>
+  /* Always-visible grid lines (React island only adds hover cells) */
+  [data-prism-grid-layer] {
+    background-color: var(--color-brand-yellow);
+    background-image:
+      linear-gradient(
+        to right,
+        rgb(26 26 26 / 0.18) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(26 26 26 / 0.18) 1px,
+        transparent 1px
+      );
+    background-size: 40px 40px;
+  }
+
+  .hero-prism-fade {
+    height: clamp(7rem, 24vh, 16rem);
+    background: linear-gradient(
+      to bottom,
+      rgb(255 209 0 / 0) 0%,
+      rgb(255 209 0 / 0.35) 28%,
+      rgb(255 209 0 / 0.78) 62%,
+      var(--color-brand-yellow) 100%
+    );
+  }
+</style>
