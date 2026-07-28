@@ -1,0 +1,91 @@
+---
+/**
+ * Pixelated corner masks (top-left + bottom-right).
+ * Hidden until the media handoff parks the card in its section.
+ */
+type Props = {
+  color?: string;
+};
+
+const { color = "#FFD100" } = Astro.props;
+
+/** Stepped staircase matching the MoMoney-style corner. */
+const pattern = [
+  [1, 1, 1, 1, 0],
+  [1, 1, 1, 0, 0],
+  [1, 1, 0, 0, 0],
+  [1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+];
+---
+
+<div
+  class="pixel-corners pointer-events-none absolute inset-0 z-10"
+  data-pixel-corners
+  aria-hidden="true"
+  style={`--pixel-color: ${color}`}
+>
+  <div class="pixel-corners__anchor pixel-corners__anchor--tl">
+    <div class="pixel-corners__block" data-pixel-block>
+      {
+        pattern.flat().map((filled) => (
+          <span class:list={[filled ? "is-on" : "is-off"]} data-pixel-cell />
+        ))
+      }
+    </div>
+  </div>
+  <div class="pixel-corners__anchor pixel-corners__anchor--br">
+    <div class="pixel-corners__block" data-pixel-block>
+      {
+        pattern.flat().map((filled) => (
+          <span class:list={[filled ? "is-on" : "is-off"]} data-pixel-cell />
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .pixel-corners {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .pixel-corners__anchor {
+    position: absolute;
+    width: clamp(4.5rem, 11vw, 8.5rem);
+    height: clamp(4.5rem, 11vw, 8.5rem);
+  }
+
+  .pixel-corners__anchor--tl {
+    top: 0;
+    left: 0;
+  }
+
+  .pixel-corners__anchor--br {
+    right: 0;
+    bottom: 0;
+    transform: rotate(180deg);
+  }
+
+  .pixel-corners__block {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    transform-origin: top left;
+  }
+
+  .pixel-corners__block span {
+    display: block;
+  }
+
+  .pixel-corners__block span.is-on {
+    background: var(--pixel-color);
+  }
+
+  .pixel-corners__block span.is-off {
+    background: transparent;
+  }
+</style>

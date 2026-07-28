@@ -1,0 +1,64 @@
+---
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
+---
+
+<div
+  data-hero-media
+  class:list={[
+    "hero-media pointer-events-none absolute left-1/2 top-[46%] z-20 hidden w-[min(38vw,21rem)] -translate-x-1/2 -translate-y-1/2 rotate-[-4deg] overflow-hidden rounded-[1.25rem] border-[0.4rem] border-accent-pink md:block",
+    className,
+  ]}
+>
+  <div class="hero-media__frame relative aspect-16/10 bg-charcoal">
+    <span class="absolute inset-0 bg-[linear-gradient(135deg,#ffd100_0%,#f091f2_45%,#2447f5_100%)]"></span>
+    <span class="absolute inset-3.5 rounded-[0.85rem] border border-paper/40"></span>
+    <span class="absolute bottom-5 left-5 font-label text-[0.72rem] font-bold uppercase tracking-[0.18em] text-ink">
+      Sample / Draft
+    </span>
+  </div>
+
+  <svg
+    class="hero-media__pixel-mask hero-media__pixel-mask--tl pointer-events-none absolute left-0 top-0 z-30"
+    aria-hidden="true"
+    viewBox="0 0 120 120"
+  >
+    <rect fill="#c9ccf6" height="12" width="120" x="0" y="0"></rect>
+    <rect fill="#c9ccf6" height="12" width="108" x="0" y="12"></rect>
+    <rect fill="#c9ccf6" height="12" width="96" x="0" y="24"></rect>
+    <rect fill="#c9ccf6" height="12" width="84" x="0" y="36"></rect>
+    <rect fill="#c9ccf6" height="12" width="72" x="0" y="48"></rect>
+    <rect fill="#c9ccf6" height="12" width="60" x="0" y="60"></rect>
+    <rect fill="#c9ccf6" height="12" width="48" x="0" y="72"></rect>
+    <rect fill="#c9ccf6" height="12" width="36" x="0" y="84"></rect>
+    <rect fill="#c9ccf6" height="12" width="24" x="0" y="96"></rect>
+    <rect fill="#c9ccf6" height="12" width="12" x="0" y="108"></rect>
+  </svg>
+
+  <svg
+    class="hero-media__pixel-mask hero-media__pixel-mask--br pointer-events-none absolute bottom-0 right-0 z-30 rotate-180"
+    aria-hidden="true"
+    viewBox="0 0 120 120"
+  >
+    <rect fill="#c9ccf6" height="12" width="120" x="0" y="0"></rect>
+    <rect fill="#c9ccf6" height="12" width="108" x="0" y="12"></rect>
+    <rect fill="#c9ccf6" height="12" width="96" x="0" y="24"></rect>
+    <rect fill="#c9ccf6" height="12" width="84" x="0" y="36"></rect>
+    <rect fill="#c9ccf6" height="12" width="72" x="0" y="48"></rect>
+    <rect fill="#c9ccf6" height="12" width="60" x="0" y="60"></rect>
+    <rect fill="#c9ccf6" height="12" width="48" x="0" y="72"></rect>
+    <rect fill="#c9ccf6" height="12" width="36" x="0" y="84"></rect>
+    <rect fill="#c9ccf6" height="12" width="24" x="0" y="96"></rect>
+    <rect fill="#c9ccf6" height="12" width="12" x="0" y="108"></rect>
+  </svg>
+</div>
+
+<style>
+  .hero-media__pixel-mask {
+    width: clamp(4.5rem, 18vw, 7.5rem);
+    height: clamp(4.5rem, 18vw, 7.5rem);
+  }
+</style>

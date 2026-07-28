@@ -1,0 +1,59 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "ink";
+  showArrow?: boolean;
+  class?: string;
+  type?: "button" | "submit";
+}
+
+const {
+  href,
+  variant = "primary",
+  showArrow = false,
+  class: className = "",
+  type = "button",
+  ...rest
+} = Astro.props;
+
+const isLink = Boolean(href);
+const Tag = isLink ? "a" : "button";
+
+const variantClass =
+  variant === "primary" ? "btn-3d-skeuo-yellow text-ink" : "btn-3d-skeuo text-paper";
+
+const sizeClass = showArrow
+  ? "group min-h-16 gap-4 px-9 py-4"
+  : "min-h-14 px-8 py-3.5";
+---
+
+<Tag
+  class:list={[
+    "btn-shine inline-flex items-center justify-center rounded-full font-label text-sm font-bold tracking-wide transition-transform duration-200 hover:scale-[1.03] active:scale-95",
+    variantClass,
+    sizeClass,
+    className,
+  ]}
+  href={href}
+  type={isLink ? undefined : type}
+  {...rest}
+>
+  <span class:list={[showArrow && "font-label text-sm font-bold tracking-wide md:text-base"]}>
+    <slot />
+  </span>
+
+  {
+    showArrow && (
+      <div class="flex size-9 items-center justify-center rounded-full bg-paper/15 text-paper shadow-sm transition-all duration-300 group-hover:translate-x-1 group-hover:bg-brand-yellow group-hover:text-charcoal">
+        <svg class="size-4 stroke-[2.5]" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+          <path
+            d="M3 8h9M8 3.5 12.5 8 8 12.5"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+    )
+  }
+</Tag>

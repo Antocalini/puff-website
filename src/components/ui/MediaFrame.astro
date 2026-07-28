@@ -1,0 +1,44 @@
+---
+import { needsClientInput, type Approval, type MediaAsset } from "../../content/landing";
+
+type Props = {
+  media: Approval<MediaAsset>;
+  ratio?: "landscape" | "portrait" | "square";
+  caption?: string;
+};
+
+const { caption, media, ratio = "landscape" } = Astro.props;
+
+const ratioClass = {
+  landscape: "aspect-media-landscape",
+  portrait: "aspect-media-portrait",
+  square: "aspect-media-square",
+}[ratio];
+
+const hasApprovedMedia = media !== needsClientInput;
+---
+
+<figure class="overflow-hidden rounded-media border border-line bg-mist shadow-ambient">
+  <div class:list={[ratioClass, "relative"]}>
+    {
+      hasApprovedMedia ? (
+        <img
+          class="size-full object-cover"
+          src={media.src}
+          alt={media.alt}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div
+          class="flex size-full items-center justify-center bg-mist p-6 text-center font-label text-label font-bold uppercase tracking-widest text-graphite"
+          role="img"
+          aria-label={needsClientInput}
+        >
+          {needsClientInput}
+        </div>
+      )
+    }
+  </div>
+  {caption && <figcaption class="px-5 py-4 text-body text-graphite">{caption}</figcaption>}
+</figure>

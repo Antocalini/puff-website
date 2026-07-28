@@ -1,0 +1,31 @@
+---
+type Props = {
+  tone?: "lime" | "pink" | "lavender" | "yellow";
+  rotate?: string;
+  class?: string;
+};
+
+const {
+  tone = "lime",
+  rotate = "-rotate-2",
+  class: className,
+} = Astro.props;
+
+const toneClass = {
+  lime: "bg-accent-lime text-ink",
+  pink: "bg-accent-pink text-ink",
+  lavender: "bg-accent-lavender text-ink",
+  yellow: "bg-brand-yellow text-ink",
+}[tone];
+---
+
+<span
+  class:list={[
+    "puff-sticker inline-block border-2 border-ink shadow-[4px_4px_0_#111111]",
+    toneClass,
+    rotate,
+    className,
+  ]}
+>
+  <slot />
+</span>

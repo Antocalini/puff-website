@@ -1,0 +1,66 @@
+---
+import MarqueeCircleIcon, { type MarqueeIconName } from "./MarqueeCircleIcon.astro";
+
+type PillItem = {
+  type: "pill";
+  label: string;
+  bg: string;
+  text: string;
+};
+
+type CircleItem = {
+  type: "circle";
+  bg: string;
+  icon: MarqueeIconName;
+};
+
+type ArchItem = {
+  type: "arch";
+  label: string;
+  bg: string;
+  text: string;
+};
+
+export type MarqueeItemData = PillItem | CircleItem | ArchItem;
+
+interface Props {
+  item: MarqueeItemData;
+}
+
+const { item } = Astro.props;
+
+const iconSizeClass =
+  item.type === "circle" && item.icon === "smiley"
+    ? "size-10 md:size-11"
+    : "size-8 md:size-9";
+---
+
+<div class="shrink-0">
+  {
+    item.type === "pill" && (
+      <div
+        class={`flex h-12 md:h-14 items-center rounded-full px-6 md:px-8 font-display text-lg md:text-xl font-black uppercase tracking-tight ${item.bg} ${item.text}`}
+      >
+        {item.label}
+      </div>
+    )
+  }
+  {
+    item.type === "circle" && (
+      <div
+        class={`flex size-12 md:size-14 items-center justify-center rounded-full ${item.bg} text-charcoal`}
+      >
+        <MarqueeCircleIcon name={item.icon} class={iconSizeClass} />
+      </div>
+    )
+  }
+  {
+    item.type === "arch" && (
+      <div
+        class={`flex h-12 md:h-14 items-center rounded-t-full rounded-b-xl px-6 md:px-8 font-display text-lg md:text-xl font-black uppercase tracking-tight ${item.bg} ${item.text}`}
+      >
+        {item.label}
+      </div>
+    )
+  }
+</div>

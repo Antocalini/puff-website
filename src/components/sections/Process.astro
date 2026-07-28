@@ -1,0 +1,233 @@
+---
+const steps = [
+  {
+    number: "1",
+    title: "Choose your plan",
+    description:
+      "Select the plan that best fits for your needs Lite, Pro or Premium.",
+    cardClass: "border-charcoal/10 bg-accent-lime text-charcoal",
+    bodyClass: "text-charcoal/80",
+    badgeClass: "border-charcoal/20 bg-paper text-charcoal",
+    rotation: "-rotate-6",
+    desktopClass: "top-[48%] left-[1%] lg:left-[2%]",
+    mobileClass: "bottom-[6%] left-[-2%] w-[9.75rem]",
+    // Below title so letterforms stay readable where they overlap
+    zClass: "z-30",
+  },
+  {
+    number: "2",
+    title: "Request your designs",
+    description: "Send your briefs directly from your dashboards.",
+    cardClass: "border-paper/10 bg-accent-cobalt text-paper",
+    bodyClass: "text-paper/80",
+    badgeClass: "border-charcoal/20 bg-paper text-charcoal",
+    rotation: "rotate-3",
+    // Above the padded headline band — must not cover the title
+    desktopClass: "top-2 left-1/2 w-60 -translate-x-1/2 lg:top-4",
+    mobileClass: "top-[20%] left-1/2 w-[10.5rem] -translate-x-1/2",
+    zClass: "z-30",
+  },
+  {
+    number: "3",
+    title: "Receive them in 48h",
+    description:
+      "Your Puff team designs and delivers unlimited requests, revisions included.",
+    cardClass: "border-charcoal/10 bg-accent-pink text-charcoal",
+    bodyClass: "text-charcoal/80",
+    badgeClass: "border-charcoal/20 bg-paper text-charcoal",
+    rotation: "rotate-6",
+    desktopClass: "top-[45%] right-[4%] lg:right-[6%]",
+    mobileClass: "bottom-[4%] right-[-2%] w-[9.75rem]",
+    // Over the yellow type — sticker sits on top of the letters
+    zClass: "z-50",
+  },
+];
+---
+
+<section
+  id="how-it-works"
+  data-process-section
+  data-nav-tone="yellow"
+  class="relative z-10 flex min-h-dvh flex-col justify-center scroll-mt-6 overflow-hidden bg-brand-yellow py-14 md:py-24"
+>
+  <div
+    data-process-circle
+    class="absolute left-1/2 top-1/2 z-0 size-[5vw] -translate-x-1/2 -translate-y-1/2 scale-0 rounded-full bg-ink"
+  >
+  </div>
+
+  <div class="relative z-10 mx-auto w-full max-w-content px-gutter pt-6 text-center md:pt-16">
+    <div class="relative grid min-h-[min(78vh,44rem)] place-items-center md:min-h-[min(78vh,52rem)]">
+      <!-- Text Block 1 — yellow stage (before black circle) -->
+      <div class="col-start-1 row-start-1 flex flex-col items-center pt-16 md:pt-44">
+        <h2
+          class="font-display text-[clamp(2.75rem,12vw,9.5rem)] font-black uppercase leading-[0.85] tracking-tight text-charcoal"
+        >
+          <span class="block overflow-hidden pb-1"
+            ><span class="block translate-y-[120%]" data-process-line-1
+              >Design that moves</span
+            ></span
+          >
+          <span class="block overflow-hidden pb-1"
+            ><span class="block translate-y-[120%]" data-process-line-1
+              >mountains & turns</span
+            ></span
+          >
+          <span class="block overflow-hidden pb-1"
+            ><span class="block translate-y-[120%]" data-process-line-1
+              >heads every day</span
+            ></span
+          >
+        </h2>
+
+        <div class="mt-8 max-w-2xl overflow-hidden md:mt-16">
+          <p
+            data-process-line-1
+            class="translate-y-[120%] text-pretty font-body text-[1.05rem] leading-relaxed text-charcoal/75 md:text-[1.35rem]"
+          >
+            We're challenging traditional creative agency models and proving that
+            high-speed execution is the ultimate competitive edge.
+          </p>
+        </div>
+      </div>
+
+      <!-- Text Block 2 — padded so blue sticker can sit above the title -->
+      <div class="pointer-events-none relative z-40 col-start-1 row-start-1 flex flex-col items-center pt-16 md:pt-44">
+        <h2
+          class="relative font-display text-[clamp(2.75rem,11vw,9.5rem)] font-black uppercase leading-[0.85] tracking-tight text-brand-yellow"
+        >
+          <span class="block overflow-hidden pb-1"
+            ><span class="block translate-y-[120%]" data-process-line-2
+              >Designs at your pace,</span
+            ></span
+          >
+          <span class="block overflow-hidden pb-1"
+            ><span class="block translate-y-[120%]" data-process-line-2>without</span
+            ></span
+          >
+          <span class="block overflow-hidden pb-1"
+            ><span class="block translate-y-[120%]" data-process-line-2
+              >complications.</span
+            ></span
+          >
+        </h2>
+
+        <div class="relative mt-8 overflow-hidden md:mt-16">
+          <p
+            data-process-line-2
+            class="max-w-3xl translate-y-[120%] text-pretty font-body text-base leading-relaxed text-paper md:text-xl"
+          >
+            With Puff, having a <strong>design team</strong> is
+            <span
+              class="text-highlight mt-1 block text-[clamp(1.75rem,4.5vw,2.5rem)] font-bold leading-[0.95] text-brand-yellow"
+              >as easy as requesting it</span
+            >
+          </p>
+        </div>
+      </div>
+
+      <!-- Mobile: floating stickers (same clip reveal as desktop) -->
+      <div class="pointer-events-none absolute inset-0 md:hidden">
+        {
+          steps.map((step) => (
+            <div
+              class={`absolute pointer-events-auto ${step.zClass} ${step.mobileClass} ${step.rotation}`}
+            >
+              <div
+                data-process-sticker-wrapper
+                data-process-sticker-mobile
+                class="relative w-full will-change-transform"
+              >
+                <div
+                  data-sticker-face
+                  class={`relative h-full w-full overflow-hidden rounded-2xl border p-3.5 shadow-float ${step.cardClass}`}
+                >
+                  <div
+                    data-sticker-overlay
+                    class="absolute inset-0 z-40 bg-[#c8c8c8]"
+                    style="box-shadow: inset 0 -8px 16px rgba(0,0,0,0.12);"
+                  />
+                  <h3 class="relative z-10 text-center font-display text-lg uppercase leading-none tracking-tight">
+                    {step.title}
+                  </h3>
+                  <p
+                    class={`relative z-10 mt-1.5 text-center text-[0.7rem] font-medium leading-tight ${step.bodyClass}`}
+                  >
+                    {step.description}
+                  </p>
+                </div>
+                <div
+                  data-sticker-badge
+                  class={`absolute -top-3 left-1/2 z-50 flex size-7 -translate-x-1/2 items-center justify-center rounded-full border font-display text-base font-bold ${step.badgeClass}`}
+                >
+                  {step.number}
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Desktop: floating stickers (per-card z so #3 can sit above the title) -->
+      <div class="pointer-events-none absolute inset-0 hidden md:block">
+        {
+          steps.map((step) => (
+            <div
+              class={`absolute w-64 pointer-events-auto ${step.zClass} ${step.desktopClass} ${step.rotation}`}
+            >
+              <div
+                data-process-sticker-wrapper
+                data-process-sticker-desktop
+                class="relative w-full will-change-transform"
+              >
+                <div
+                  data-sticker-face
+                  class={`relative h-full w-full overflow-hidden rounded-2xl border p-6 shadow-float ${step.cardClass}`}
+                >
+                  <!-- Backing paper that peels top → bottom as the sticker sticks -->
+                  <div
+                    data-sticker-overlay
+                    class="absolute inset-0 z-40 bg-[#c8c8c8]"
+                    style="box-shadow: inset 0 -8px 16px rgba(0,0,0,0.12);"
+                  />
+                  <h3 class="relative z-10 text-center font-display text-3xl uppercase leading-none tracking-tight">
+                    {step.title}
+                  </h3>
+                  <p
+                    class={`relative z-10 mt-2 text-center text-sm font-medium leading-tight ${step.bodyClass}`}
+                  >
+                    {step.description}
+                  </p>
+                </div>
+                <div
+                  data-sticker-badge
+                  class={`absolute -top-4 left-1/2 z-50 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border font-display text-lg font-bold ${step.badgeClass}`}
+                >
+                  {step.number}
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initProcessReveal } from "../../scripts/motion/process-reveal";
+
+  let cleanup: (() => void) | undefined;
+
+  const boot = () => {
+    cleanup?.();
+    cleanup = initProcessReveal();
+  };
+
+  document.addEventListener("astro:page-load", boot);
+
+  document.addEventListener("astro:before-swap", () => {
+    cleanup?.();
+    cleanup = undefined;
+  });
+</script>

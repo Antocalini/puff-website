@@ -1,0 +1,145 @@
+---
+import MarqueeItem from "../ui/MarqueeItem.astro";
+
+const row1 = [
+  {
+    type: "pill",
+    label: "Branding",
+    bg: "bg-accent-pink",
+    text: "text-charcoal",
+  },
+  { type: "circle", bg: "bg-amber-500", icon: "star" },
+  {
+    type: "arch",
+    bg: "bg-brand-yellow",
+    label: "48h Delivery",
+    text: "text-charcoal",
+  },
+  {
+    type: "pill",
+    label: "UI/UX Systems",
+    bg: "bg-accent-lime",
+    text: "text-charcoal",
+  },
+  { type: "circle", bg: "bg-accent-cobalt", icon: "lightning" },
+  {
+    type: "pill",
+    label: "Motion Design",
+    bg: "bg-paper",
+    text: "text-charcoal",
+  },
+  {
+    type: "arch",
+    bg: "bg-accent-pink",
+    label: "Unlimited",
+    text: "text-charcoal",
+  },
+] as const;
+
+const row2 = [
+  {
+    type: "pill",
+    label: "Graphic Design",
+    bg: "bg-brand-yellow",
+    text: "text-charcoal",
+  },
+  { type: "circle", bg: "bg-accent-lime", icon: "sparkle" },
+  {
+    type: "pill",
+    label: "Websites",
+    bg: "bg-accent-cobalt",
+    text: "text-paper",
+  },
+  {
+    type: "arch",
+    bg: "bg-amber-500",
+    label: "Design-as-a-Service",
+    text: "text-charcoal",
+  },
+  {
+    type: "pill",
+    label: "Social Assets",
+    bg: "bg-accent-pink",
+    text: "text-charcoal",
+  },
+  { type: "circle", bg: "bg-brand-yellow", icon: "smiley" },
+  {
+    type: "pill",
+    label: "Art Direction",
+    bg: "bg-accent-lime",
+    text: "text-charcoal",
+  },
+] as const;
+
+const extendedRow1 = [...row1, ...row1, ...row1, ...row1];
+const extendedRow2 = [...row2, ...row2, ...row2, ...row2];
+---
+
+<section
+  data-nav-tone="ink"
+  class="relative z-10 w-full overflow-hidden bg-ink py-6 text-charcoal md:py-8"
+>
+  <!-- Row 1 (Left to Right animation) -->
+  <div
+    class="marquee-wrapper flex overflow-hidden whitespace-nowrap select-none"
+  >
+    <div
+      class="marquee-content flex shrink-0 items-center gap-4 pr-4 animate-marquee"
+    >
+      {extendedRow1.map((item) => <MarqueeItem item={item} />)}
+    </div>
+    <!-- Duplicate for seamless infinite loop -->
+    <div
+      class="marquee-content flex shrink-0 items-center gap-4 pr-4 animate-marquee"
+      aria-hidden="true"
+    >
+      {extendedRow1.map((item) => <MarqueeItem item={item} />)}
+    </div>
+  </div>
+
+  <!-- Row 2 (Right to Left animation) -->
+  <div
+    class="marquee-wrapper mt-3 flex overflow-hidden whitespace-nowrap select-none"
+  >
+    <div
+      class="marquee-content flex shrink-0 items-center gap-4 pr-4 animate-marquee-reverse"
+    >
+      {extendedRow2.map((item) => <MarqueeItem item={item} />)}
+    </div>
+    <!-- Duplicate for seamless infinite loop -->
+    <div
+      class="marquee-content flex shrink-0 items-center gap-4 pr-4 animate-marquee-reverse"
+      aria-hidden="true"
+    >
+      {extendedRow2.map((item) => <MarqueeItem item={item} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .animate-marquee {
+    animation: marquee 250s linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee-reverse 250s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes marquee-reverse {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+</style>

@@ -1,0 +1,348 @@
+---
+import bulbSticker from "../../assets/images/stickers/bulb.webp";
+import FloatingSticker from "../ui/FloatingSticker.astro";
+import PuffSticker from "../ui/PuffSticker.astro";
+
+const testimonials = [
+  {
+    quote: "As a long-term partner, Puff proactively drives innovation to not only meet our growth goals but transform our end-user digital experience.",
+    author: "Alex Chen",
+    company: "VP of Product at Nexa Tech",
+  },
+  {
+    quote: "The speed of execution is unprecedented. We went from design concept to a production Astro app in under a week with 0 friction.",
+    author: "Elena Rostova",
+    company: "Head of Marketing at Pulse Global",
+  },
+  {
+    quote: "Puff's subscription model completely replaced our traditional agency costs while delivering 3x higher design quality and motion.",
+    author: "Marcus Vance",
+    company: "Founder at Vanguard Mobility",
+  },
+];
+
+const logosRow1 = [
+  "icash pay",
+  "PRESIDENT SECURITIES",
+  "LITEON",
+  "NESPRESSO",
+  "CATHAY FINANCIAL",
+  "FAREASTONE",
+  "CHICTRIP",
+  "HOTAI MOTOR",
+];
+
+const logosRow2 = [
+  "CATHAY FINANCIAL",
+  "FAREASTONE",
+  "NESPRESSO",
+  "icash pay",
+  "HOTAI MOTOR",
+  "LITEON",
+  "CHICTRIP",
+  "PRESIDENT SECURITIES",
+];
+---
+
+<section
+  id="testimonials"
+  data-nav-tone="yellow"
+  class="relative z-10 w-full flex flex-col justify-center scroll-mt-6 bg-brand-yellow pt-20 pb-12 md:pt-28 md:pb-16 text-charcoal overflow-x-clip"
+>
+  
+  <div class="mx-auto max-w-content px-gutter w-full relative z-20">
+    
+    <!-- Section Header -->
+    <div class="mx-auto flex max-w-3xl flex-col items-center text-center pb-4 md:pb-10">
+      <PuffSticker tone="lavender" rotate="rotate-[5deg]">
+        Client Proof & Reviews
+      </PuffSticker>
+      <h2 class="mt-2 font-display text-[clamp(2.5rem,6vw,5.5rem)] font-black uppercase leading-[0.88] tracking-tight text-charcoal md:mt-4">
+        Stand With Clients
+      </h2>
+      <p class="mt-4 max-w-2xl font-body text-base leading-relaxed text-charcoal/75 md:mt-6 md:text-lg">
+        From product teams to marketing leaders, brands trust Puff to move fast without sacrificing craft. Hear how they ship design, motion, and campaigns on a subscription that scales with them — no retainers, no scope creep, no agency runaround.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Card stage: marquees sit behind the centered testimonial card -->
+  <div class="relative isolate mt-4 md:mt-8">
+    <div
+      class="pointer-events-none absolute inset-0 z-0 flex flex-col justify-center gap-8 opacity-25 md:gap-14 md:opacity-20"
+      aria-hidden="true"
+    >
+      <!-- Logo Row 1 (Left to Right) -->
+      <div class="flex overflow-hidden whitespace-nowrap select-none">
+        <div class="marquee-content flex shrink-0 items-center gap-16 pr-16 animate-marquee-slow">
+          {logosRow1.concat(logosRow1).map((logo) => (
+            <span class="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-charcoal">
+              {logo}
+            </span>
+          ))}
+        </div>
+        <div class="marquee-content flex shrink-0 items-center gap-16 pr-16 animate-marquee-slow">
+          {logosRow1.concat(logosRow1).map((logo) => (
+            <span class="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-charcoal">
+              {logo}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Logo Row 2 (Right to Left) -->
+      <div class="flex overflow-hidden whitespace-nowrap select-none">
+        <div class="marquee-content flex shrink-0 items-center gap-16 pr-16 animate-marquee-slow-reverse">
+          {logosRow2.concat(logosRow2).map((logo) => (
+            <span class="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-charcoal">
+              {logo}
+            </span>
+          ))}
+        </div>
+        <div class="marquee-content flex shrink-0 items-center gap-16 pr-16 animate-marquee-slow-reverse">
+          {logosRow2.concat(logosRow2).map((logo) => (
+            <span class="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-charcoal">
+              {logo}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Central Floating Testimonial Card Stack -->
+    <div class="relative z-10 mx-auto max-w-content px-gutter w-full py-8 md:py-14">
+    <div class="relative mx-auto max-w-md md:max-w-2xl" data-testimonial-container>
+      
+      <!-- Solid black back card — scroll-tilted via GSAP -->
+      <div
+        data-testimonial-accent
+        class="absolute inset-0 rounded-[1.5rem] bg-charcoal shadow-lg md:rounded-[2rem]"
+      ></div>
+
+      <!-- Front White Main Card -->
+      <div class="relative z-10 rounded-[1.5rem] border border-charcoal/10 bg-paper p-5 shadow-md md:rounded-[2rem] md:p-12">
+        
+        <!-- Yellow Quote Icon -->
+        <div class="text-brand-yellow">
+          <svg class="size-6 md:size-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path>
+          </svg>
+        </div>
+
+        <!-- Quote Body inside Vertical Mask Container -->
+        <div class="mt-3 flex min-h-[4.5rem] items-center overflow-hidden md:mt-4 md:min-h-[90px]">
+          <p data-testimonial-quote class="font-body text-sm font-bold leading-relaxed text-charcoal md:text-xl">
+            "{testimonials[0].quote}"
+          </p>
+        </div>
+
+        <!-- Author & Pagination Row inside Vertical Mask Container -->
+        <div class="mt-5 flex flex-col gap-3 border-t border-charcoal/10 pt-3 sm:flex-row sm:items-center sm:justify-between md:mt-8 md:gap-4 md:pt-4">
+          <div class="overflow-hidden">
+            <div data-testimonial-meta>
+              <h4 data-testimonial-author class="font-display text-lg font-black uppercase text-charcoal md:text-xl">
+                {testimonials[0].author}
+              </h4>
+              <p data-testimonial-company class="font-body text-xs font-medium text-charcoal/70">
+                {testimonials[0].company}
+              </p>
+            </div>
+          </div>
+
+          <!-- Pagination Bar Indicators with Yellow Active Bar -->
+          <div class="flex items-center gap-2">
+            {testimonials.map((_, idx) => (
+              <button
+                data-testimonial-dot={idx}
+                class:list={[
+                  "h-1.5 rounded-full transition-all duration-300 cursor-pointer border border-charcoal/20",
+                  idx === 0 ? "w-8 bg-brand-yellow" : "w-3 bg-charcoal/20 hover:bg-charcoal/40"
+                ]}
+                aria-label={`Go to slide ${idx + 1}`}
+              ></button>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+      <FloatingSticker
+        src={bulbSticker}
+        peel="bl"
+        size="moment"
+        rotate={-38}
+        class="bottom-0 left-0 z-20 -translate-x-[38%] translate-y-[18%] md:-translate-x-[62%] md:translate-y-[34%] lg:-translate-x-[66%]"
+      />
+
+    </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  import { ensureGsap, prefersReducedMotion } from "../../scripts/motion/setup";
+
+  const testimonials = [
+    {
+      quote: "As a long-term partner, Puff proactively drives innovation to not only meet our growth goals but transform our end-user digital experience.",
+      author: "Alex Chen",
+      company: "VP of Product at Nexa Tech",
+    },
+    {
+      quote: "The speed of execution is unprecedented. We went from design concept to a production Astro app in under a week with 0 friction.",
+      author: "Elena Rostova",
+      company: "Head of Marketing at Pulse Global",
+    },
+    {
+      quote: "Puff's subscription model completely replaced our traditional agency costs while delivering 3x higher design quality and motion.",
+      author: "Marcus Vance",
+      company: "Founder at Vanguard Mobility",
+    },
+  ];
+
+  let tiltCleanup: (() => void) | undefined;
+
+  function setupTestimonials() {
+    const { gsap } = ensureGsap();
+    let currentIndex = 0;
+    let isAnimating = false;
+
+    const quoteEl = document.querySelector('[data-testimonial-quote]');
+    const authorEl = document.querySelector('[data-testimonial-author]');
+    const companyEl = document.querySelector('[data-testimonial-company]');
+    const metaEl = document.querySelector('[data-testimonial-meta]');
+    const dots = document.querySelectorAll('[data-testimonial-dot]');
+
+    function goToSlide(index: number) {
+      if (isAnimating || index === currentIndex) return;
+      if (!quoteEl || !authorEl || !companyEl || !metaEl) return;
+
+      isAnimating = true;
+
+      // Smooth Mask Animation: Slide current text UP and OUT
+      gsap.to([quoteEl, metaEl], {
+        yPercent: -120,
+        opacity: 0,
+        duration: 0.35,
+        ease: "power2.in",
+        onComplete: () => {
+          currentIndex = index;
+          const data = testimonials[index];
+
+          quoteEl.textContent = `"${data.quote}"`;
+          authorEl.textContent = data.author;
+          companyEl.textContent = data.company;
+
+          // Set starting position at BOTTOM
+          gsap.set([quoteEl, metaEl], { yPercent: 120, opacity: 0 });
+
+          // Smooth Mask Animation: Slide new text UP into view
+          gsap.to([quoteEl, metaEl], {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.45,
+            stagger: 0.05,
+            ease: "power3.out",
+            onComplete: () => {
+              isAnimating = false;
+            }
+          });
+        }
+      });
+
+      // Update dots active state
+      dots.forEach((dot, idx) => {
+        if (idx === index) {
+          dot.className = "h-1.5 w-8 rounded-full bg-brand-yellow border border-charcoal/20 transition-all duration-300 cursor-pointer";
+        } else {
+          dot.className = "h-1.5 w-3 rounded-full bg-charcoal/20 hover:bg-charcoal/40 transition-all duration-300 cursor-pointer";
+        }
+      });
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => goToSlide(idx));
+    });
+
+    setInterval(() => {
+      const nextIndex = (currentIndex + 1) % testimonials.length;
+      goToSlide(nextIndex);
+    }, 6500);
+
+    // Black accent: stacked with white card at scroll start, tilts in as section approaches
+    tiltCleanup?.();
+    const section = document.querySelector("#testimonials");
+    const accentEl = document.querySelector("[data-testimonial-accent]");
+    const cardStack = document.querySelector("[data-testimonial-container]");
+
+    if (section && accentEl && cardStack) {
+      const tiltDeg = 3.5;
+
+      gsap.set(accentEl, {
+        rotate: 0,
+        transformOrigin: "center center",
+      });
+
+      if (prefersReducedMotion()) {
+        gsap.set(accentEl, { rotate: tiltDeg });
+      } else {
+        const tiltTween = gsap.fromTo(
+          accentEl,
+          { rotate: 0 },
+          {
+            rotate: tiltDeg,
+            ease: "none",
+            scrollTrigger: {
+              trigger: cardStack,
+              start: "top 92%",
+              end: "top 48%",
+              scrub: 0.65,
+            },
+          },
+        );
+
+        tiltCleanup = () => {
+          tiltTween.scrollTrigger?.kill();
+          tiltTween.kill();
+        };
+      }
+    }
+  }
+
+  document.addEventListener("astro:page-load", setupTestimonials);
+
+  document.addEventListener("astro:before-swap", () => {
+    tiltCleanup?.();
+    tiltCleanup = undefined;
+  });
+</script>
+
+<style>
+  .animate-marquee-slow {
+    animation: marquee-slow 120s linear infinite;
+  }
+
+  .animate-marquee-slow-reverse {
+    animation: marquee-slow-reverse 120s linear infinite;
+  }
+
+  @keyframes marquee-slow {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes marquee-slow-reverse {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+</style>

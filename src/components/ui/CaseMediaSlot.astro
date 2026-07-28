@@ -1,0 +1,49 @@
+---
+import type { CaseMediaRatio } from "../../content/projects";
+
+type Props = {
+  label: string;
+  ratio?: CaseMediaRatio;
+  src?: string;
+  alt?: string;
+  class?: string;
+};
+
+const { label, ratio = "landscape", src, alt, class: className } = Astro.props;
+
+const ratioClass = {
+  landscape: "aspect-[16/10]",
+  portrait: "aspect-[9/16]",
+  square: "aspect-square",
+  wide: "aspect-[21/9]",
+}[ratio];
+
+const hasMedia = Boolean(src);
+---
+
+<figure class:list={["case-media group relative w-full overflow-hidden", className]}>
+  <div class:list={[ratioClass, "relative w-full overflow-hidden bg-charcoal"]}>
+    {
+      hasMedia ? (
+        <img
+          class="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+          src={src}
+          alt={alt ?? label}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div class="absolute inset-0" aria-hidden="true">
+          <div class="absolute inset-0 bg-[linear-gradient(160deg,#ffd100_0%,#f091f2_42%,#2447f5_100%)]" />
+          <div class="absolute inset-x-0 bottom-0 h-px bg-paper/25" />
+        </div>
+      )
+    }
+
+    <figcaption
+      class="pointer-events-none absolute bottom-3 left-3 z-[2] font-label text-[0.65rem] font-bold uppercase tracking-[0.16em] text-ink md:bottom-4 md:left-4 md:text-[0.72rem] md:tracking-[0.18em]"
+    >
+      {hasMedia ? label : `${label} · Sample / Draft`}
+    </figcaption>
+  </div>
+</figure>

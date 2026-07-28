@@ -1,0 +1,106 @@
+---
+import starSticker from "../../assets/images/stickers/star.webp";
+import { projects } from "../../content/projects";
+import FloatingSticker from "../ui/FloatingSticker.astro";
+import PuffSticker from "../ui/PuffSticker.astro";
+---
+
+<section
+  id="work"
+  data-nav-tone="ink"
+  class="relative z-10 w-full scroll-anchor-offset overflow-x-clip bg-ink py-20 text-paper md:py-28"
+>
+  <!-- Section Title -->
+  <div class="relative mx-auto flex max-w-content flex-col items-center px-gutter text-center">
+    <PuffSticker tone="pink" rotate="-rotate-[7deg]">
+      Selected Work
+    </PuffSticker>
+    <div class="relative mt-4 inline-block">
+      <h2 class="relative z-10 font-display text-[clamp(4rem,14vw,11rem)] font-black uppercase leading-none tracking-tight text-brand-yellow">
+        Portfolio
+      </h2>
+      <FloatingSticker
+        src={starSticker}
+        peel="tr"
+        size="moment"
+        class="bottom-full left-[72%] z-20 mb-1 -translate-x-1/3 md:left-[70%] md:mb-3 lg:left-[72%]"
+      />
+    </div>
+    <p class="relative z-10 mt-4 max-w-xl font-body text-base leading-relaxed text-paper md:text-xl">
+      Selected creative work produced for fast-moving brands and ambitious products.
+    </p>
+  </div>
+
+  <!-- Full-width Grid: 2 columns, no gaps, no border-radius -->
+  <div class="mt-14 grid w-full grid-cols-1 md:grid-cols-2 gap-0 border-t border-b border-paper/20 md:mt-20">
+    {
+      projects.map((item) => (
+        <a 
+          href={`/work/${item.slug}`}
+          class="block focus:outline-none focus:ring-2 focus:ring-brand-yellow z-10"
+          aria-label={`View ${item.title} project detail`}
+        >
+          <article class={`group relative w-full ${item.aspect} ${item.bg} ${item.textColor} overflow-hidden transition-all duration-300 cursor-pointer`}>
+            <!-- SVG Background Animation -->
+            <div class="absolute inset-0 z-0 overflow-hidden opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100 group-active:opacity-100 pointer-events-none">
+              <svg class={`absolute inset-0 h-full w-full object-cover scale-[1.5] -rotate-12 ${item.svgColor}`} viewBox="0 0 589 553" preserveAspectRatio="xMidYMid slice">
+                <path class="portfolio-path" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M126.94,531.47c-46.72-26.73-82.92-74.02-98.37-128.51-5.54-19.53-8.49-40.41-4.62-60.4,3.87-19.99,15.39-38.97,32.67-47.37,23.11-11.23,50.75-1.52,71.31,14.45,25.27,19.63,43.62,47.63,62.58,74.26,18.96,26.63,39.88,53.15,67.9,67.82,28.03,14.67,64.96,14.52,87.37-8.79,18.02-18.74,23.05-48.66,17.98-75.08-5.07-26.42-18.87-49.91-34.12-71.31-26.15-36.68-57.37-69.14-92.33-95.99-12.97-9.96-26.57-19.26-37.65-31.6s-19.59-28.4-19.61-45.56c-.02-23.66,16.88-44.9,37.53-52.97,20.65-8.07,44-4.64,64.24,4.54,20.25,9.19,37.95,23.72,55.2,38.38,27.01,22.95,53.5,46.61,79.45,70.93,15.3,14.34,30.62,29.08,48.69,38.98,18.07,9.9,39.59,14.57,58.82,7.64,28.61-10.32,45.53-45.21,43.23-77.62-2.3-32.4-20.57-61.54-43.65-82.48-23.07-20.94-50.79-34.89-78.15-48.6" pathLength="100" />
+              </svg>
+              <svg class={`absolute inset-0 h-full w-full object-cover scale-[1.5] -rotate-12 scale-x-[-1] ${item.svgColor}`} viewBox="0 0 589 553" preserveAspectRatio="xMidYMid slice">
+                <path class="portfolio-path" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M126.94,531.47c-46.72-26.73-82.92-74.02-98.37-128.51-5.54-19.53-8.49-40.41-4.62-60.4,3.87-19.99,15.39-38.97,32.67-47.37,23.11-11.23,50.75-1.52,71.31,14.45,25.27,19.63,43.62,47.63,62.58,74.26,18.96,26.63,39.88,53.15,67.9,67.82,28.03,14.67,64.96,14.52,87.37-8.79,18.02-18.74,23.05-48.66,17.98-75.08-5.07-26.42-18.87-49.91-34.12-71.31-26.15-36.68-57.37-69.14-92.33-95.99-12.97-9.96-26.57-19.26-37.65-31.6s-19.59-28.4-19.61-45.56c-.02-23.66,16.88-44.9,37.53-52.97,20.65-8.07,44-4.64,64.24,4.54,20.25,9.19,37.95,23.72,55.2,38.38,27.01,22.95,53.5,46.61,79.45,70.93,15.3,14.34,30.62,29.08,48.69,38.98,18.07,9.9,39.59,14.57,58.82,7.64,28.61-10.32,45.53-45.21,43.23-77.62-2.3-32.4-20.57-61.54-43.65-82.48-23.07-20.94-50.79-34.89-78.15-48.6" pathLength="100" />
+              </svg>
+            </div>
+
+            <!-- Inner Content -->
+            <div class="relative z-10 flex h-full flex-col justify-between p-8 md:p-10 transition-transform duration-500 group-hover:scale-105">
+              <div class="flex items-center justify-between">
+                <span class="font-display text-2xl font-black opacity-60">{item.number}</span>
+                <span class="rounded-full border border-current/20 px-3.5 py-1 font-display text-xs font-bold uppercase tracking-widest">
+                  {item.category}
+                </span>
+              </div>
+
+              <div>
+                <h3 
+                  class="font-display text-3xl font-black uppercase leading-tight tracking-tight md:text-4xl"
+                  transition:name={`project-title-${item.slug}`}
+                >
+                  {item.title}
+                </h3>
+              </div>
+            </div>
+          </article>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .portfolio-path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    stroke-width: 65;
+  }
+
+  .group:hover .portfolio-path,
+  .group:focus-within .portfolio-path,
+  .group:active .portfolio-path {
+    animation: drawAndFill 1.4s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes drawAndFill {
+    0% {
+      stroke-dashoffset: 100;
+      stroke-width: 65;
+    }
+    40% {
+      stroke-dashoffset: 0;
+      stroke-width: 65;
+    }
+    100% {
+      stroke-dashoffset: 0;
+      stroke-width: 2000;
+    }
+  }
+</style>

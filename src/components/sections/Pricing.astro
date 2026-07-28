@@ -1,0 +1,244 @@
+---
+import { Image } from "astro:assets";
+import fuelSticker from "../../assets/images/stickers/fuel.webp";
+import passSticker from "../../assets/images/stickers/pass.webp";
+import pricingPattern from "../../assets/images/pricing-pattern.webp";
+import FloatingSticker from "../ui/FloatingSticker.astro";
+import PuffSticker from "../ui/PuffSticker.astro";
+
+const plans = [
+  {
+    name: "Graphic",
+    tag: "Essential",
+    price: "$1,000",
+    period: "/month",
+    summary: "Graphic Design Service for fast-moving visual assets.",
+    featured: false,
+    inclusions: [
+      "20 active projects",
+      "One request at a time",
+      "Avg. 48 hour delivery",
+      "Unlimited brands & stock photos",
+      "Pause or cancel anytime",
+    ],
+    cta: "Get Graphic",
+    cardStyle: "bg-ink/70 border border-paper/10 text-paper hover:border-paper/30",
+    priceColor: "text-paper",
+    bulletColor: "bg-brand-yellow",
+  },
+  {
+    name: "Web & UI",
+    tag: "MOST POPULAR",
+    price: "$1,500",
+    period: "/month",
+    summary: "Graphic + Full Web & UI/UX Design System.",
+    featured: true,
+    inclusions: [
+      "Unlimited active projects",
+      "Simultaneous active requests",
+      "Full Web & UI/UX Design",
+      "Astro & Webflow development",
+      "Priority 48h delivery",
+    ],
+    cta: "Get Web & UI",
+    cardStyle: "bg-brand-yellow text-charcoal border-2 border-charcoal shadow-2xl scale-[1.02] z-10",
+    priceColor: "text-charcoal font-black",
+    bulletColor: "bg-charcoal",
+    tagStyle: "bg-charcoal text-brand-yellow",
+  },
+  {
+    name: "Full Scale",
+    tag: "All-In-One",
+    price: "$2,500",
+    period: "/month",
+    summary: "Graphic + Web + Video Design & 3D Motion editing.",
+    featured: false,
+    inclusions: [
+      "Everything in Web & UI, plus:",
+      "Full Video Editing & Motion",
+      "3D Assets & Animations",
+      "Unlimited stock videos",
+      "Dedicated creative director",
+    ],
+    cta: "Get Full Scale",
+    cardStyle: "bg-ink/70 border border-paper/10 text-paper hover:border-paper/30",
+    priceColor: "text-paper",
+    bulletColor: "bg-brand-yellow",
+  },
+];
+---
+
+<section
+  id="pricing"
+  data-nav-tone="yellow"
+  class="relative z-10 w-full flex flex-col justify-center scroll-mt-6 bg-brand-yellow py-16 md:py-20 text-charcoal overflow-x-clip"
+>
+  <div class="mx-auto max-w-content px-gutter w-full">
+    
+    <!-- Compact Section Header -->
+    <div class="relative z-20 mx-auto flex max-w-3xl flex-col items-center text-center">
+      <PuffSticker tone="pink" rotate="-rotate-[4deg]">
+        Pricing & Membership
+      </PuffSticker>
+      <h2 class="mt-4 font-display text-[clamp(2.5rem,6.5vw,5.5rem)] font-black uppercase leading-[0.88] tracking-tight text-charcoal">
+        One Subscription,<br />
+        Endless Possibilities
+      </h2>
+    </div>
+
+    <!-- Main 2-Column Layout (Left Join Card + Right 3-Plan Sub-grid) -->
+    <div class="relative mt-8 grid gap-6 lg:grid-cols-12 lg:items-stretch md:mt-10">
+      
+      <!-- Left Container: Join Puff Card -->
+      <div class="relative flex flex-col justify-between overflow-visible rounded-[2rem] p-6 shadow-float md:p-8 lg:col-span-4 min-h-[460px] lg:min-h-[540px]">
+        <!-- Puff cloud pattern — bottom fill -->
+        <div
+          class="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[2rem]"
+          aria-hidden="true"
+        >
+          <Image
+            src={pricingPattern}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 h-full w-full object-cover"
+          />
+        </div>
+
+        <!-- Creative Pass — large membership card, overlaps top/left like reference -->
+        <FloatingSticker
+          src={passSticker}
+          peel="tl"
+          size="clamp(14rem, 88vw, 38rem)"
+          rotate={-12}
+          motion="drift"
+          class="-left-[12%] -top-8 z-20 md:-left-[20%] md:-top-14 lg:-left-[22%] lg:-top-16"
+        />
+
+        <!-- Creative Fuel — bottom-right of join card, clear of pricing panel -->
+        <FloatingSticker
+          src={fuelSticker}
+          peel="br"
+          size="accent"
+          rotate={22}
+          class="pointer-events-none absolute -bottom-8 -right-4 z-30 md:-bottom-12 md:-right-8"
+        />
+
+        <!-- Bottom content area of left card -->
+        <div class="relative z-10 mt-auto pt-36 md:pt-56 lg:pt-60">
+          <!-- Start today pill -->
+          <div class="btn-3d-skeuo btn-shine inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-paper">
+            <span class="size-2 shrink-0 rounded-full bg-brand-yellow shadow-[0_0_6px_rgba(255,209,0,0.6)]"></span>
+            <span class="font-label text-[0.7rem] font-bold uppercase tracking-wider">Start today</span>
+          </div>
+
+          <!-- Join Puff Title -->
+          <h3
+            class="mt-4 font-display text-[clamp(2.25rem,5.5vw,3.5rem)] font-black uppercase leading-[0.9] tracking-tight text-paper [text-shadow:0_2px_8px_rgba(0,0,0,0.75),0_4px_24px_rgba(0,0,0,0.45)]"
+          >
+            Join Puff<br />
+            Monthly
+          </h3>
+        </div>
+      </div>
+
+      <!-- Right Container: 3-Plan Sub-grid -->
+      <div class="relative overflow-visible rounded-[2rem] bg-charcoal p-6 md:p-8 text-paper shadow-2xl lg:col-span-8">
+        <!-- Header Row -->
+        <div class="relative z-10 flex items-center justify-between border-b border-paper/15 pb-4">
+          <h3 class="font-display text-2xl font-black uppercase tracking-tight text-paper md:text-3xl">
+            CHOOSE YOUR LEVEL
+          </h3>
+          <span class="rounded-md border border-paper/20 px-2.5 py-0.5 font-label text-[0.6rem] font-bold uppercase tracking-[0.16em] text-paper/70">
+            PAUSE OR CANCEL ANYTIME
+          </span>
+        </div>
+
+        <!-- 3 Plans Grid in Parallel -->
+        <div class="mt-6 grid gap-4 md:grid-cols-3">
+          {plans.map((plan) => (
+            <div 
+              class:list={[
+                "relative flex flex-col justify-between rounded-2xl p-5 transition-all duration-300",
+                plan.cardStyle
+              ]}
+            >
+              <!-- Featured Tag -->
+              {plan.featured && (
+                <div class:list={["absolute -top-3 right-4 rounded-full px-3 py-0.5 font-label text-[0.62rem] font-bold uppercase tracking-widest shadow-sm", plan.tagStyle]}>
+                  {plan.tag}
+                </div>
+              )}
+
+              <div>
+                <!-- Header -->
+                <div class="flex items-center justify-between">
+                  <span class:list={["font-display text-2xl font-black uppercase", plan.featured ? "text-charcoal" : "text-paper"]}>
+                    {plan.name}
+                  </span>
+                  {!plan.featured && (
+                    <span class="font-label text-[0.65rem] font-bold uppercase tracking-widest text-paper/50">
+                      {plan.tag}
+                    </span>
+                  )}
+                </div>
+
+                <p class:list={["mt-2 font-body text-[0.72rem] leading-relaxed min-h-[36px]", plan.featured ? "text-charcoal/80" : "text-paper"]}>
+                  {plan.summary}
+                </p>
+
+                <!-- Price -->
+                <div class:list={["mt-4 flex items-baseline gap-1 border-b pb-4", plan.featured ? "border-charcoal/20" : "border-paper/15"]}>
+                  <span class:list={["font-display text-4xl font-black tracking-tight", plan.priceColor]}>
+                    {plan.price}
+                  </span>
+                  <span class:list={["font-label text-[0.65rem] font-bold uppercase tracking-widest", plan.featured ? "text-charcoal/60" : "text-paper/50"]}>
+                    {plan.period}
+                  </span>
+                </div>
+
+                <!-- Inclusions -->
+                <ul class="mt-4 space-y-2 font-body text-xs">
+                  {plan.inclusions.map((inc) => (
+                    <li class="flex items-center gap-2">
+                      <span class:list={["size-1.5 rounded-full shrink-0", plan.bulletColor]}></span>
+                      <span class:list={["line-clamp-1 font-medium", plan.featured ? "text-charcoal" : "text-paper/85"]}>{inc}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- CTA -->
+              <a 
+                href="#faq"
+                class:list={[
+                  "btn-shine mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-3 text-center font-label text-[0.7rem] font-bold tracking-wide transition-all duration-200 active:scale-95",
+                  plan.featured 
+                    ? "btn-3d-skeuo text-brand-yellow font-black" 
+                    : "btn-3d-skeuo-yellow text-charcoal font-black"
+                ]}
+              >
+                {plan.cta}
+              </a>
+            </div>
+          ))}
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bottom Guarantee Capsule Pill -->
+    <div class="mt-8 flex w-full items-center justify-center md:mt-10">
+      <div
+        class="btn-3d-skeuo btn-shine inline-flex items-center justify-center rounded-full px-8 py-3.5 text-paper transition-transform duration-200 hover:scale-[1.03] md:px-10 md:py-4"
+      >
+        <span class="font-label text-xs font-black tracking-wide md:text-sm">
+          Try Puff free for 7 days +
+          <span class="text-brand-yellow"> 20% OFF</span> for 3 months
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>

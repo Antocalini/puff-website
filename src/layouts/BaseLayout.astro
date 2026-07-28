@@ -1,0 +1,70 @@
+---
+import { ClientRouter } from "astro:transitions";
+import SiteFooter from "../components/common/SiteFooter.astro";
+import SiteHeader from "../components/common/SiteHeader.astro";
+import {
+  landingContent,
+  needsClientInput,
+  type Approval,
+} from "../content/landing";
+import "../styles/global.css";
+
+type Props = {
+  title?: Approval<string>;
+  description?: Approval<string>;
+};
+
+const {
+  description = landingContent.metadata.description,
+  title = landingContent.metadata.title,
+} = Astro.props;
+
+const pageTitle = title === needsClientInput ? "Puff Cross Media" : title;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <ClientRouter />
+  </head>
+  <body class="bg-brand-yellow text-ink antialiased">
+    <a
+      class="sr-only z-50 bg-brand-yellow px-5 py-3 font-label text-label font-bold uppercase tracking-widest text-ink focus:fixed focus:left-gutter focus:top-4 focus:not-sr-only"
+      href="#main-content"
+    >
+      Skip to main content
+    </a>
+    <SiteHeader items={landingContent.primaryNavigation} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <SiteFooter />
+
+    <script>
+      // Ensures hash anchors (e.g. #work) land on target element after GSAP & ScrollTrigger settle layout
+      document.addEventListener("astro:page-load", () => {
+        if (window.location.hash) {
+          const targetId = window.location.hash.replace("#", "");
+          const el = document.getElementById(targetId);
+          if (el) {
+            requestAnimationFrame(() => {
+              setTimeout(() => {
+                el.scrollIntoView({ behavior: "instant" });
+              }, 60);
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

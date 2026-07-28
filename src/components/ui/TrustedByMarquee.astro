@@ -1,0 +1,132 @@
+---
+interface Props {
+  label?: string;
+  logos?: readonly string[];
+  maskColor?: string;
+  class?: string;
+}
+
+const defaultLogos = [
+  "Nexa Tech",
+  "Pulse Global",
+  "Vanguard",
+  "Kroma Studio",
+  "Hyperion Labs",
+  "Aether OS",
+] as const;
+
+const {
+  label = "Trusted By Teams At",
+  logos = defaultLogos,
+  maskColor = "var(--color-brand-yellow)",
+  class: className = "",
+} = Astro.props;
+
+const track = [...logos, ...logos];
+---
+
+<div
+  class:list={["trusted-marquee mx-auto w-full max-w-md md:max-w-lg lg:max-w-xl", className]}
+  style={`--trusted-marquee-mask: ${maskColor}`}
+>
+  <p
+    class="mb-1.5 text-center font-label text-[0.8rem] font-semibold normal-case tracking-normal text-charcoal/55 md:mb-2 md:text-sm"
+  >
+    {label}
+  </p>
+
+  <div class="trusted-marquee-viewport relative overflow-hidden">
+    <div
+      class="trusted-marquee-fade trusted-marquee-fade--left pointer-events-none absolute inset-y-0 left-0 z-10"
+      aria-hidden="true"
+    />
+    <div
+      class="trusted-marquee-fade trusted-marquee-fade--right pointer-events-none absolute inset-y-0 right-0 z-10"
+      aria-hidden="true"
+    />
+
+    <div class="flex overflow-hidden whitespace-nowrap select-none" aria-hidden="false">
+      <div class="trusted-marquee-track flex shrink-0 items-center gap-10 pr-10 md:gap-12 md:pr-12">
+        {
+          track.map((logo) => (
+            <span class="font-display text-base font-black tracking-tight text-charcoal/45 md:text-lg">
+              {logo}
+            </span>
+          ))
+        }
+      </div>
+      <div class="trusted-marquee-track flex shrink-0 items-center gap-10 pr-10 md:gap-12 md:pr-12" aria-hidden="true">
+        {
+          track.map((logo) => (
+            <span class="font-display text-base font-black tracking-tight text-charcoal/45 md:text-lg">
+              {logo}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .trusted-marquee-viewport {
+    overflow: hidden;
+  }
+
+  .trusted-marquee-fade {
+    width: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .trusted-marquee-fade {
+      width: 6rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .trusted-marquee-fade {
+      width: 7.5rem;
+    }
+  }
+
+  .trusted-marquee-fade--left {
+    background: linear-gradient(
+      to right,
+      var(--trusted-marquee-mask) 0%,
+      color-mix(in srgb, var(--trusted-marquee-mask) 96%, transparent) 22%,
+      color-mix(in srgb, var(--trusted-marquee-mask) 72%, transparent) 48%,
+      color-mix(in srgb, var(--trusted-marquee-mask) 32%, transparent) 72%,
+      transparent 100%
+    );
+  }
+
+  .trusted-marquee-fade--right {
+    background: linear-gradient(
+      to left,
+      var(--trusted-marquee-mask) 0%,
+      color-mix(in srgb, var(--trusted-marquee-mask) 96%, transparent) 22%,
+      color-mix(in srgb, var(--trusted-marquee-mask) 72%, transparent) 48%,
+      color-mix(in srgb, var(--trusted-marquee-mask) 32%, transparent) 72%,
+      transparent 100%
+    );
+  }
+
+  .trusted-marquee-track {
+    animation: trusted-marquee 90s linear infinite;
+  }
+
+  @keyframes trusted-marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trusted-marquee-track {
+      animation: none;
+    }
+  }
+</style>
