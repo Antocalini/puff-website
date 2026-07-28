@@ -1,0 +1,34 @@
+change: puff-redesign
+phase: apply
+artifact_store: openspec
+artifacts:
+  exploration: true
+  proposal: draft
+  specs: true
+  design: true
+  tasks: true
+skills:
+  completed:
+    - puff-scope
+    - puff-sdd
+    - puff-brand
+    - puff-design-system
+    - puff-layouts
+    - puff-components
+    - puff-motion
+    - puff-clean-code
+  pending: []
+architecture:
+  stack: Astro + Tailwind CSS
+  motion: Lenis + GSAP + ScrollTrigger
+  cms: TBD
+delivery:
+  strategy: stacked-to-main
+  implementation_authorized: true
+apply_progress:
+  completed_work_units:
+    - foundation-content
+    - static-landing
+  pending_work_units:
+    - islands-quality
+last_updated: "2026-07-22"

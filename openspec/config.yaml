@@ -1,0 +1,75 @@
+schema: spec-driven
+
+context: |
+  Project: puff-website (Puff Cross Media redesign)
+  Phase: SPECIFICATION — no code or dependencies yet
+  Current site: https://puffcrossmedia.com/ — single-page marketing site (Design-as-a-Service)
+  Stack: Astro (static-first) + Tailwind CSS; Lenis + GSAP/ScrollTrigger for motion
+  Testing: Not configured
+  Brand: Yellow (#FFD100 approx), white, black, grey; playful hand-drawn illustrations
+  Business: Subscription creative agency — Graphic/Web/Video tiers ($500–$1500/mo)
+
+strict_tdd: false
+
+testing:
+  strict_tdd: false
+  detected: "2026-07-22"
+  runner:
+    available: false
+    command: "—"
+    framework: "—"
+  layers:
+    unit:
+      available: false
+      tool: "—"
+    integration:
+      available: false
+      tool: "—"
+    e2e:
+      available: false
+      tool: "—"
+  coverage:
+    available: false
+    command: "—"
+  quality:
+    linter:
+      available: false
+      command: "—"
+    type_checker:
+      available: false
+      command: "—"
+    formatter:
+      available: false
+      command: "—"
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Reference audit findings in openspec/changes/puff-redesign/exploration.md
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+    - Each page section MUST have accessibility and responsive requirements
+  design:
+    - Preserve Puff brand identity (yellow, playful illustrations) while elevating trust
+    - Document architecture decisions with rationale
+    - Include competitor benchmark references (Design Pickle, ManyPixels, Superside)
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+    - Separate content/copy tasks from implementation tasks
+  apply:
+    - Follow existing code patterns once stack is chosen
+    - Render static content with Astro; hydrate only isolated interactive islands
+    - Use Tailwind semantic design tokens; avoid arbitrary-value duplication
+    - Follow `.cursor/skills/puff-clean-code/SKILL.md`
+    tdd: false
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: ""
+    coverage_threshold: 0
+    lighthouse_mobile_min: 90
+    lighthouse_desktop_min: 90
+  archive:
+    - Warn before merging destructive deltas
