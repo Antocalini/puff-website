@@ -215,13 +215,16 @@ const steps = [
 </section>
 
 <script>
-  import { initProcessReveal } from "../../scripts/motion/process-reveal";
+  import { whenIdle } from "../../scripts/defer-idle";
 
   let cleanup: (() => void) | undefined;
 
   const boot = () => {
     cleanup?.();
-    cleanup = initProcessReveal();
+    whenIdle(async () => {
+      const { initProcessReveal } = await import("../../scripts/motion/process-reveal");
+      cleanup = await initProcessReveal();
+    });
   };
 
   document.addEventListener("astro:page-load", boot);

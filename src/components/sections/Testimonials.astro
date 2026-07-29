@@ -154,11 +154,16 @@ const logosRow2 = [...testimonialLogosRow2];
 </section>
 
 <script>
-  import {
-    setupTestimonials,
-    teardownTestimonials,
-  } from "../../scripts/testimonials-carousel";
+  import { whenIdle } from "../../scripts/defer-idle";
+  import { teardownTestimonials } from "../../scripts/testimonials-carousel";
 
-  document.addEventListener("astro:page-load", setupTestimonials);
+  const boot = () => {
+    whenIdle(async () => {
+      const { setupTestimonials } = await import("../../scripts/testimonials-carousel");
+      await setupTestimonials();
+    });
+  };
+
+  document.addEventListener("astro:page-load", boot);
   document.addEventListener("astro:before-swap", teardownTestimonials);
 </script>

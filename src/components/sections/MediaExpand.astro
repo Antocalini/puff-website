@@ -42,19 +42,20 @@
 </style>
 
 <script>
-  import { initMediaHandoff } from "../../scripts/motion/media-handoff";
+  import { whenIdle } from "../../scripts/defer-idle";
 
   let cleanup: (() => void) | undefined;
 
   const boot = () => {
     cleanup?.();
-    cleanup = initMediaHandoff();
+    whenIdle(async () => {
+      const { initMediaHandoff } = await import("../../scripts/motion/media-handoff");
+      cleanup = await initMediaHandoff();
+    });
   };
 
-  // Run on initial page load and every View Transitions navigation (including back/forward)
   document.addEventListener("astro:page-load", boot);
 
-  // Clean up GSAP timelines/triggers before Astro swaps the DOM
   document.addEventListener("astro:before-swap", () => {
     cleanup?.();
     cleanup = undefined;

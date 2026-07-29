@@ -5,7 +5,7 @@ let tiltCleanup: (() => void) | undefined;
 let autoplayTimer: ReturnType<typeof setInterval> | undefined;
 let sectionAbort: AbortController | undefined;
 
-export function setupTestimonials() {
+export async function setupTestimonials() {
   teardownTestimonials();
 
   const section = document.querySelector<HTMLElement>("#testimonials");
@@ -14,7 +14,7 @@ export function setupTestimonials() {
   sectionAbort = new AbortController();
   const { signal } = sectionAbort;
 
-  const { gsap } = ensureGsap();
+  const { gsap } = await ensureGsap();
   let currentIndex = 0;
   let isAnimating = false;
 

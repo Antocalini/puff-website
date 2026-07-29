@@ -18,8 +18,8 @@ const {
   title = landingContent.metadata.title,
 } = Astro.props;
 
-const FONT_URL =
-  "https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap";
+const CAVEAT_FONT_URL =
+  "https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap";
 
 const pageTitle = title === needsClientInput ? "Puff Cross Media" : title;
 ---
@@ -38,16 +38,14 @@ const pageTitle = title === needsClientInput ? "Puff Cross Media" : title;
       type="font/woff2"
       crossorigin
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href={FONT_URL}
+      href={CAVEAT_FONT_URL}
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
-      <link href={FONT_URL} rel="stylesheet" />
+      <link href={CAVEAT_FONT_URL} rel="stylesheet" />
     </noscript>
   </head>
   <body class="bg-brand-yellow text-ink antialiased">

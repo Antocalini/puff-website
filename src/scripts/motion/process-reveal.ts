@@ -169,8 +169,8 @@ function buildTimeline(
   return tl;
 }
 
-export function initProcessReveal() {
-  const { gsap, ScrollTrigger } = ensureGsap();
+export async function initProcessReveal() {
+  const { gsap, ScrollTrigger } = await ensureGsap();
 
   const section = document.querySelector<HTMLElement>("[data-process-section]");
   const circle = document.querySelector<HTMLElement>("[data-process-circle]");
