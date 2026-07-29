@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Bebas Neue";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/bebas-neue-latin.woff2") format("woff2");
+}
+
 @theme {
   --color-brand-yellow: #ffd100;
   --color-brand-yellow-hover: #e6bc00;
