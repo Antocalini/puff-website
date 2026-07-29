@@ -13,10 +13,13 @@ const primaryCta = landingContent.hero.value.primaryCta;
 
 const navLinkClass =
   "nav-pill-link whitespace-nowrap rounded-pill px-3.5 py-2 text-[0.8125rem] font-medium tracking-tight transition-colors duration-standard ease-out hover:bg-charcoal/8";
+
+const mobilePanelLinkClass =
+  "nav-mobile-panel-link nav-pill-link block rounded-pill px-3.5 py-2.5 text-[0.9375rem] font-semibold tracking-tight transition-colors duration-standard ease-out hover:bg-charcoal/8";
 ---
 
 <header class="pointer-events-none fixed inset-x-0 top-0 z-50" data-site-header>
-  <div class="pointer-events-none mx-auto flex max-w-content justify-center px-gutter py-4 md:py-5">
+  <div class="pointer-events-none mx-auto flex w-full max-w-content justify-center px-gutter py-3 md:py-5">
     <!-- Desktop / tablet smart pill -->
     <nav
       class="nav-pill-3d pointer-events-auto relative hidden items-center rounded-full md:flex"
@@ -72,193 +75,91 @@ const navLinkClass =
       </div>
     </nav>
 
-    <!-- Mobile: compact smart pill with CTA + menu -->
-    <div
-      class="nav-pill-3d pointer-events-auto flex w-full max-w-md items-center justify-between gap-2 rounded-full px-2.5 py-2 md:hidden"
-      data-nav-pill-mobile
-    >
-      <a class="nav-pill-logo-link" href="/">
-        <img
-          src={logoPuff.src}
-          alt={brandName}
-          class="nav-pill-logo nav-pill-logo--mobile"
-          width={73}
-          height={35}
-          decoding="async"
-        />
-      </a>
-
-      <div class="flex items-center gap-1.5">
-        <a
-          class="btn-3d-skeuo btn-shine inline-flex shrink-0 items-center justify-center rounded-full px-3.5 py-2 font-label text-[0.68rem] font-bold tracking-wide text-paper"
-          href={primaryCta.href}
-        >
-          {primaryCta.label}
+    <!-- Mobile: smart pill — logo left + menu right; panel sits outside overflow:hidden -->
+    <div class="pointer-events-auto relative w-full md:hidden" data-mobile-nav-shell>
+      <nav
+        class="nav-pill-3d relative flex min-w-0 items-center rounded-full"
+        data-nav-pill-mobile
+        aria-label="Primary navigation"
+      >
+        <a class="nav-pill-logo-link relative z-10 shrink-0" href="/" data-nav-logo-mobile>
+          <img
+            src={logoPuff.src}
+            alt={brandName}
+            class="nav-pill-logo nav-pill-logo--mobile"
+            width={73}
+            height={35}
+            decoding="async"
+          />
         </a>
 
-        <details class="group relative" data-mobile-nav>
-          <summary
-            class="grid size-11 cursor-pointer list-none place-items-center marker:content-none [&::-webkit-details-marker]:hidden"
-            aria-label="Open menu"
-          >
-            <svg aria-hidden="true" class="size-4" fill="none" viewBox="0 0 18 18">
-              <path d="M3.5 5.25H14.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
-              <path d="M3.5 9H14.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
-              <path d="M3.5 12.75H14.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
-            </svg>
-          </summary>
-
-          <div
-            class="nav-pill-3d absolute right-0 top-[calc(100%+0.75rem)] z-30 min-w-60 rounded-[1.75rem] p-3"
-          >
-            <nav aria-label="Mobile navigation">
-              <ul class="flex flex-col gap-1">
-                {
-                  items.map(({ href, label }) => (
-                    <li>
-                      <a class={`${navLinkClass} block`} href={href} data-mobile-nav-link>
-                        {label}
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
-            </nav>
+        <div class="nav-pill-collapse nav-pill-collapse--mobile" data-nav-collapse-mobile>
+          <div class="nav-pill-collapse-inner">
+            <div class="nav-pill-collapse-content flex items-center justify-end">
+              <button
+                type="button"
+                class="nav-mobile-menu-btn grid size-9 shrink-0 cursor-pointer place-items-center rounded-full"
+                aria-label="Open menu"
+                aria-expanded="false"
+                aria-controls="mobile-nav-panel"
+                data-mobile-nav-toggle
+              >
+                <svg aria-hidden="true" class="nav-mobile-menu-icon size-4" fill="none" viewBox="0 0 18 18">
+                  <path d="M3.5 5.25H14.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+                  <path d="M3.5 9H14.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+                  <path d="M3.5 12.75H14.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+                </svg>
+              </button>
+            </div>
           </div>
-        </details>
+        </div>
+      </nav>
+
+      <div
+        id="mobile-nav-panel"
+        class="nav-mobile-panel nav-pill-3d absolute left-1/2 top-[calc(100%+0.75rem)] z-30 hidden w-[min(18rem,calc(100vw-2rem))] -translate-x-1/2 rounded-[1.75rem] p-3"
+        data-mobile-nav-panel
+        hidden
+      >
+        <nav aria-label="Mobile navigation">
+          <ul class="flex flex-col gap-1">
+            {
+              items.map(({ href, label }) => (
+                <li>
+                  <a class={mobilePanelLinkClass} href={href} data-mobile-nav-link>
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <a
+          class="group btn-shine nav-mobile-panel-cta mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full py-2.5 pl-4 pr-2"
+          href={primaryCta.href}
+          data-mobile-nav-link
+        >
+          <span class="nav-pill-cta-label font-label text-xs font-bold tracking-wide">
+            {primaryCta.label}
+          </span>
+          <div class="nav-pill-cta-arrow flex size-7 shrink-0 items-center justify-center rounded-full shadow-sm">
+            <svg class="size-3.5 stroke-[2.5]" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+              <path
+                d="M3 8h9M8 3.5 12.5 8 8 12.5"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </div>
+        </a>
       </div>
     </div>
   </div>
 </header>
 
 <script>
-  import { setNavSurface, type NavSurface } from "../../scripts/nav-surface";
+  import { bootSmartNav } from "../../scripts/smart-nav";
 
-  const COMPACT_AFTER = 72;
-  const DIR_DELTA = 6;
-
-  function initSmartNav() {
-    const pill = document.querySelector<HTMLElement>("[data-nav-pill]");
-    const sections = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-nav-tone]"),
-    );
-
-    let lastY = window.scrollY;
-    let compact = false;
-    let ticking = false;
-    let activeTone: NavSurface = "yellow";
-
-    const setCompact = (next: boolean) => {
-      if (!pill || compact === next) return;
-      compact = next;
-      pill.classList.toggle("is-compact", next);
-      pill.setAttribute("data-compact", next ? "true" : "false");
-    };
-
-    const applyTone = (tone: NavSurface) => {
-      if (activeTone === tone) return;
-      activeTone = tone;
-      setNavSurface(tone);
-    };
-
-    // Thin band under the fixed header — whichever section owns it wins.
-    // IO is async / cheap; no layout reads on every scroll frame.
-    const observer =
-      sections.length > 0
-        ? new IntersectionObserver(
-            (entries) => {
-              const visible = entries
-                .filter((entry) => entry.isIntersecting)
-                .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-              const top = visible[0]?.target;
-              if (!(top instanceof HTMLElement)) return;
-
-              const tone = top.dataset.navTone === "ink" ? "ink" : "yellow";
-              applyTone(tone);
-            },
-            {
-              // ~header strip at the top of the viewport
-              rootMargin: "-12px 0px -88% 0px",
-              threshold: [0, 0.25, 0.5, 1],
-            },
-          )
-        : null;
-
-    sections.forEach((section) => observer?.observe(section));
-
-    // Process (and future dynamic sections) update data-nav-tone mid-scroll
-    const onToneSync = (event: Event) => {
-      const detail = (event as CustomEvent<{ tone?: NavSurface }>).detail;
-      if (detail?.tone === "yellow" || detail?.tone === "ink") {
-        applyTone(detail.tone);
-      }
-    };
-    window.addEventListener("puff:nav-tone", onToneSync);
-
-    const onScroll = () => {
-      if (!pill || ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const y = window.scrollY;
-        const delta = y - lastY;
-
-        if (y <= COMPACT_AFTER) {
-          setCompact(false);
-        } else if (delta > DIR_DELTA) {
-          setCompact(true);
-        } else if (delta < -DIR_DELTA) {
-          setCompact(false);
-        }
-
-        lastY = y;
-        ticking = false;
-      });
-    };
-
-    // Match the section currently under the header band (not always yellow)
-    const initialTone: NavSurface =
-      sections.find((section) => {
-        const rect = section.getBoundingClientRect();
-        return rect.top <= 24 && rect.bottom > 24;
-      })?.dataset.navTone === "ink"
-        ? "ink"
-        : sections[0]?.dataset.navTone === "ink"
-          ? "ink"
-          : "yellow";
-    setNavSurface(initialTone);
-    activeTone = initialTone;
-    if (pill) setCompact(window.scrollY > COMPACT_AFTER);
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    const mobileNav = document.querySelector<HTMLDetailsElement>("[data-mobile-nav]");
-    const closeMobileNav = () => {
-      if (mobileNav) mobileNav.open = false;
-    };
-    document.querySelectorAll("[data-mobile-nav-link]").forEach((link) => {
-      link.addEventListener("click", closeMobileNav);
-    });
-
-    return () => {
-      observer?.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("puff:nav-tone", onToneSync);
-      document.querySelectorAll("[data-mobile-nav-link]").forEach((link) => {
-        link.removeEventListener("click", closeMobileNav);
-      });
-    };
-  }
-
-  let cleanup: (() => void) | undefined;
-
-  const boot = () => {
-    cleanup?.();
-    cleanup = initSmartNav();
-  };
-
-  document.addEventListener("astro:page-load", boot);
-  document.addEventListener("astro:before-swap", () => {
-    cleanup?.();
-    cleanup = undefined;
-  });
+  bootSmartNav();
 </script>

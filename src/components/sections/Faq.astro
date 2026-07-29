@@ -2,127 +2,15 @@
 import { landingContent } from "../../content/landing";
 import PuffSticker from "../ui/PuffSticker.astro";
 import faqLoop from "../../assets/images/faq.webm";
+import "../../styles/sections/faq.css";
 
 const { heading, items } = landingContent.faq.value;
 ---
 
-<style>
-  .faq-item {
-    border-radius: 1rem;
-    transition:
-      background-color 0.5s ease,
-      border-color 0.5s ease,
-      border-radius 0.5s ease,
-      padding 0.5s ease,
-      margin 0.5s ease,
-      box-shadow 0.5s ease;
-  }
-  .faq-item:not(.is-active):hover {
-    background-color: rgb(26 26 26 / 0.04);
-  }
-  @media (min-width: 768px) {
-    .faq-item:not(.is-active):hover {
-      background-color: rgb(26 26 26 / 0.05);
-    }
-  }
-  .faq-item.is-active {
-    background-color: var(--color-ink);
-    border-color: transparent;
-    border-radius: 1.25rem;
-    margin-block: 0.5rem;
-    padding: 0.25rem 1.25rem 0.5rem;
-    overflow: hidden;
-    box-shadow: 0 14px 36px -12px rgb(26 26 26 / 0.45);
-  }
-  @media (min-width: 768px) {
-    .faq-item.is-active {
-      border-radius: 1.5rem;
-      padding: 0.5rem 2rem 0.75rem;
-    }
-  }
-  .faq-content-wrapper {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-  }
-  .faq-item.is-active .faq-content-wrapper {
-    grid-template-rows: 1fr;
-  }
-  .faq-content {
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-8px);
-    transition: opacity 0.4s cubic-bezier(0.65, 0, 0.35, 1), transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
-    transition-delay: 0s;
-  }
-  .faq-item.is-active .faq-content {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.15s;
-  }
-  .faq-layout {
-    position: relative;
-  }
-  .faq-container {
-    position: relative;
-    width: 100%;
-    max-width: 48rem;
-    margin-inline: auto;
-    padding-inline: 0.25rem;
-  }
-  .faq-header-sticker {
-    padding: 0.55rem 1.35rem;
-    font-size: clamp(1rem, 2.4vw, 1.35rem);
-  }
-  /* Overlay on top of tiles — no layout space */
-  .faq-media {
-    position: absolute;
-    right: -1.5rem;
-    bottom: -1rem;
-    z-index: 30;
-    width: auto;
-    margin: 0;
-    pointer-events: none;
-  }
-  .faq-media video {
-    width: 13rem;
-    height: auto;
-    display: block;
-    background: transparent;
-  }
-  @media (min-width: 768px) {
-    .faq-media {
-      right: -2.25rem;
-      bottom: -1.25rem;
-    }
-    .faq-media video {
-      width: 16rem;
-    }
-  }
-  @media (min-width: 1024px) {
-    .faq-media {
-      right: -3.5rem;
-      bottom: -1.5rem;
-    }
-    .faq-media video {
-      width: 19rem;
-    }
-  }
-  @media (min-width: 1280px) {
-    .faq-media {
-      right: -4.25rem;
-      bottom: -1.75rem;
-    }
-    .faq-media video {
-      width: 20rem;
-    }
-  }
-</style>
-
 <section
   id="faq"
   data-nav-tone="yellow"
-  class="relative w-full bg-brand-yellow flex flex-col pt-24 pb-12 overflow-x-clip"
+  class="relative w-full bg-brand-yellow flex flex-col pt-24 pb-12"
 >
   
   <!-- Header Area -->
@@ -152,23 +40,24 @@ const { heading, items } = landingContent.faq.value;
     <div class="faq-container flex flex-col">
       {items.map((item) => (
         <div class="faq-item group border-b border-ink/25 last:border-b-0 cursor-pointer">
-          <div class="faq-trigger flex items-center justify-center gap-3 md:gap-6 py-6 md:py-9 px-2 md:px-4 transition-colors duration-500 hover:bg-ink/5 group-[.is-active]:hover:bg-transparent w-full text-center rounded-[inherit]">
-            
-            <div class="flex-shrink-0 flex items-center text-ink group-[.is-active]:text-brand-yellow transition-colors transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-[.is-active]:rotate-90">
+          <div class="faq-trigger flex items-center justify-center py-6 md:py-9 px-2 md:px-4 transition-colors duration-500 hover:bg-ink/5 group-[.is-active]:hover:bg-transparent w-full text-center rounded-[inherit]">
+            <div class="faq-trigger-row">
+            <div class="faq-trigger-icon flex-shrink-0 flex items-center text-ink group-[.is-active]:text-brand-yellow transition-colors transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-[.is-active]:rotate-90">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 md:w-7 md:h-7">
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
               </svg>
             </div>
             
-            <h3 class="font-body text-2xl md:text-4xl lg:text-[2.5rem] font-bold tracking-normal text-ink group-[.is-active]:text-brand-yellow transition-colors duration-500 leading-tight">
+            <h3 class="faq-trigger-question font-body text-2xl md:text-4xl lg:text-[2.5rem] font-bold tracking-normal text-ink group-[.is-active]:text-brand-yellow transition-colors duration-500 leading-tight">
               {item.question}
             </h3>
               
-            <div class="w-6 h-6 md:w-8 md:h-8 flex-shrink-0 flex items-center justify-center text-ink group-[.is-active]:text-brand-yellow transition-colors transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-[.is-active]:rotate-90">
+            <div class="faq-trigger-icon w-6 h-6 md:w-8 md:h-8 flex-shrink-0 flex items-center justify-center text-ink group-[.is-active]:text-brand-yellow transition-colors transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-[.is-active]:rotate-90">
               <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
                 <path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z"></path>
               </svg>
+            </div>
             </div>
 
           </div>
@@ -203,43 +92,8 @@ const { heading, items } = landingContent.faq.value;
 </section>
 
 <script>
-  function initFaqLoop() {
-    const video = document.querySelector('[data-faq-loop]');
-    if (!(video instanceof HTMLVideoElement)) return;
-    video.playbackRate = 0.62;
-    const play = () => {
-      video.play().catch(() => {});
-    };
-    if (video.readyState >= 2) play();
-    else video.addEventListener('loadeddata', play, { once: true });
-  }
+  import { initFaq } from "../../scripts/faq-accordion";
 
-  function initFaq() {
-    initFaqLoop();
-    const items = document.querySelectorAll('.faq-item');
-    items.forEach(item => {
-      const trigger = item.querySelector('.faq-trigger');
-      if (trigger) {
-        // Asegurar de no agregar event listener múltiples veces
-        trigger.replaceWith(trigger.cloneNode(true));
-        const newTrigger = item.querySelector('.faq-trigger');
-        
-        if (newTrigger) {
-          newTrigger.addEventListener('click', () => {
-            const isActive = item.classList.contains('is-active');
-            // Acordeón único: cerramos los demás
-            items.forEach(i => i.classList.remove('is-active'));
-            // Alternar estado actual
-            if (!isActive) {
-              item.classList.add('is-active');
-            }
-          });
-        }
-      }
-    });
-  }
-
-  // Inicializar al cargar (soporte para transiciones cliente y recargas duras)
-  document.addEventListener('astro:page-load', initFaq);
-  document.addEventListener('DOMContentLoaded', initFaq);
+  initFaq();
+  document.addEventListener("astro:page-load", initFaq);
 </script>

@@ -101,64 +101,8 @@ import PuffSticker from "../ui/PuffSticker.astro";
   }
 </style>
 
-<script is:inline>
-  (function (C, A, L) {
-    var p = function (a, ar) { a.q.push(ar); };
-    var d = C.document;
-    C.Cal =
-      C.Cal ||
-      function () {
-        var cal = C.Cal;
-        var ar = arguments;
-        if (!cal.loaded) {
-          cal.ns = {};
-          cal.q = cal.q || [];
-          d.head.appendChild(d.createElement("script")).src = A;
-          cal.loaded = true;
-        }
-        if (ar[0] === L) {
-          var api = function () { p(api, arguments); };
-          var namespace = ar[1];
-          api.q = api.q || [];
-          if (typeof namespace === "string") {
-            cal.ns[namespace] = cal.ns[namespace] || api;
-            p(cal.ns[namespace], ar);
-            p(cal, ["initNamespace", namespace]);
-          } else {
-            p(cal, ar);
-          }
-          return;
-        }
-        p(cal, ar);
-      };
-  })(window, "https://app.cal.com/embed/embed.js", "init");
+<script>
+  import { setupCalEmbed } from "../../scripts/cal-embed";
 
-  function initCalModal() {
-    Cal("init", { origin: "https://cal.com" });
-
-    Cal("ui", {
-      theme: "dark",
-      layout: "month_view",
-      hideEventTypeDetails: false,
-      styles: { branding: { brandColor: "#ffd100" } },
-      cssVarsPerTheme: {
-        dark: {
-          "cal-brand": "#ffd100",
-          "cal-brand-text": "#1a1a1a",
-          "cal-brand-emphasis": "#e6bc00",
-          "cal-bg": "#1a1a1a",
-          "cal-bg-emphasis": "#2c2c2c",
-          "cal-bg-subtle": "#242424",
-          "cal-text": "#ffffff",
-          "cal-text-emphasis": "#ffffff",
-          "cal-text-subtle": "#ffffffb3",
-          "cal-border-booker": "#ffffff1a",
-          "cal-border": "#ffffff1a",
-          radius: "1rem",
-        },
-      },
-    });
-  }
-
-  document.addEventListener("astro:page-load", initCalModal);
+  document.addEventListener("astro:page-load", setupCalEmbed);
 </script>
