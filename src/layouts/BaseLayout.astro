@@ -19,22 +19,31 @@ const {
   title = landingContent.metadata.title,
 } = Astro.props;
 
+const FONT_URL =
+  "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap";
+
 const pageTitle = title === needsClientInput ? "Puff Cross Media" : title;
 ---
-
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffd100" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href={FONT_URL} />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap"
+      href={FONT_URL}
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link href={FONT_URL} rel="stylesheet" />
+    </noscript>
     <ClientRouter />
   </head>
   <body class="bg-brand-yellow text-ink antialiased">
@@ -51,20 +60,9 @@ const pageTitle = title === needsClientInput ? "Puff Cross Media" : title;
     <SiteFooter />
 
     <script>
-      // Ensures hash anchors (e.g. #work) land on target element after GSAP & ScrollTrigger settle layout
-      document.addEventListener("astro:page-load", () => {
-        if (window.location.hash) {
-          const targetId = window.location.hash.replace("#", "");
-          const el = document.getElementById(targetId);
-          if (el) {
-            requestAnimationFrame(() => {
-              setTimeout(() => {
-                el.scrollIntoView({ behavior: "instant" });
-              }, 60);
-            });
-          }
-        }
-      });
+      import { initHashScroll } from "../scripts/hash-scroll";
+
+      initHashScroll();
     </script>
   </body>
 </html>

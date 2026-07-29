@@ -19,6 +19,8 @@ Thumbs.db
 
 # Probe / temp assets
 src/assets/images/_faq-*
+lighthouse*.json
+.tmp/
 
 # Vercel
 .vercel
