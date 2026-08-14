@@ -1,0 +1,145 @@
+---
+// src/components/ui/Preloader.astro
+---
+
+<div id="puff-preloader" class="fixed inset-0 z-[100] flex bg-transparent" aria-hidden="true">
+  {
+    Array.from({ length: 5 }).map((_, i) => (
+      <div class="preloader-col relative h-full w-1/5 overflow-hidden bg-ink">
+        <div
+          class="absolute bottom-0 grid place-items-center translate-y-[20%] -translate-x-[2%]"
+          style={`width: 100vw; left: -${i * 20}vw;`}
+        >
+          <!-- Outline SVG -->
+          <svg class="preloader-logo-outline col-start-1 row-start-1 w-[110vw] text-brand-yellow" viewBox="0 0 71.07 24" fill="none" stroke="currentColor" stroke-width="0.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M62.03,14.71v.72l-5.71-.78v-5.61l5.71-.79v1.83h7.17v4.66l-7.17-.03ZM62.03,16.07l-5.71-.94v4.43l5.71,2.01v-5.5ZM44.73,22.69h1.15v-7.72h7.17v-.08l-12.88-2.11v4.6l4.56,5.31ZM51.58,1.03h-11.85v8.08L51.58,1.03ZM18.86,11.17v1.3c-.09,2.18.32,4.35,1.18,6.36l5.12-2.09c-.46-1.15-.66-2.39-.59-3.63v-1.6l-5.71-.35ZM37.29,7.58V1.24h-3.54l3.54,6.34ZM40.37,12.13l12.88,1.76v-4.2h-7.15v-4.02h7.49l.91-.33V1.01h-.79l-13.29,8.13-.04,2.99ZM56.31,8.59l5.71-1.01v-1.72h8.37V1.19h-1.56l-12.5,3.95v3.45ZM55.74,4.63l9.75-3.58h-9.73v3.58ZM6.47,21.81l-2.73.88h2.74v-.88ZM19.32,10.68l5.71.51v-4.47l-5.71-2.7v6.66ZM33.14,1.58h-1.33v11.53c0,3.76-1.06,5.12-3.33,5.12-.51.05-1.03-.05-1.49-.28-.46-.23-.84-.59-1.09-1.02l-4.98,2.28c1.41,2.57,3.93,3.8,7.59,3.8h.57l2.44-3.47-2.11,3.45c5.42-.33,7.93-3.71,7.93-10.53v-4.41l-4.19-6.47ZM55.91,20.02v2.51h5.71v-.19l-5.71-2.32ZM24.91,6.24V1.18h-5.71v2.01l5.71,3.05ZM39.77,17.29v5.2h3.89l-3.89-5.2ZM.43,8.79l5.71.51v-3.74h1.93c2.19,0,3.45.72,3.45,2.6.02.55-.11,1.1-.36,1.6l5.67.51c.18-.69.26-1.4.26-2.11.01-.88-.12-1.76-.39-2.6L2.04,1.16H.38l.05,7.64ZM6.54,15.73h2.33c1.67.03,3.32-.33,4.82-1.03l-12.86,1.83v5.85h.26l5.45-1.53v-5.12ZM17.1,5.41C15.97,2.12,12.57,1,8.73,1h-3.62l11.99,4.41ZM16.75,10.78l-5.89-.39c-.35.34-.77.6-1.23.76-.46.16-.95.22-1.44.18h-2.06v-1.24l-5.71-.38v5.85l13.33-1.11c1.41-.82,2.46-2.12,2.95-3.65l.05-.02Z"/>
+          </svg>
+          <!-- Filled SVG (starts hidden via clip-path) -->
+          <svg class="preloader-logo-fill col-start-1 row-start-1 w-[110vw] text-brand-yellow" viewBox="0 0 71.07 24" fill="currentColor" stroke="none" style="clip-path: inset(100% 0 0 0);">
+            <path d="M62.03,14.71v.72l-5.71-.78v-5.61l5.71-.79v1.83h7.17v4.66l-7.17-.03ZM62.03,16.07l-5.71-.94v4.43l5.71,2.01v-5.5ZM44.73,22.69h1.15v-7.72h7.17v-.08l-12.88-2.11v4.6l4.56,5.31ZM51.58,1.03h-11.85v8.08L51.58,1.03ZM18.86,11.17v1.3c-.09,2.18.32,4.35,1.18,6.36l5.12-2.09c-.46-1.15-.66-2.39-.59-3.63v-1.6l-5.71-.35ZM37.29,7.58V1.24h-3.54l3.54,6.34ZM40.37,12.13l12.88,1.76v-4.2h-7.15v-4.02h7.49l.91-.33V1.01h-.79l-13.29,8.13-.04,2.99ZM56.31,8.59l5.71-1.01v-1.72h8.37V1.19h-1.56l-12.5,3.95v3.45ZM55.74,4.63l9.75-3.58h-9.73v3.58ZM6.47,21.81l-2.73.88h2.74v-.88ZM19.32,10.68l5.71.51v-4.47l-5.71-2.7v6.66ZM33.14,1.58h-1.33v11.53c0,3.76-1.06,5.12-3.33,5.12-.51.05-1.03-.05-1.49-.28-.46-.23-.84-.59-1.09-1.02l-4.98,2.28c1.41,2.57,3.93,3.8,7.59,3.8h.57l2.44-3.47-2.11,3.45c5.42-.33,7.93-3.71,7.93-10.53v-4.41l-4.19-6.47ZM55.91,20.02v2.51h5.71v-.19l-5.71-2.32ZM24.91,6.24V1.18h-5.71v2.01l5.71,3.05ZM39.77,17.29v5.2h3.89l-3.89-5.2ZM.43,8.79l5.71.51v-3.74h1.93c2.19,0,3.45.72,3.45,2.6.02.55-.11,1.1-.36,1.6l5.67.51c.18-.69.26-1.4.26-2.11.01-.88-.12-1.76-.39-2.6L2.04,1.16H.38l.05,7.64ZM6.54,15.73h2.33c1.67.03,3.32-.33,4.82-1.03l-12.86,1.83v5.85h.26l5.45-1.53v-5.12ZM17.1,5.41C15.97,2.12,12.57,1,8.73,1h-3.62l11.99,4.41ZM16.75,10.78l-5.89-.39c-.35.34-.77.6-1.23.76-.46.16-.95.22-1.44.18h-2.06v-1.24l-5.71-.38v5.85l13.33-1.11c1.41-.82,2.46-2.12,2.95-3.65l.05-.02Z"/>
+          </svg>
+        </div>
+      </div>
+    ))
+  }
+
+  <!-- Counter -->
+  <div
+    class="preloader-counter-container absolute top-6 right-6 z-[110] font-display text-6xl font-black text-transparent md:top-8 md:right-12 md:text-8xl lg:text-9xl xl:text-[10rem]"
+    style="-webkit-text-stroke: 2.5px #ffd100;"
+  >
+    <span id="preloader-counter">0</span>%
+  </div>
+</div>
+
+<script>
+  import gsap from "gsap";
+
+  function initPreloader() {
+    const preloader = document.getElementById("puff-preloader");
+    const counterEl = document.getElementById("preloader-counter");
+    if (!preloader || !counterEl) return;
+
+    // Only run preloader on main landing page ("/")
+    const isLanding = window.location.pathname === "/" || window.location.pathname === "";
+    const hasSeenPreloader = sessionStorage.getItem("puff_preloader_seen");
+
+    if (!isLanding || hasSeenPreloader) {
+      preloader.style.display = "none";
+      document.body.style.overflow = "";
+      return;
+    }
+
+    // Lock scroll to prevent users from scrolling while loading
+    document.body.style.overflow = "hidden";
+    
+    // Set up SVG stroke animation
+    const paths = document.querySelectorAll(".preloader-logo-outline path");
+    paths.forEach((p) => {
+      const path = p as SVGPathElement;
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = `${length + 10}`;
+      path.style.strokeDashoffset = `${length + 10}`;
+    });
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        document.body.style.overflow = "";
+        preloader.style.display = "none";
+        sessionStorage.setItem("puff_preloader_seen", "true");
+        document.dispatchEvent(new CustomEvent("preloader:complete"));
+      },
+    });
+
+    const counterObj = { value: 0 };
+
+    // 0. Animate Counter 0 to 100 (fast loading)
+    tl.to(
+      counterObj,
+      {
+        value: 100,
+        duration: 1.0, // Numbers load fast
+        ease: "power2.out",
+        onUpdate: () => {
+          counterEl.innerText = Math.round(counterObj.value).toString();
+        },
+      },
+      0 // Start at time 0
+    )
+    // 1. Draw outline (slow like original)
+    .to(
+      ".preloader-logo-outline path",
+      {
+        strokeDashoffset: 0,
+        duration: 1.6,
+        ease: "power2.inOut",
+      },
+      0
+    )
+    // 2. Fill the logo from bottom to top (slow like original)
+    .to(
+      ".preloader-logo-fill",
+      {
+        clipPath: "inset(0% 0 0 0)",
+        duration: 1.2,
+        ease: "power2.inOut",
+      },
+      "-=0.4"
+    )
+    // 3. Hide the outline stroke as the fill completes
+    .to(
+      ".preloader-logo-outline",
+      {
+        opacity: 0,
+        duration: 0.4,
+      },
+      "-=0.4"
+    )
+    // 4. Pause for a split second
+    .to({}, { duration: 0.25 })
+    // 5. Stagger columns sliding up (slow and graceful)
+    .to(
+      ".preloader-col",
+      {
+        yPercent: -100,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power4.inOut",
+      }
+    )
+    // Slide the counter away with the columns
+    .to(
+      ".preloader-counter-container",
+      {
+        yPercent: -100,
+        opacity: 0,
+        duration: 1.0,
+        ease: "power4.inOut",
+      },
+      "-=1.2" // Sync with columns
+    );
+  }
+
+  // Use Astro's page-load event to ensure it runs on initial landing load
+  document.addEventListener("astro:page-load", initPreloader);
+</script>

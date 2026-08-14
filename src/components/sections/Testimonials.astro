@@ -1,16 +1,14 @@
 ---
+import { Image } from "astro:assets";
 import bulbSticker from "../../assets/images/stickers/bulb.webp";
 import FloatingSticker from "../ui/FloatingSticker.astro";
 import PuffSticker from "../ui/PuffSticker.astro";
-import {
-  testimonials,
-  testimonialLogosRow1,
-  testimonialLogosRow2,
-} from "../../content/testimonials";
+import { testimonials } from "../../content/testimonials";
+import { clientLogosRow1, clientLogosRow2 } from "../../content/clientLogos";
 import "../../styles/sections/testimonials.css";
 
-const logosRow1 = [...testimonialLogosRow1];
-const logosRow2 = [...testimonialLogosRow2];
+const logosRow1 = [...clientLogosRow1, ...clientLogosRow1];
+const logosRow2 = [...clientLogosRow2, ...clientLogosRow2];
 ---
 
 <section
@@ -39,41 +37,57 @@ const logosRow2 = [...testimonialLogosRow2];
   <!-- Card stage: marquees sit behind the centered testimonial card -->
   <div class="relative isolate mt-4 md:mt-8">
     <div
-      class="pointer-events-none absolute inset-0 z-0 flex flex-col justify-center gap-8 opacity-25 md:gap-14 md:opacity-20"
+      class="pointer-events-none absolute inset-0 z-0 flex flex-col justify-center gap-8 md:gap-14"
       aria-hidden="true"
     >
       <!-- Logo Row 1 (Left to Right) -->
       <div class="flex overflow-hidden whitespace-nowrap select-none">
-        <div class="marquee-content flex shrink-0 items-center gap-16 pr-16 animate-marquee-slow">
-          {logosRow1.concat(logosRow1).map((logo) => (
-            <span class="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-charcoal">
-              {logo}
-            </span>
+        <div class="marquee-content flex shrink-0 items-center gap-10 pr-10 md:gap-12 md:pr-12 animate-marquee-slow">
+          {logosRow1.map((item) => (
+            <Image
+              src={item.image}
+              alt=""
+              class="h-12 w-auto max-w-[11rem] object-contain md:h-16 md:max-w-[14rem] opacity-35 grayscale contrast-110"
+              loading="lazy"
+              decoding="async"
+            />
           ))}
         </div>
-        <div class="marquee-content flex shrink-0 items-center gap-16 pr-16 animate-marquee-slow">
-          {logosRow1.concat(logosRow1).map((logo) => (
-            <span class="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-charcoal">
-              {logo}
-            </span>
+        <div class="marquee-content flex shrink-0 items-center gap-10 pr-10 md:gap-12 md:pr-12 animate-marquee-slow">
+          {logosRow1.map((item) => (
+            <Image
+              src={item.image}
+              alt=""
+              class="h-12 w-auto max-w-[11rem] object-contain md:h-16 md:max-w-[14rem] opacity-35 grayscale contrast-110"
+              loading="lazy"
+              decoding="async"
+            />
           ))}
         </div>
       </div>
 
       <!-- Logo Row 2 (Right to Left) -->
       <div class="flex overflow-hidden whitespace-nowrap select-none">
-        <div class="marquee-content flex shrink-0 items-center gap-16 pr-16 animate-marquee-slow-reverse">
-          {logosRow2.concat(logosRow2).map((logo) => (
-            <span class="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-charcoal">
-              {logo}
-            </span>
+        <div class="marquee-content flex shrink-0 items-center gap-10 pr-10 md:gap-12 md:pr-12 animate-marquee-slow-reverse">
+          {logosRow2.map((item) => (
+            <Image
+              src={item.image}
+              alt=""
+              class="h-12 w-auto max-w-[11rem] object-contain md:h-16 md:max-w-[14rem] opacity-35 grayscale contrast-110"
+              loading="lazy"
+              decoding="async"
+            />
           ))}
         </div>
-        <div class="marquee-content flex shrink-0 items-center gap-16 pr-16 animate-marquee-slow-reverse">
-          {logosRow2.concat(logosRow2).map((logo) => (
-            <span class="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-charcoal">
-              {logo}
-            </span>
+        <div class="marquee-content flex shrink-0 items-center gap-10 pr-10 md:gap-12 md:pr-12 animate-marquee-slow-reverse">
+          {logosRow2.map((item) => (
+            <Image
+              src={item.image}
+              alt=""
+              class="h-12 w-auto max-w-[11rem] object-contain md:h-16 md:max-w-[14rem] opacity-35 grayscale contrast-110"
+              loading="lazy"
+              decoding="async"
+            />
           ))}
         </div>
       </div>
@@ -154,16 +168,11 @@ const logosRow2 = [...testimonialLogosRow2];
 </section>
 
 <script>
-  import { whenIdle } from "../../scripts/defer-idle";
-  import { teardownTestimonials } from "../../scripts/testimonials-carousel";
+  import {
+    setupTestimonials,
+    teardownTestimonials,
+  } from "../../scripts/testimonials-carousel";
 
-  const boot = () => {
-    whenIdle(async () => {
-      const { setupTestimonials } = await import("../../scripts/testimonials-carousel");
-      await setupTestimonials();
-    });
-  };
-
-  document.addEventListener("astro:page-load", boot);
+  document.addEventListener("astro:page-load", setupTestimonials);
   document.addEventListener("astro:before-swap", teardownTestimonials);
 </script>

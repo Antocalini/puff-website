@@ -4,9 +4,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   output: "static",
-  build: {
-    inlineStylesheets: "always",
-  },
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],

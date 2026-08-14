@@ -1,0 +1,40 @@
+---
+import type { TypographyMedia } from "../../content/projects";
+
+type Props = {
+  item: TypographyMedia;
+  class?: string;
+  parallax?: boolean;
+};
+
+const { item, class: className, parallax = true } = Astro.props;
+
+const ratioClass = {
+  landscape: "aspect-[16/10]",
+  portrait: "aspect-[9/16]",
+  square: "aspect-square",
+  wide: "aspect-[21/9]",
+  standard: "aspect-[4/3]",
+}[item.ratio];
+---
+
+<figure
+  class:list={["case-media group relative w-full overflow-hidden bg-paper rounded-2xl", className]}
+  data-parallax-container={parallax ? "" : undefined}
+>
+  <div class:list={[ratioClass, "relative w-full overflow-hidden flex flex-col justify-center items-center p-8 md:p-12 text-ink"]}>
+    
+    <div class="text-center">
+      <span class="font-label text-xs font-bold uppercase tracking-widest text-ink/40 mb-2 block">
+        Font Family
+      </span>
+      <h3 class:list={["text-5xl md:text-7xl font-bold tracking-tight", item.fontFamily]}>
+        {item.fontName}
+      </h3>
+    </div>
+    
+    <div class:list={["mt-8 text-center break-words max-w-sm text-3xl md:text-5xl leading-tight", item.fontFamily]}>
+      {item.sampleText || "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz"}
+    </div>
+  </div>
+</figure>

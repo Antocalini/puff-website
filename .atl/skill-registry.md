@@ -42,6 +42,7 @@ Phase: **PLANNING** (skills + boundaries only)
 | `ui-ux-pro-max` | nextlevelbuilder/ui-ux-pro-max-skill | UI structure, color, typography, layout, a11y | `.agents/skills/ui-ux-pro-max/SKILL.md` | ⚠️ Gen: High Risk |
 | `design-taste-frontend` | leonxlnx/taste-skill | Landing/redesign anti-slop, brief inference | `.agents/skills/design-taste-frontend/SKILL.md` | Safe |
 | `high-end-visual-design` | leonxlnx/taste-skill | Visual polish, motion, premium layouts | `.agents/skills/high-end-visual-design/SKILL.md` | Safe |
+| `copywriting` | local/daas | Landing page copy, hooks, CTAs, conversion | `.agents/skills/copywriting/SKILL.md` | Safe |
 
 ## Cuándo cargar cada imported skill
 

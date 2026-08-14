@@ -1,14 +1,64 @@
-export type CaseMediaRatio = "landscape" | "portrait" | "square" | "wide";
-export type CaseMediaSpan = "full" | "half" | "third";
+import type { ImageMetadata } from "astro";
 
-export type CaseMedia = {
+import epaBurguerThumb from "../assets/images/epa-burguer-thumbnail.webp";
+import epaBurguerTakeawayBox from "../assets/images/projects/epa-burguer/epa-burguer-takeaway-box.webp";
+import epaBurguerStreetVibe from "../assets/images/projects/epa-burguer/epa-burguer-street-vibe.webp";
+import epaBurguerStorefront from "../assets/images/projects/epa-burguer/epa-burguer-storefront.webp";
+import epaBurguerPackaging from "../assets/images/projects/epa-burguer/epa-burguer-packaging.webp";
+import epaBurguerLogo from "../assets/images/logos/epa-burguer-logo.png";
+import ogiThumb from "../assets/images/ogi-thumbnail.webp";
+import ogiLogo from "../assets/images/logos/ogi-logo.png";
+import ogiBox from "../assets/images/projects/ogi/ogi-box.webp";
+import ogiMatcha from "../assets/images/projects/ogi/ogi-matcha.webp";
+import ogiPlace from "../assets/images/projects/ogi/ogi-place.webp";
+import ravagoThumb from "../assets/images/ravago-thumbnail.webp";
+import ravagoLogo from "../assets/images/logos/ravago-logo.png";
+import ravagoCorporateKit from "../assets/images/projects/ravago/ravago-corporate-kit.webp";
+import ravagoBrandIdentity from "../assets/images/projects/ravago/ravago-brand-identity.webp";
+import ravagoCollateral from "../assets/images/projects/ravago/ravago-collateral.webp";
+import ravagoStickerMockup from "../assets/images/projects/ravago/ravago-sticker-mockup.webp";
+import spanishFlowersThumb from "../assets/images/spanish-flowers-thumbnail.webp";
+import spanishFlowersLogo from "../assets/images/logos/spanish-flowers-logo.png";
+import spanishFlowersPackaging from "../assets/images/spanish-flowers-packaging.png";
+import spanishSign from "../assets/images/projects/spanish/spanish-sign.webp";
+import spanishCard from "../assets/images/projects/spanish/spanish-card.webp";
+import spanishStickers from "../assets/images/projects/spanish/spanish-stickers.webp";
+import spanishTshirt from "../assets/images/projects/spanish/spanish-tshirt.webp";
+
+export type CaseMediaRatio = "landscape" | "portrait" | "square" | "wide" | "standard";
+export type CaseMediaSpan = "full" | "half" | "third";
+export type CaseMediaPosition = "bottom" | "center" | "top" | "upper";
+
+export type BaseCaseMedia = {
   label: string;
   ratio: CaseMediaRatio;
   span?: CaseMediaSpan;
+  position?: CaseMediaPosition;
+};
+
+export type ImageMedia = BaseCaseMedia & {
+  type?: "image";
   /** Approved asset path; omit until client provides media. */
   src?: string;
   alt?: string;
 };
+
+export type ColorPaletteMedia = BaseCaseMedia & {
+  type: "color-palette";
+  colors: { name: string; hex: string; textClass?: string }[];
+  logoSrc?: string;
+  logoBgHex?: string;
+  logoWhite?: boolean;
+};
+
+export type TypographyMedia = BaseCaseMedia & {
+  type: "typography";
+  fontFamily: string;
+  fontName: string;
+  sampleText?: string;
+};
+
+export type CaseMedia = ImageMedia | ColorPaletteMedia | TypographyMedia;
 
 export type Project = {
   slug: string;
@@ -23,250 +73,223 @@ export type Project = {
   solution: string;
   outcome: string;
   deliverables: readonly string[];
+  statement?: string;
   gallery: readonly CaseMedia[];
   bg: string;
   textColor: string;
   svgColor: string;
   accentColor: string;
   aspect: string;
+  thumbnail: ImageMetadata;
 };
 
 export const projects: readonly Project[] = [
   {
-    slug: "brand-identity-system",
+    slug: "epa-burguer-branding",
     number: "01",
-    title: "BRAND IDENTITY & SYSTEM",
-    category: "Branding",
-    client: "Nexa Tech Solutions",
+    title: "EPA BURGUER BRANDING",
+    category: "Packaging & Street Collateral",
+    client: "Epa Burguer",
     year: "2025",
     summary:
-      "Complete visual identity rebrand, design system, and brand guidelines for a next-gen fintech scaleup.",
+      "Custom takeaway packaging boxes, greaseproof burger wrapping paper, outdoor food truck signage graphics, and branded napkin prints designed for Katy, Texas' premier Venezuelan street food spot.",
     overview:
-      "Nexa was ready to move past a safe corporate look. We rebuilt their visual language from the ground up—wordmark, type system, color, and modular assets—so every touchpoint feels sharp, energetic, and unmistakably theirs.",
+      "Epa Burguer is a high-energy Venezuelan street food truck operating in Katy, Texas, famous for its heavy-loaded smash burgers, pepitos, and street-style Arepas. They required custom physical design collateral built to withstand high-volume kitchen service and takeaway delivery. We engineered print-ready packaging assets including heavy-duty cardboard burger boxes, custom greaseproof wrapping paper, high-visibility food truck exterior vinyl signage, and two-color printed napkins that make every order look impressive right out of the bag.",
     challenge:
-      "Nexa needed a bold, memorable visual identity that stood out in a sea of generic corporate blues, establishing immediate authority and energy across global markets.",
+      "Designing food packaging and outdoor street collateral that can handle high heat, moisture, and grease from fresh smash burgers while keeping colors crisp, typography legible, and print costs efficient for daily food truck operations.",
     solution:
-      "We engineered a dynamic visual system powered by high-contrast typography, modular geometric assets, and a vibrant color palette that scales effortlessly across physical and digital touchpoints.",
+      "We developed custom food-safe grease-resistant print layouts, high-contrast takeaway box structures, and weatherproof vinyl graphics for the truck exterior. Every piece was built using high-visibility typography and vibrant color blocks that stand out in outdoor lighting and on social media unboxing videos.",
     outcome:
-      "A cohesive brand kit the team can ship from—guidelines, tokens, and asset libraries that keep campaigns, product UI, and sales decks in lockstep without reinventing the wheel each launch.",
+      "Delivered a complete, production-ready suite of packaging assets and physical collateral that streamlined food assembly, enhanced order presentation, and increased organic customer shares across social platforms.",
     deliverables: [
-      "Visual Identity",
-      "Brand Strategy",
-      "Design System",
-      "Brand Guidelines",
-      "Asset Library",
+      "Takeaway Packaging Boxes",
+      "Greaseproof Wrapping Paper",
+      "Food Truck Exterior Signage",
+      "Custom Printed Napkins",
     ],
     gallery: [
-      { label: "Cover — Brand mark", ratio: "wide", span: "full" },
-      { label: "Logo lockup", ratio: "landscape", span: "half" },
-      { label: "Wordmark study", ratio: "portrait", span: "half" },
-      { label: "Color system", ratio: "square", span: "third" },
-      { label: "Type specimens", ratio: "square", span: "third" },
-      { label: "Iconography set", ratio: "square", span: "third" },
-      { label: "Guidelines spread", ratio: "landscape", span: "half" },
-      { label: "Stationery kit", ratio: "landscape", span: "half" },
+      { label: "Cover — Takeaway Collateral", ratio: "standard", span: "full", src: epaBurguerThumb.src },
+      {
+        label: "Color Palette & Print Specs",
+        ratio: "wide",
+        span: "full",
+        type: "color-palette",
+        logoSrc: epaBurguerLogo.src,
+        logoBgHex: "#DC2626",
+        logoWhite: true,
+        colors: [
+          { name: "Spicy Red", hex: "#DC2626", textClass: "text-white" },
+          { name: "Burger Bun", hex: "#F59E0B", textClass: "text-ink" },
+          { name: "Charcoal", hex: "#1D1D1D", textClass: "text-white" },
+          { name: "Paper", hex: "#F5F5F5", textClass: "text-ink" },
+        ],
+      },
+      { label: "Takeaway Packaging Box", ratio: "landscape", span: "full", src: epaBurguerTakeawayBox.src },
+      { label: "In-Store & Street Collateral", ratio: "wide", span: "full", src: epaBurguerStreetVibe.src },
+      { label: "Storefront Signage Application", ratio: "wide", span: "full", src: epaBurguerStorefront.src },
+      { label: "Brand Packaging & Napkin Details", ratio: "portrait", span: "full", position: "bottom", src: epaBurguerPackaging.src },
     ],
-    bg: "bg-brand-yellow",
-    textColor: "text-charcoal",
-    svgColor: "text-paper",
-    accentColor: "#FFD100",
+    bg: "bg-red-600",
+    textColor: "text-paper",
+    svgColor: "text-amber-500",
+    accentColor: "#DC2626",
     aspect: "aspect-[4/3]",
+    thumbnail: epaBurguerThumb,
   },
   {
-    slug: "web-product-design",
+    slug: "ogi-visual-identity",
     number: "02",
-    title: "WEB & PRODUCT DESIGN",
-    category: "Digital",
-    client: "Kroma Studio",
+    title: "OGI BRAND EXPERIENCE",
+    category: "Product Packaging & Merch",
+    client: "OGI",
     year: "2025",
     summary:
-      "High-converting web experience and design architecture crafted for an AI creative suite.",
+      "Structural paper delivery bags, waterproof iced matcha cup labels, bakery packaging wraps, and spatial signage mockups for OGI Coffee, Gelato & Bakery in Texas.",
     overview:
-      "Kroma needed a site that felt like the product: fast, tactile, and premium. We designed the information architecture, UI system, and interactive walkthroughs that turn curiosity into demos.",
+      "OGI Coffee, Gelato & Bakery is an artisanal Texas café concept that combines Japanese minimalist aesthetics with specialty coffee, house-made gelatos, and fresh baked goods. We designed a comprehensive collection of physical packaging assets and spatial collateral pieces. This included custom structural paper delivery bags, waterproof container labels for their signature iced matcha line, bakery tissue wraps, and physical store placement signage that unifies the takeaway and in-house dining experience.",
     challenge:
-      "Kroma required a website that felt like a premium creative tool itself—fast, interactive, and visually stunning without compromising page load speeds or accessibility.",
+      "Engineering packaging pieces for delicate iced matcha beverages, specialty gelatos, and fresh bakery items that prevent condensation leaks, maintain product temperature, and communicate an elevated artisanal quality to customers.",
     solution:
-      "Designed and built an ultra-clean modular web interface featuring micro-animations, rich typography hierarchy, and dynamic product walkthroughs.",
+      "We created custom structural paper bags with reinforced handles, waterproof matte labels for cold beverage cups, grease-resistant bakery tissue papers, and clean architectural signage layouts for the physical space.",
     outcome:
-      "A modular web system with clear hierarchy, reusable components, and motion that supports the story instead of competing with it—ready for product and marketing teams to extend.",
+      "Produced a cohesive set of physical product pieces and takeaway packaging collaterals that elevated OGI's customer touchpoints and strengthened their market presence as a premium specialty café.",
     deliverables: [
-      "Web Architecture",
-      "UI/UX Design",
-      "Interactive Prototypes",
-      "Design System",
-      "Figma Components",
+      "Reinforced Delivery Paper Bags",
+      "Waterproof Matcha Cup Labels",
+      "Greaseproof Bakery Wraps",
+      "Spatial Store Signage",
     ],
     gallery: [
-      { label: "Cover — Landing hero", ratio: "wide", span: "full" },
-      { label: "Product walkthrough", ratio: "landscape", span: "half" },
-      { label: "Mobile frames", ratio: "portrait", span: "half" },
-      { label: "Dashboard UI", ratio: "landscape", span: "full" },
-      { label: "Component library", ratio: "square", span: "third" },
-      { label: "Interaction states", ratio: "square", span: "third" },
-      { label: "Typography scale", ratio: "square", span: "third" },
-      { label: "Marketing modules", ratio: "landscape", span: "half" },
+      { label: "Cover — Product Packaging", ratio: "standard", span: "full", src: ogiThumb.src },
+      {
+        label: "Color Palette & Specs",
+        ratio: "wide",
+        span: "full",
+        type: "color-palette",
+        logoSrc: ogiLogo.src,
+        logoBgHex: "#581C87",
+        logoWhite: false,
+        colors: [
+          { name: "Purple Core", hex: "#581C87", textClass: "text-white" },
+          { name: "Accent Lime", hex: "#A3E635", textClass: "text-ink" },
+          { name: "Dark Ink", hex: "#18181B", textClass: "text-white" },
+          { name: "Paper White", hex: "#F5F5F5", textClass: "text-ink" },
+        ],
+      },
+      { label: "Delivery Bag Mockup", ratio: "standard", span: "full", src: ogiBox.src },
+      { label: "Matcha Product Container", ratio: "portrait", span: "full", position: "upper", src: ogiMatcha.src },
+      { label: "Spatial Environment Collateral", ratio: "landscape", span: "full", src: ogiPlace.src },
+    ],
+    bg: "bg-purple-900",
+    textColor: "text-paper",
+    svgColor: "text-accent-lime",
+    accentColor: "#581C87",
+    aspect: "aspect-[4/3]",
+    thumbnail: ogiThumb,
+  },
+  {
+    slug: "ravago-corporate-identity",
+    number: "03",
+    title: "RAVAGO CORPORATE SYSTEM",
+    category: "Executive Corporate Kits",
+    client: "Ravago",
+    year: "2024",
+    summary:
+      "Executive presentation folders, corporate stationery cards, industrial die-cut sticker sheets, and print marketing collateral for Ravago Manufacturing Americas.",
+    overview:
+      "Ravago Manufacturing Americas is a global leader in polymer compounding, plastic recycling, and engineered thermoplastics with major manufacturing facilities in Houston and Baytown, Texas. To support their sales directors and executive teams during international summits and client presentations, we designed a suite of executive corporate collateral pieces. This included custom pocket presentation folders, embossed business cards, industrial die-cut sticker sheets, and structured print product catalog sheets.",
+    challenge:
+      "Creating corporate print collateral that communicates industrial scale, polymer engineering expertise, and environmental sustainability across diverse international business units and executive-level client meetings.",
+    solution:
+      "We produced structured print layouts utilizing heavy paper stocks, precision die-cut folder pockets, custom polymer sticker assets, and clean technical grid typography designed for corporate clarity and ease of navigation.",
+    outcome:
+      "Equipped Ravago's sales and executive teams with a unified, high-end collection of corporate print pieces that standardized sales presentations, improved client proposals, and reflected the company's global industry leadership.",
+    deliverables: [
+      "Executive Pocket Folders",
+      "Embossed Corporate Cards",
+      "Die-Cut Polymer Sticker Sheets",
+      "Print Product Catalogs",
+    ],
+    gallery: [
+      { label: "Cover — Corporate Kit", ratio: "standard", span: "full", src: ravagoThumb.src },
+      {
+        label: "Color Palette & Print Specs",
+        ratio: "wide",
+        span: "full",
+        type: "color-palette",
+        logoSrc: ravagoLogo.src,
+        logoBgHex: "#2447F5",
+        logoWhite: true,
+        colors: [
+          { name: "Cobalt Blue", hex: "#2447F5", textClass: "text-white" },
+          { name: "Pure Paper", hex: "#FFFFFF", textClass: "text-ink" },
+          { name: "Charcoal Ink", hex: "#18181B", textClass: "text-white" },
+        ],
+      },
+      { label: "Corporate Folder & Guidelines", ratio: "wide", span: "full", src: ravagoCorporateKit.src },
+      { label: "Brand Collateral System", ratio: "wide", span: "full", src: ravagoBrandIdentity.src },
+      { label: "Executive Presentation Pieces", ratio: "wide", span: "full", src: ravagoCollateral.src },
+      { label: "Sticker Collateral & Assets", ratio: "landscape", span: "full", src: ravagoStickerMockup.src },
     ],
     bg: "bg-accent-cobalt",
     textColor: "text-paper",
-    svgColor: "text-charcoal",
+    svgColor: "text-paper",
     accentColor: "#2447F5",
     aspect: "aspect-[4/3]",
+    thumbnail: ravagoThumb,
   },
   {
-    slug: "motion-3d-animation",
-    number: "03",
-    title: "MOTION & 3D ANIMATION",
-    category: "Motion",
-    client: "Hyperion Labs",
-    year: "2024",
-    summary:
-      "3D product teaser, launch motion graphics, and interactive web elements for a flagship hardware release.",
-    overview:
-      "Hyperion's hardware launch needed emotion, not a spec sheet. We built a motion system—3D stills, teaser film, and web-ready renders—that sells craftsmanship in a few seconds of scroll.",
-    challenge:
-      "Translate complex hardware engineering specs into an emotional, high-impact motion launch film that captures audience imagination.",
-    solution:
-      "Crafted photorealistic 3D renders combined with sleek kinetic typography and smooth camera transitions to showcase product craftsmanship.",
-    outcome:
-      "A launch kit of stills, teaser cuts, and interactive web renders that marketing can remix across paid, organic, and product pages without losing visual consistency.",
-    deliverables: [
-      "3D Product Renders",
-      "Motion Teaser Film",
-      "Social Video Kit",
-      "Interactive Web Renders",
-    ],
-    gallery: [
-      { label: "Cover — Hero still", ratio: "wide", span: "full" },
-      { label: "Product beauty shot", ratio: "landscape", span: "half" },
-      { label: "Detail close-up", ratio: "portrait", span: "half" },
-      { label: "Teaser frame 01", ratio: "landscape", span: "half" },
-      { label: "Teaser frame 02", ratio: "landscape", span: "half" },
-      { label: "Kinetic type still", ratio: "square", span: "third" },
-      { label: "Social cutdown", ratio: "portrait", span: "third" },
-      { label: "Web interaction still", ratio: "square", span: "third" },
-    ],
-    bg: "bg-accent-pink",
-    textColor: "text-charcoal",
-    svgColor: "text-paper",
-    accentColor: "#F091F2",
-    aspect: "aspect-[4/3]",
-  },
-  {
-    slug: "campaign-social-assets",
+    slug: "spanish-flowers-brand",
     number: "04",
-    title: "CAMPAIGN & SOCIAL ASSETS",
-    category: "Marketing",
-    client: "Vanguard Mobility",
+    title: "SPANISH FLOWERS IDENTITY",
+    category: "Restaurant Collateral & Merch",
+    client: "Spanish Flowers",
     year: "2024",
     summary:
-      "Global social launch campaign assets, digital billboards, and conversion ad creative suite.",
+      "Laser-cut 3D architectural wood signage, tactile business cards, takeout packaging graphics, custom merchandise t-shirts, and sticker collaterals for Houston landmark Spanish Flowers.",
     overview:
-      "Vanguard needed a campaign system that travels—Instagram, LinkedIn, and digital OOH—without diluting the brand. We built templates and motion ads engineered for recognition at a glance.",
+      "Founded in 1979, Spanish Flowers Mexican Restaurant is a celebrated Houston culinary institution known for authentic Tex-Mex, homemade menudo, and round-the-clock dining tradition. We designed a diverse collection of physical design pieces to enrich their restaurant environment and customer outreach. This included a multi-layered 3D laser-cut wood architectural wall sign, tactile business cards, takeout box graphic wraps, custom merchandise t-shirts, and branded sticker sheets.",
     challenge:
-      "Drive global awareness and high CTR across multi-platform ad channels with consistent brand voice and instant recognition.",
+      "Designing physical architectural pieces and merchandise collateral that honor over four decades of traditional Mexican culinary heritage while feeling fresh, durable, and appealing to new generations of diners.",
     solution:
-      "Created a versatile kit of high-impact visual templates and motion ads engineered for maximum engagement across Instagram, LinkedIn, and OOH digital billboards.",
+      "We engineered vector files for precision 3D wood laser cutting and assembly, designed high-texture print cards, produced screen-print apparel artwork for merchandise t-shirts, and developed durable takeout packaging graphics.",
     outcome:
-      "A campaign toolkit the team can localize and iterate: static and motion templates, OOH adaptations, and a clear visual voice that stays sharp across channels.",
+      "Transformed the restaurant's interior with an iconic 3D wood wall art feature and launched a popular merchandise line that turned loyal diners into brand ambassadors across Houston.",
     deliverables: [
-      "Social Ad Suite",
-      "Campaign Design System",
-      "Digital OOH Ads",
-      "Marketing Toolkit",
+      "3D Layered Wood Signage",
+      "Tactile Business Cards",
+      "Takeout Box Wraps",
+      "Custom Screen-Printed T-Shirts",
     ],
     gallery: [
-      { label: "Cover — Campaign key visual", ratio: "wide", span: "full" },
-      { label: "Feed ad — square", ratio: "square", span: "third" },
-      { label: "Story / Reel frame", ratio: "portrait", span: "third" },
-      { label: "Carousel panel", ratio: "square", span: "third" },
-      { label: "LinkedIn banner", ratio: "landscape", span: "half" },
-      { label: "Digital OOH", ratio: "landscape", span: "half" },
-      { label: "Motion still", ratio: "landscape", span: "full" },
-      { label: "Toolkit overview", ratio: "landscape", span: "half" },
+      { label: "Cover — Hospitality Collateral", ratio: "standard", span: "full", src: spanishFlowersThumb.src },
+      {
+        label: "Color Palette & Print Specs",
+        ratio: "wide",
+        span: "full",
+        type: "color-palette",
+        logoSrc: spanishFlowersLogo.src,
+        logoBgHex: "#10B981",
+        logoWhite: false,
+        colors: [
+          { name: "Emerald", hex: "#10B981", textClass: "text-ink" },
+          { name: "Accent Pink", hex: "#EC4899", textClass: "text-white" },
+          { name: "Charcoal", hex: "#18181B", textClass: "text-white" },
+          { name: "Paper", hex: "#F5F5F5", textClass: "text-ink" },
+        ],
+      },
+      { label: "Architectural 3D Signage", ratio: "portrait", span: "half", src: spanishSign.src },
+      { label: "Stationery Card Pieces", ratio: "portrait", span: "half", src: spanishCard.src },
+      { label: "Packaging & Printables", ratio: "landscape", span: "full", src: spanishFlowersPackaging.src },
+      { label: "Custom Apparel & Merch", ratio: "portrait", span: "half", src: spanishTshirt.src },
+      { label: "Brand Sticker Collateral", ratio: "portrait", span: "half", src: spanishStickers.src },
     ],
-    bg: "bg-accent-lime",
-    textColor: "text-charcoal",
-    svgColor: "text-paper",
-    accentColor: "#CCFF00",
+    bg: "bg-emerald-500",
+    textColor: "text-paper",
+    svgColor: "text-pink-500",
+    accentColor: "#10B981",
     aspect: "aspect-[4/3]",
-  },
-  {
-    slug: "ui-ux-design-system",
-    number: "05",
-    title: "UI/UX DESIGN SYSTEM",
-    category: "Product",
-    client: "Aether OS",
-    year: "2025",
-    summary:
-      "Scalable atomic design system with 200+ accessible components for multi-platform web applications.",
-    overview:
-      "Aether's product surface had grown faster than its UI language. We built an atomic system—tokens, components, and docs—so design and engineering ship in sync.",
-    challenge:
-      "Eliminate UI debt and speed up product shipping times across a distributed engineering and design team.",
-    solution:
-      "Built an exhaustive design system with tokenized CSS, strict accessibility standards, and reusable Figma & React libraries.",
-    outcome:
-      "A living system: tokens, patterns, and documented components that cut redesign churn and give product teams a shared source of truth.",
-    deliverables: [
-      "Design System",
-      "Component Library",
-      "UX Guidelines",
-      "Design Tokens",
-    ],
-    gallery: [
-      { label: "Cover — System overview", ratio: "wide", span: "full" },
-      { label: "Token foundation", ratio: "landscape", span: "half" },
-      { label: "Component grid", ratio: "landscape", span: "half" },
-      { label: "Button & form states", ratio: "square", span: "third" },
-      { label: "Navigation patterns", ratio: "square", span: "third" },
-      { label: "Data display", ratio: "square", span: "third" },
-      { label: "Figma library", ratio: "landscape", span: "half" },
-      { label: "Accessibility notes", ratio: "landscape", span: "half" },
-    ],
-    bg: "bg-charcoal",
-    textColor: "text-brand-yellow",
-    svgColor: "text-paper",
-    accentColor: "#1A1A1A",
-    aspect: "aspect-[4/3]",
-  },
-  {
-    slug: "creative-art-direction",
-    number: "06",
-    title: "CREATIVE ART DIRECTION",
-    category: "Art Direction",
-    client: "Pulse Magazine",
-    year: "2024",
-    summary:
-      "Editorial direction, photography style guide, and digital issue layout for contemporary culture publication.",
-    overview:
-      "Pulse wanted the digital issue to feel as tactile as a coffee-table book. We set photography direction, typography pairings, and layout systems that make every scroll feel curated.",
-    challenge:
-      "Reinvent the digital magazine experience to feel as tactile and immersive as a high-end physical coffee table book.",
-    solution:
-      "Established bold photographic direction, unconventional grid layouts, and expressive typographic pairings.",
-    outcome:
-      "An editorial system—style guide, layout templates, and art direction notes—that keeps each issue distinctive while remaining producible on deadline.",
-    deliverables: [
-      "Art Direction",
-      "Photography Style Guide",
-      "Editorial Layouts",
-      "Digital Magazine Design",
-    ],
-    gallery: [
-      { label: "Cover — Issue opener", ratio: "wide", span: "full" },
-      { label: "Photo direction still", ratio: "portrait", span: "half" },
-      { label: "Editorial spread", ratio: "landscape", span: "half" },
-      { label: "Typography pairing", ratio: "square", span: "third" },
-      { label: "Feature layout", ratio: "square", span: "third" },
-      { label: "Pull-quote treatment", ratio: "square", span: "third" },
-      { label: "Photo grid", ratio: "landscape", span: "full" },
-      { label: "Style guide page", ratio: "landscape", span: "half" },
-    ],
-    bg: "bg-paper",
-    textColor: "text-charcoal",
-    svgColor: "text-brand-yellow",
-    accentColor: "#F4F0EA",
-    aspect: "aspect-[4/3]",
+    thumbnail: spanishFlowersThumb,
   },
 ];
 
@@ -279,6 +302,24 @@ export type ProjectAccent = {
 /** Tailwind accent classes for dark (ink) sections, derived from each project's hero color. */
 export function getProjectAccent(project: Pick<Project, "bg">): ProjectAccent {
   switch (project.bg) {
+    case "bg-red-600":
+      return {
+        text: "text-red-500",
+        border: "border-red-500",
+        pillHover: "hover:bg-red-600 hover:text-paper",
+      };
+    case "bg-purple-900":
+      return {
+        text: "text-purple-400",
+        border: "border-purple-400",
+        pillHover: "hover:bg-purple-900 hover:text-paper",
+      };
+    case "bg-emerald-500":
+      return {
+        text: "text-emerald-500",
+        border: "border-emerald-500",
+        pillHover: "hover:bg-emerald-500 hover:text-ink",
+      };
     case "bg-accent-cobalt":
       return {
         text: "text-accent-cobalt",

@@ -1,29 +1,5 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "Bebas Neue";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src: url("/fonts/bebas-neue-latin.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src: url("/fonts/dm-sans-latin-400.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 700;
-  src: url("/fonts/dm-sans-latin-700.woff2") format("woff2");
-}
-
 @theme {
   --color-brand-yellow: #ffd100;
   --color-brand-yellow-hover: #e6bc00;
@@ -43,6 +19,7 @@
   --font-body: "DM Sans", "Trebuchet MS", system-ui, sans-serif;
   --font-label: "DM Sans", system-ui, sans-serif;
   --font-accent: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+  --font-sf: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
 
   --text-display-2xl: clamp(3.5rem, 10vw, 10.75rem);
   --text-display-2xl--line-height: 0.86;

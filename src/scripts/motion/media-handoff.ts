@@ -20,8 +20,8 @@ type Rect = { left: number; top: number; width: number; height: number };
  * Media starts mounted in the hero ([data-media-origin] > [data-hero-media]).
  * On scroll it flies into [data-media-target] and becomes the second section.
  */
-export async function initMediaHandoff() {
-  const { gsap, ScrollTrigger } = await ensureGsap();
+export function initMediaHandoff() {
+  const { gsap, ScrollTrigger } = ensureGsap();
 
   const media = document.querySelector<HTMLElement>("[data-hero-media]");
   const origin = document.querySelector<HTMLElement>("[data-media-origin]");

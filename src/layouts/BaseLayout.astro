@@ -1,6 +1,8 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import SiteFooter from "../components/common/SiteFooter.astro";
 import SiteHeader from "../components/common/SiteHeader.astro";
+import Preloader from "../components/ui/Preloader.astro";
 import {
   landingContent,
   needsClientInput,
@@ -11,15 +13,17 @@ import "../styles/global.css";
 type Props = {
   title?: Approval<string>;
   description?: Approval<string>;
+  showPreloader?: boolean;
 };
 
 const {
   description = landingContent.metadata.description,
   title = landingContent.metadata.title,
+  showPreloader = false,
 } = Astro.props;
 
-const CAVEAT_FONT_URL =
-  "https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap";
+const FONT_URL =
+  "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Inter:wght@400;500;600;700&display=swap";
 
 const pageTitle = title === needsClientInput ? "Puff Cross Media" : title;
 ---
@@ -31,24 +35,22 @@ const pageTitle = title === needsClientInput ? "Puff Cross Media" : title;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ffd100" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href={FONT_URL} />
     <link
-      rel="preload"
-      href="/fonts/bebas-neue-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      href={CAVEAT_FONT_URL}
+      href={FONT_URL}
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
-      <link href={CAVEAT_FONT_URL} rel="stylesheet" />
+      <link href={FONT_URL} rel="stylesheet" />
     </noscript>
+    <ClientRouter />
   </head>
   <body class="bg-brand-yellow text-ink antialiased">
+    {showPreloader && <Preloader />}
     <a
       class="sr-only z-50 bg-brand-yellow px-5 py-3 font-label text-label font-bold uppercase tracking-widest text-ink focus:fixed focus:left-gutter focus:top-4 focus:not-sr-only"
       href="#main-content"

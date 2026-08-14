@@ -6,6 +6,7 @@ import TrustedByMarquee from "../ui/TrustedByMarquee.astro";
 import workSticker from "../../assets/images/stickers/work.webp";
 import cloudSticker from "../../assets/images/stickers/cloud.webp";
 import numberOneSticker from "../../assets/images/stickers/number-one.webp";
+import heroFeatureImage from "../../assets/images/spanish-flowers-packaging.png";
 import "../../styles/sections/hero.css";
 
 const { body, primaryCta } = landingContent.hero.value;
@@ -41,7 +42,7 @@ const heroStickers: HeroSticker[] = [
 ---
 
 <section
-  data-nav-tone="ink"
+  data-nav-tone="yellow"
   class="pointer-events-none relative z-20 min-h-dvh overflow-hidden bg-transparent text-charcoal"
 >
 
@@ -61,11 +62,13 @@ const heroStickers: HeroSticker[] = [
           class="hero-media h-full w-full overflow-hidden rounded-[0.65rem] border-[0.2rem] border-accent-pink bg-charcoal md:rounded-[1.25rem] md:border-[0.4rem]"
         >
           <div class="relative h-full w-full">
-            <div class="absolute inset-0 bg-[linear-gradient(160deg,#ffd100_0%,#f091f2_42%,#2447f5_100%)]"></div>
-            <div class="absolute inset-1 rounded-[0.35rem] border border-paper/35 md:inset-3.5 md:rounded-[0.85rem]"></div>
-            <p class="absolute bottom-1 left-1 z-[6] font-label text-[0.32rem] font-bold uppercase tracking-[0.1em] text-ink md:bottom-5 md:left-5 md:text-[0.72rem] md:tracking-[0.18em]">
-              Sample / Draft
-            </p>
+            <Image
+              src={heroFeatureImage}
+              alt="Spanish Flowers Packaging & Printables"
+              class="h-full w-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
           </div>
         </div>
       </span>

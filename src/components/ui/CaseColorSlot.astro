@@ -1,0 +1,109 @@
+---
+import type { ColorPaletteMedia } from "../../content/projects";
+
+type Props = {
+  item: ColorPaletteMedia;
+  class?: string;
+  parallax?: boolean;
+};
+
+const { item, class: className, parallax = true } = Astro.props;
+
+const ratioClass = {
+  landscape: "aspect-[16/10]",
+  portrait: "aspect-[9/16]",
+  square: "aspect-square",
+  wide: "aspect-[21/9]",
+  standard: "aspect-[4/3]",
+}[item.ratio];
+
+const hasLogo = Boolean(item.logoSrc);
+
+// Find primary color (matching logoBgHex or first color)
+const bgHexLower = (item.logoBgHex ?? "").toLowerCase();
+const primaryColorIndex = item.colors.findIndex(
+  (c) => c.hex.toLowerCase() === bgHexLower
+);
+const primaryColor =
+  primaryColorIndex >= 0 ? item.colors[primaryColorIndex] : item.colors[0];
+
+// Secondary colors (excluding primary color to eliminate right-side duplicate)
+const secondaryColors = hasLogo
+  ? item.colors.filter((_, idx) => idx !== (primaryColorIndex >= 0 ? primaryColorIndex : 0))
+  : item.colors;
+---
+
+<figure
+  class:list={["case-media group relative w-full overflow-hidden bg-paper rounded-2xl", className]}
+  data-parallax-container={parallax ? "" : undefined}
+>
+  <div class:list={[ratioClass, "relative w-full overflow-hidden"]}>
+    {
+      hasLogo ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 h-full w-full">
+          <!-- Left: Primary background with Logo + Main color info in bottom corner -->
+          <div
+            class="relative flex items-center justify-center p-8 md:p-12"
+            style={`background-color: ${item.logoBgHex ?? primaryColor?.hex ?? "#1D1D1D"};`}
+          >
+            <img
+              src={item.logoSrc}
+              alt="Brand Logo"
+              class:list={[
+                "max-h-32 md:max-h-48 max-w-[75%] object-contain filter drop-shadow-md transition-transform duration-300 group-hover:scale-105",
+                item.logoWhite && "brightness-0 invert",
+              ]}
+              loading="lazy"
+              decoding="async"
+            />
+
+            <!-- Main color info in bottom-left corner -->
+            {primaryColor && (
+              <div class="absolute bottom-4 left-5 md:bottom-6 md:left-7 flex flex-col gap-0.5 pointer-events-none">
+                <span class:list={["font-sf text-xs md:text-sm font-semibold capitalize tracking-tight opacity-90", primaryColor.textClass]}>
+                  {primaryColor.name}
+                </span>
+                <span class:list={["font-sf text-xs md:text-sm font-medium tracking-tight opacity-75", primaryColor.textClass]}>
+                  {primaryColor.hex}
+                </span>
+              </div>
+            )}
+          </div>
+
+          <!-- Right: Secondary colors in vertical rows -->
+          <div class="flex flex-col h-full w-full">
+            {secondaryColors.map((color) => (
+              <div
+                class="flex-1 flex items-center justify-between px-6 py-4 md:px-8"
+                style={`background-color: ${color.hex};`}
+              >
+                <span class:list={["font-sf text-xs sm:text-sm font-semibold capitalize tracking-tight", color.textClass]}>
+                  {color.name}
+                </span>
+                <span class:list={["font-sf text-xs sm:text-sm opacity-80 font-medium tracking-tight", color.textClass]}>
+                  {color.hex}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div class="flex flex-col md:flex-row h-full w-full">
+          {item.colors.map((color) => (
+            <div
+              class="flex-1 flex flex-col justify-between p-4 md:p-6"
+              style={`background-color: ${color.hex};`}
+            >
+              <span class:list={["font-sf text-xs sm:text-sm font-semibold capitalize tracking-tight", color.textClass]}>
+                {color.name}
+              </span>
+              <span class:list={["font-sf text-xs sm:text-sm opacity-80 font-medium tracking-tight", color.textClass]}>
+                {color.hex}
+              </span>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</figure>

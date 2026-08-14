@@ -12,7 +12,7 @@ import Services from "../components/sections/Services.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title={landingContent.hero.value.heading} description={landingContent.hero.value.body}>
+<BaseLayout title={landingContent.hero.value.heading} description={landingContent.hero.value.body} showPreloader={true}>
   <HeroMediaSequence />
   <Process />
   <BannerMarquee />

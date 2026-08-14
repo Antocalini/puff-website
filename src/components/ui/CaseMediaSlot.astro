@@ -1,32 +1,67 @@
 ---
-import type { CaseMediaRatio } from "../../content/projects";
+import type { CaseMediaPosition, CaseMediaRatio, CaseMediaSpan } from "../../content/projects";
 
 type Props = {
   label: string;
   ratio?: CaseMediaRatio;
+  span?: CaseMediaSpan;
   src?: string;
   alt?: string;
   class?: string;
+  parallax?: boolean;
+  position?: CaseMediaPosition;
 };
 
-const { label, ratio = "landscape", src, alt, class: className } = Astro.props;
+const {
+  label,
+  ratio = "landscape",
+  span = "full",
+  src,
+  alt,
+  class: className,
+  parallax = true,
+  position = "bottom",
+} = Astro.props;
 
 const ratioClass = {
   landscape: "aspect-[16/10]",
   portrait: "aspect-[9/16]",
   square: "aspect-square",
   wide: "aspect-[21/9]",
+  standard: "aspect-[4/3]",
 }[ratio];
 
+const positionClass = {
+  bottom: "object-[center_68%]",
+  center: "object-[center_45%]",
+  top: "object-top",
+  upper: "object-[center_28%]",
+}[position];
+
+const isVerticalFull = ratio === "portrait" && span === "full";
 const hasMedia = Boolean(src);
 ---
 
-<figure class:list={["case-media group relative w-full overflow-hidden", className]}>
-  <div class:list={[ratioClass, "relative w-full overflow-hidden bg-charcoal"]}>
+<figure
+  class:list={["case-media group relative w-full overflow-hidden", className]}
+  data-parallax-container={parallax ? "" : undefined}
+>
+  <div
+    class:list={[
+      ratioClass,
+      "relative w-full overflow-hidden bg-charcoal",
+      isVerticalFull && "max-h-[65vh] md:max-h-[70vh]",
+    ]}
+  >
     {
       hasMedia ? (
         <img
-          class="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+          class:list={[
+            "w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]",
+            isVerticalFull ? positionClass : "object-center",
+            parallax ? "h-[110%]" : "h-full",
+          ]}
+          data-parallax-img={parallax ? "" : undefined}
           src={src}
           alt={alt ?? label}
           loading="lazy"
@@ -39,11 +74,5 @@ const hasMedia = Boolean(src);
         </div>
       )
     }
-
-    <figcaption
-      class="pointer-events-none absolute bottom-3 left-3 z-[2] font-label text-[0.65rem] font-bold uppercase tracking-[0.16em] text-ink md:bottom-4 md:left-4 md:text-[0.72rem] md:tracking-[0.18em]"
-    >
-      {hasMedia ? label : `${label} · Sample / Draft`}
-    </figcaption>
   </div>
 </figure>

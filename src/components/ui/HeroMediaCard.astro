@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import heroFeatureImage from "../../assets/images/spanish-flowers-packaging.png";
+
 type Props = {
   class?: string;
 };
@@ -14,11 +17,13 @@ const { class: className } = Astro.props;
   ]}
 >
   <div class="hero-media__frame relative aspect-16/10 bg-charcoal">
-    <span class="absolute inset-0 bg-[linear-gradient(135deg,#ffd100_0%,#f091f2_45%,#2447f5_100%)]"></span>
-    <span class="absolute inset-3.5 rounded-[0.85rem] border border-paper/40"></span>
-    <span class="absolute bottom-5 left-5 font-label text-[0.72rem] font-bold uppercase tracking-[0.18em] text-ink">
-      Sample / Draft
-    </span>
+    <Image
+      src={heroFeatureImage}
+      alt="Spanish Flowers Packaging"
+      class="h-full w-full object-cover"
+      loading="eager"
+      decoding="async"
+    />
   </div>
 
   <svg

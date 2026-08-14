@@ -4,8 +4,8 @@ import { landingContent } from "../../content/landing";
 import Button from "../ui/Button.astro";
 import FloatingSticker from "../ui/FloatingSticker.astro";
 import focusModeSticker from "../../assets/images/stickers/focus-mode.webp";
-import madeToMakeItSticker from "../../assets/images/stickers/made-to-make-it.webp";
 import starSticker from "../../assets/images/stickers/star.webp";
+import patternTexture from "../../assets/images/pattern-texture.png";
 import "../../styles/components/footer.css";
 
 const navLinks = [
@@ -27,28 +27,34 @@ const sectionLabel =
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-ink";
 const outlinePill = [
-  "inline-flex items-center justify-center rounded-pill border-2 border-paper/40 bg-transparent px-4 py-2 font-body text-base font-semibold text-paper transition-colors duration-standard hover:border-brand-yellow hover:bg-brand-yellow hover:text-ink md:px-5 md:py-2.5 md:text-lg",
+  "inline-flex items-center justify-center rounded-pill border-2 border-paper/40 bg-transparent px-3.5 py-1.5 font-body text-sm font-semibold text-paper transition-colors duration-standard hover:border-brand-yellow hover:bg-brand-yellow hover:text-ink md:px-4 md:py-2 md:text-base",
   focusRing,
 ].join(" ");
 const navPill = [
-  "inline-flex items-center justify-center rounded-pill border-2 border-brand-yellow bg-transparent px-4 py-2 font-body text-base font-semibold text-brand-yellow transition-colors duration-standard hover:bg-brand-yellow hover:text-ink md:px-5 md:py-2.5 md:text-lg",
+  "inline-flex items-center justify-center rounded-pill border-2 border-brand-yellow bg-transparent px-3.5 py-1.5 font-body text-sm font-semibold text-brand-yellow transition-colors duration-standard hover:bg-brand-yellow hover:text-ink md:px-4 md:py-2 md:text-base",
   focusRing,
 ].join(" ");
 ---
 
-<footer class="site-footer relative z-20 -mt-12 w-full md:-mt-16 lg:-mt-20" data-nav-tone="ink">
-  <div class="footer-shell relative overflow-visible rounded-t-panel md:rounded-t-[2.75rem]">
-    <div class="footer-surface-backdrop pointer-events-none absolute inset-0" aria-hidden="true"></div>
+<footer class="site-footer relative z-20 -mt-10 w-full overflow-x-clip md:-mt-12 lg:-mt-14" data-nav-tone="ink">
+  <div class="footer-shell relative min-w-0 overflow-x-clip rounded-t-panel md:rounded-t-[2.5rem]">
+    <div class="footer-surface-backdrop pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true"></div>
 
     <div
-      class="footer-panel relative z-10 flex w-full flex-col overflow-hidden rounded-t-panel bg-ink text-paper md:rounded-t-[2.75rem]"
+      class="footer-panel relative z-10 flex w-full flex-col overflow-hidden rounded-t-panel bg-ink text-paper md:rounded-t-[2.5rem]"
     >
-      <div class="relative z-10 mx-auto w-full max-w-content px-gutter pb-6 pt-8 md:pb-7 md:pt-14 lg:pt-16">
-        <div class="footer-layout flex flex-col gap-7 md:gap-8 lg:gap-9">
-          <!-- Band 1 — Brand statement + accent sticker -->
-          <div class="footer-band footer-band--brand">
+      <!-- Yellow Pattern Texture Overlay (same pattern-texture.png as case studies) -->
+      <div
+        class="footer-pattern-texture pointer-events-none absolute inset-0 z-0 overflow-hidden"
+        style={`background-image: url('${patternTexture.src}');`}
+        aria-hidden="true"
+      ></div>
+      <div class="relative z-10 mx-auto w-full max-w-content px-gutter pb-6 pt-9 md:pb-7 md:pt-14 lg:pt-16">
+        <div class="footer-layout flex flex-col gap-6 md:gap-7 lg:gap-7">
+          <!-- Band 1 — Brand statement + Ready When CTA -->
+          <div class="footer-band footer-band--brand items-center text-center lg:items-start lg:text-left">
             <p
-              class="footer-headline font-display text-[clamp(2.85rem,11vw,7.5rem)] font-black uppercase leading-[0.88] tracking-tight text-paper text-balance"
+              class="footer-headline font-display text-[clamp(3.2rem,9.5vw,7.5rem)] font-black uppercase leading-[0.86] tracking-tight text-paper text-balance"
             >
               Design that keeps
               <span
@@ -58,23 +64,49 @@ const navPill = [
               </span>
             </p>
 
-            <div class="footer-made-zone" aria-hidden="true">
-              <Image
-                src={madeToMakeItSticker}
-                alt=""
-                class="footer-made-sticker"
-                loading="lazy"
-                decoding="async"
-              />
+            <div class="footer-cta-wrap flex justify-center lg:justify-start w-full">
+              <div class="footer-cta-card relative overflow-visible rounded-[1.75rem] border border-brand-yellow/25 bg-[#fafafa] p-5.5 text-ink md:rounded-[2rem] md:p-6.5 text-center lg:text-left w-full max-w-sm lg:max-w-none">
+                <FloatingSticker
+                  src={starSticker}
+                  peel="tr"
+                  size="whisper"
+                  rotate={14}
+                  class="footer-cta-sticker"
+                  loading="lazy"
+                />
+
+                <p class="font-label text-xs font-bold uppercase tracking-[0.22em] text-ink/75 md:text-sm">
+                  Next step
+                </p>
+                <p
+                  class="footer-cta-headline mt-1.5 font-display text-[clamp(1.75rem,2.8vw,2.35rem)] font-black uppercase leading-[0.92] tracking-tight text-balance mx-auto lg:mx-0"
+                >
+                  Ready when
+                  <span
+                    class="text-highlight block text-[0.62em] font-semibold normal-case leading-[0.95] tracking-normal text-ink/70"
+                  >
+                    you are.
+                  </span>
+                </p>
+                <p class="mt-2 max-w-xs font-body text-xs leading-relaxed text-ink/65 md:text-sm lg:text-base mx-auto lg:mx-0">
+                  Book a free 15-minute intro and see if Puff fits your next creative priority.
+                </p>
+
+                <div class="mt-4 flex justify-center lg:justify-start">
+                  <Button href="#book-meeting" variant="primary">
+                    Book a Call
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Band 2 — Nav / legal + social / contact -->
+          <!-- Band 2 — Nav / legal + centered focus sticker -->
           <div class="footer-band footer-band--utility">
-            <div class="footer-utility-left flex flex-col gap-5 md:gap-5">
-              <div>
+            <div class="footer-utility-left flex flex-col gap-6 md:gap-4 items-center text-center lg:items-start lg:text-left">
+              <div class="flex flex-col items-center lg:items-start">
                 <p class={sectionLabel}>Navigation</p>
-                <ul class="mt-3 flex flex-row flex-wrap items-center gap-2 md:gap-2.5">
+                <ul class="mt-3 lg:mt-2 flex flex-row flex-wrap items-center justify-center lg:justify-start gap-2.5 lg:gap-2">
                   {
                     navLinks.map(({ href, label }) => (
                       <li>
@@ -87,9 +119,9 @@ const navPill = [
                 </ul>
               </div>
 
-              <div>
+              <div class="flex flex-col items-center lg:items-start mt-2 lg:mt-0">
                 <p class={sectionLabel}>Legal</p>
-                <ul class="mt-3 flex flex-row flex-wrap items-center gap-2 md:gap-2.5">
+                <ul class="mt-3 lg:mt-2 flex flex-row flex-wrap items-center justify-center lg:justify-start gap-2.5 lg:gap-2">
                   {
                     legalLinks.map(({ href, label }) => (
                       <li>
@@ -103,7 +135,7 @@ const navPill = [
               </div>
             </div>
 
-            <div class="footer-focus-zone" aria-hidden="true">
+            <div class="footer-focus-zone mt-4 lg:mt-0" aria-hidden="true">
               <Image
                 src={focusModeSticker}
                 alt=""
@@ -112,59 +144,14 @@ const navPill = [
                 decoding="async"
               />
             </div>
-
-            <div class="footer-utility-right">
-              <p class={sectionLabel}>Follow us</p>
-              <ul class="mt-3 flex items-center gap-3">
-                {
-                  socialLinks.map(({ href, label, platform }) => (
-                    <li>
-                      <a
-                        class:list={[
-                          "footer-social-3d btn-3d-skeuo-yellow grid size-12 place-items-center rounded-full text-ink md:size-14",
-                          focusRing,
-                        ]}
-                        aria-label={label}
-                        href={href}
-                      >
-                        {platform === "instagram" ? (
-                          <svg aria-hidden="true" class="size-5 md:size-6" fill="none" viewBox="0 0 18 18">
-                            <rect
-                              height="12.5"
-                              rx="3.25"
-                              stroke="currentColor"
-                              stroke-width="1.5"
-                              width="12.5"
-                              x="2.75"
-                              y="2.75"
-                            />
-                            <circle cx="9" cy="9" r="3" stroke="currentColor" stroke-width="1.5" />
-                            <circle cx="13.1" cy="4.9" fill="currentColor" r="0.75" />
-                          </svg>
-                        ) : (
-                          <svg aria-hidden="true" class="size-5 md:size-6" fill="currentColor" viewBox="0 0 18 18">
-                            <path d="M10.2 9.6H12.3L13.1 6.8H10.2V5.1C10.2 4.4 10.4 3.9 11.5 3.9H13.2V1.4C12.9 1.4 11.9 1.2 10.8 1.2C8.5 1.2 7 2.5 7 4.8V6.8H4.5V9.6H7V16.8H10.2V9.6Z" />
-                          </svg>
-                        )}
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
-
-              <p class={`${sectionLabel} mt-4 md:mt-5`}>Contact</p>
-              <p class="mt-2 max-w-xs font-body text-base leading-relaxed text-paper/60 md:text-lg">
-                Design on demand, no hassle. Book your free intro below.
-              </p>
-            </div>
           </div>
 
-          <!-- Band 3 — Signature + single CTA -->
+          <!-- Band 3 — Signature + Follow us / Contact -->
           <div class="footer-band footer-band--close">
-            <div class="footer-brand">
+            <div class="footer-brand flex flex-col items-center text-center lg:items-start lg:text-left w-full lg:w-auto">
               <div class="footer-logo-sticker">
                 <svg
-                  class="footer-wordmark text-brand-yellow"
+                  class="footer-wordmark text-brand-yellow mx-auto lg:mx-0"
                   viewBox="0 0 71.07 24"
                   aria-label="Puff"
                   role="img"
@@ -210,46 +197,55 @@ const navPill = [
               </div>
 
               <p
-                class="mt-2 font-label text-[0.7rem] font-bold uppercase tracking-[0.18em] text-paper/55 md:mt-3"
+                class="mt-4 lg:mt-2 font-label text-[0.7rem] font-bold uppercase tracking-[0.18em] text-paper/55 md:mt-2"
               >
                 © {new Date().getFullYear()} Puff Cross Media. All rights reserved.
               </p>
             </div>
 
-            <div class="footer-cta-wrap">
-              <div class="footer-cta-card relative overflow-visible rounded-[1.75rem] border border-brand-yellow/25 bg-[#fafafa] p-5 text-ink md:rounded-[2rem] md:p-6">
-                <FloatingSticker
-                  src={starSticker}
-                  peel="tr"
-                  size="whisper"
-                  rotate={14}
-                  class="footer-cta-sticker"
-                  loading="lazy"
-                />
+            <div class="footer-utility-right flex flex-col items-center text-center lg:items-start lg:text-left mt-6 lg:mt-0 w-full lg:w-auto">
+              <p class={sectionLabel}>Follow us</p>
+              <ul class="mt-3 lg:mt-2 flex items-center justify-center lg:justify-start gap-2.5">
+                {
+                  socialLinks.map(({ href, label, platform }) => (
+                    <li>
+                      <a
+                        class:list={[
+                          "footer-social-3d btn-3d-skeuo-yellow grid size-10 place-items-center rounded-full text-ink md:size-11",
+                          focusRing,
+                        ]}
+                        aria-label={label}
+                        href={href}
+                      >
+                        {platform === "instagram" ? (
+                          <svg aria-hidden="true" class="size-4 md:size-5" fill="none" viewBox="0 0 18 18">
+                            <rect
+                              height="12.5"
+                              rx="3.25"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              width="12.5"
+                              x="2.75"
+                              y="2.75"
+                            />
+                            <circle cx="9" cy="9" r="3" stroke="currentColor" stroke-width="1.5" />
+                            <circle cx="13.1" cy="4.9" fill="currentColor" r="0.75" />
+                          </svg>
+                        ) : (
+                          <svg aria-hidden="true" class="size-4 md:size-5" fill="currentColor" viewBox="0 0 18 18">
+                            <path d="M10.2 9.6H12.3L13.1 6.8H10.2V5.1C10.2 4.4 10.4 3.9 11.5 3.9H13.2V1.4C12.9 1.4 11.9 1.2 10.8 1.2C8.5 1.2 7 2.5 7 4.8V6.8H4.5V9.6H7V16.8H10.2V9.6Z" />
+                          </svg>
+                        )}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
 
-                <p class="font-label text-xs font-bold uppercase tracking-[0.22em] text-ink/75">
-                  Next step
-                </p>
-                <p
-                  class="footer-cta-headline mt-2 font-display text-[clamp(1.75rem,3vw,2.35rem)] font-black uppercase leading-[0.92] tracking-tight text-balance"
-                >
-                  Ready when
-                  <span
-                    class="text-highlight block text-[0.62em] font-semibold normal-case leading-[0.95] tracking-normal text-ink/70"
-                  >
-                    you are.
-                  </span>
-                </p>
-                <p class="mt-2 max-w-sm font-body text-sm leading-relaxed text-ink/65 md:text-base">
-                  Book a free 15-minute intro and see if Puff fits your next creative priority.
-                </p>
-
-                <div class="mt-4">
-                  <Button href="#book-meeting" variant="primary">
-                    Book a Call
-                  </Button>
-                </div>
-              </div>
+              <p class={`${sectionLabel} mt-5 lg:mt-3`}>Contact</p>
+              <p class="mt-2 lg:mt-1 max-w-xs font-body text-xs leading-relaxed text-paper/60 md:text-sm mx-auto lg:mx-0">
+                Design on demand, no hassle. Book your free intro below.
+              </p>
             </div>
           </div>
         </div>

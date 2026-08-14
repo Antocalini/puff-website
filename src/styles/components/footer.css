@@ -1,7 +1,7 @@
-/* Site footer — 3-band layout with shared column alignment on desktop */
+/* Site footer — 3-band compact layout with shared column alignment on desktop */
 
 .footer-shell {
-  padding-top: clamp(1.25rem, 2.5vw, 2.5rem);
+  padding-top: clamp(0.75rem, 1.5vw, 1.5rem);
 }
 
 .footer-surface-backdrop {
@@ -13,55 +13,71 @@
 }
 
 .footer-panel {
-  padding-top: clamp(1rem, 2vw, 1.5rem);
+  padding-top: clamp(0.75rem, 1.5vw, 1.25rem);
   padding-bottom: 0;
   background-color: var(--color-ink);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
+.footer-pattern-texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: overlay;
+  filter: grayscale(100%);
+  opacity: 0.15;
+}
+
 .footer-social-3d {
   border-radius: 9999px;
 }
 
-/* Band 1 — headline + made sticker */
+/* Band 1 — headline + Ready When CTA */
 .footer-band--brand {
   position: relative;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1.5rem;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 0.5rem;
 }
 
 .footer-headline {
   flex: 1 1 auto;
   min-width: 0;
-  padding-top: 0.5rem;
-  padding-right: min(36vw, 9rem);
+  padding-top: 0.25rem;
 }
 
-.footer-made-zone {
-  position: absolute;
+.footer-cta-wrap {
+  width: 100%;
+}
+
+.footer-cta-card {
+  box-shadow: 0 6px 20px -10px rgba(0, 0, 0, 0.28);
+}
+
+.footer-cta-sticker {
   top: 0;
   right: 0;
-  z-index: 4;
+  z-index: 10;
+  transform: translate(12%, -30%);
   pointer-events: none;
 }
 
-.footer-made-sticker {
-  display: block;
-  width: min(44vw, 11.5rem);
-  height: auto;
-  transform: rotate(9deg);
-  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.32));
+.footer-cta-sticker .floating-sticker__img {
+  width: min(20vw, 5rem);
 }
 
-/* Band 2 — utility row + centered focus sticker */
+/* Band 2 — utility row (Nav/Legal) + centered focus sticker */
 .footer-band--utility {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .footer-utility-left,
@@ -75,31 +91,31 @@
   align-items: center;
   pointer-events: none;
   z-index: 5;
-  margin-block: -0.5rem;
+  margin-block: -0.25rem;
 }
 
 .footer-focus-sticker {
   display: block;
-  width: min(58vw, 14.5rem);
+  width: min(65vw, 16rem);
   height: auto;
   transform: rotate(11deg);
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.32));
 }
 
-/* Band 3 — signature + CTA */
+/* Band 3 — signature + Follow Us / Contact */
 .footer-band--close {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
   padding-top: 0.25rem;
-}
-
-.footer-cta-wrap {
-  order: -1;
 }
 
 .footer-brand {
   order: 1;
+}
+
+.footer-utility-right {
+  order: -1;
 }
 
 .footer-logo-sticker {
@@ -111,57 +127,28 @@
 
 .footer-wordmark {
   display: block;
-  width: min(82vw, 22rem);
+  width: min(75vw, 18rem);
   max-width: 100%;
   height: auto;
   margin: 0;
   overflow: visible;
 }
 
-.footer-cta-card {
-  box-shadow: 0 6px 20px -10px rgba(0, 0, 0, 0.28);
-}
-
-.footer-cta-sticker {
-  top: 0;
-  right: 0;
-  z-index: 10;
-  transform: translate(28%, -36%);
-  pointer-events: none;
-}
-
-.footer-cta-sticker .floating-sticker__img {
-  width: min(24vw, 6.25rem);
-}
-
-@media (min-width: 768px) {
-  .footer-cta-sticker .floating-sticker__img {
-    width: min(15vw, 7.25rem);
-  }
-}
-
-@media (min-width: 1024px) {
-  .footer-cta-sticker .floating-sticker__img {
-    width: 7.75rem;
-  }
-}
-
 @media (min-width: 768px) {
   .footer-headline {
-    padding-top: 1rem;
-    padding-right: min(24vw, 11rem);
+    padding-top: 0.5rem;
   }
 
-  .footer-made-sticker {
-    width: min(28vw, 15rem);
+  .footer-cta-sticker .floating-sticker__img {
+    width: min(13vw, 5.75rem);
   }
 
   .footer-focus-sticker {
-    width: min(36vw, 16rem);
+    width: min(38vw, 17.5rem);
   }
 
   .footer-wordmark {
-    width: min(42vw, 26rem);
+    width: min(36vw, 21rem);
   }
 }
 
@@ -169,9 +156,9 @@
   /* Shared 3-column canvas: left content | focus | right content */
   .footer-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) clamp(10rem, 14vw, 14rem) minmax(0, 1fr);
-    column-gap: clamp(3rem, 6vw, 5.5rem);
-    row-gap: 2rem;
+    grid-template-columns: minmax(0, 1fr) clamp(8rem, 12vw, 12rem) minmax(0, 1fr);
+    column-gap: clamp(2.5rem, 5vw, 4.5rem);
+    row-gap: 1.5rem;
   }
 
   .footer-band--brand,
@@ -185,30 +172,26 @@
 
   /* Band 1 */
   .footer-band--brand {
-    align-items: end;
+    align-items: start;
+    padding-top: clamp(0.75rem, 1.5vw, 1.5rem);
   }
 
   .footer-headline {
-    grid-column: 1;
+    grid-column: 1 / span 2;
     justify-self: start;
-    padding-top: clamp(0.75rem, 1.5vw, 1.5rem);
-    padding-right: 0;
+    padding-top: 0.25rem;
     max-width: none;
   }
 
-  .footer-made-zone {
-    position: relative;
-    top: auto;
-    right: auto;
+  .footer-cta-wrap {
     grid-column: 3;
     justify-self: end;
-    align-self: start;
-    margin-top: 0;
+    width: 100%;
+    max-width: 26rem;
   }
 
-  .footer-made-sticker {
-    width: min(24vw, 20rem);
-    transform: rotate(8deg);
+  .footer-cta-sticker .floating-sticker__img {
+    width: 7.25rem;
   }
 
   /* Band 2 */
@@ -216,7 +199,7 @@
     grid-column: 1;
     justify-self: start;
     width: 100%;
-    max-width: 36rem;
+    max-width: 32rem;
   }
 
   .footer-focus-zone {
@@ -231,22 +214,14 @@
   }
 
   .footer-focus-sticker {
-    width: min(18vw, 17rem);
+    width: min(22vw, 19.5rem);
     transform: rotate(10deg);
   }
 
-  .footer-utility-right {
-    grid-column: 3;
-    justify-self: start;
-    width: 100%;
-    max-width: 24rem;
-    padding-top: 0;
-  }
-
-  /* Band 3 — CTA aligns with Follow us / Contact column */
+  /* Band 3 — Brand signature on left, Follow us / Contact on right */
   .footer-band--close {
     align-items: end;
-    padding-top: 0.5rem;
+    padding-top: 0.25rem;
   }
 
   .footer-brand {
@@ -256,34 +231,31 @@
     padding-bottom: 0.25rem;
   }
 
-  .footer-cta-wrap {
+  .footer-utility-right {
     grid-column: 3;
     justify-self: start;
     order: unset;
     width: 100%;
-    max-width: 24rem;
+    max-width: 23rem;
+    padding-top: 0;
   }
 
   .footer-wordmark {
-    width: min(36vw, 28rem);
+    width: min(30vw, 22rem);
   }
 }
 
 @media (min-width: 1280px) {
   .footer-layout {
-    column-gap: clamp(3.5rem, 6.5vw, 6rem);
-  }
-
-  .footer-made-sticker {
-    width: min(22vw, 21rem);
+    column-gap: clamp(3rem, 5.5vw, 5rem);
   }
 
   .footer-focus-sticker {
-    width: min(16vw, 18rem);
+    width: min(20vw, 21rem);
   }
 
-  .footer-utility-right,
-  .footer-cta-wrap {
-    max-width: 26rem;
+  .footer-cta-wrap,
+  .footer-utility-right {
+    max-width: 24rem;
   }
 }

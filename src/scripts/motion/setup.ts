@@ -1,28 +1,14 @@
-import type gsapType from "gsap";
-import type { ScrollTrigger as ScrollTriggerType } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-type GsapBundle = {
-  gsap: typeof gsapType;
-  ScrollTrigger: typeof ScrollTriggerType;
-};
+let registered = false;
 
-let bundlePromise: Promise<GsapBundle> | null = null;
-
-/** Load GSAP + ScrollTrigger once, on demand. */
+/** Register GSAP plugins once for the whole site. */
 export function ensureGsap() {
-  if (!bundlePromise) {
-    bundlePromise = Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
-      ([gsapMod, scrollTriggerMod]) => {
-        gsapMod.default.registerPlugin(scrollTriggerMod.ScrollTrigger);
-        return {
-          gsap: gsapMod.default,
-          ScrollTrigger: scrollTriggerMod.ScrollTrigger,
-        };
-      },
-    );
-  }
-
-  return bundlePromise;
+  if (registered) return { gsap, ScrollTrigger };
+  gsap.registerPlugin(ScrollTrigger);
+  registered = true;
+  return { gsap, ScrollTrigger };
 }
 
 export function prefersReducedMotion() {

@@ -1,23 +1,17 @@
 ---
+import { Image } from "astro:assets";
+import { clientLogos, type ClientLogo } from "../../content/clientLogos";
+
 interface Props {
   label?: string;
-  logos?: readonly string[];
+  logos?: readonly ClientLogo[];
   maskColor?: string;
   class?: string;
 }
 
-const defaultLogos = [
-  "Nexa Tech",
-  "Pulse Global",
-  "Vanguard",
-  "Kroma Studio",
-  "Hyperion Labs",
-  "Aether OS",
-] as const;
-
 const {
   label = "Trusted By Teams At",
-  logos = defaultLogos,
+  logos = clientLogos,
   maskColor = "var(--color-brand-yellow)",
   class: className = "",
 } = Astro.props;
@@ -36,31 +30,30 @@ const track = [...logos, ...logos];
   </p>
 
   <div class="trusted-marquee-viewport relative overflow-hidden">
-    <div
-      class="trusted-marquee-fade trusted-marquee-fade--left pointer-events-none absolute inset-y-0 left-0 z-10"
-      aria-hidden="true"
-    />
-    <div
-      class="trusted-marquee-fade trusted-marquee-fade--right pointer-events-none absolute inset-y-0 right-0 z-10"
-      aria-hidden="true"
-    />
-
     <div class="flex overflow-hidden whitespace-nowrap select-none" aria-hidden="false">
-      <div class="trusted-marquee-track flex shrink-0 items-center gap-10 pr-10 md:gap-12 md:pr-12">
+      <div class="trusted-marquee-track flex shrink-0 items-center gap-5 pr-5 md:gap-7 md:pr-7">
         {
-          track.map((logo) => (
-            <span class="font-display text-base font-black tracking-tight text-charcoal/45 md:text-lg">
-              {logo}
-            </span>
+          track.map((item) => (
+            <Image
+              src={item.image}
+              alt={item.name}
+              class="marquee-logo-img h-8 w-auto max-w-[9rem] object-contain md:h-11 md:max-w-[12rem] opacity-60 grayscale contrast-125 transition-opacity"
+              loading="eager"
+              decoding="async"
+            />
           ))
         }
       </div>
-      <div class="trusted-marquee-track flex shrink-0 items-center gap-10 pr-10 md:gap-12 md:pr-12" aria-hidden="true">
+      <div class="trusted-marquee-track flex shrink-0 items-center gap-5 pr-5 md:gap-7 md:pr-7" aria-hidden="true">
         {
-          track.map((logo) => (
-            <span class="font-display text-base font-black tracking-tight text-charcoal/45 md:text-lg">
-              {logo}
-            </span>
+          track.map((item) => (
+            <Image
+              src={item.image}
+              alt=""
+              class="marquee-logo-img h-8 w-auto max-w-[9rem] object-contain md:h-11 md:max-w-[12rem] opacity-60 grayscale contrast-125 transition-opacity"
+              loading="eager"
+              decoding="async"
+            />
           ))
         }
       </div>
@@ -71,42 +64,18 @@ const track = [...logos, ...logos];
 <style>
   .trusted-marquee-viewport {
     overflow: hidden;
-  }
-
-  .trusted-marquee-fade {
-    width: 4rem;
-  }
-
-  @media (min-width: 768px) {
-    .trusted-marquee-fade {
-      width: 6rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .trusted-marquee-fade {
-      width: 7.5rem;
-    }
-  }
-
-  .trusted-marquee-fade--left {
-    background: linear-gradient(
+    mask-image: linear-gradient(
       to right,
-      var(--trusted-marquee-mask) 0%,
-      color-mix(in srgb, var(--trusted-marquee-mask) 96%, transparent) 22%,
-      color-mix(in srgb, var(--trusted-marquee-mask) 72%, transparent) 48%,
-      color-mix(in srgb, var(--trusted-marquee-mask) 32%, transparent) 72%,
+      transparent 0%,
+      black 15%,
+      black 85%,
       transparent 100%
     );
-  }
-
-  .trusted-marquee-fade--right {
-    background: linear-gradient(
-      to left,
-      var(--trusted-marquee-mask) 0%,
-      color-mix(in srgb, var(--trusted-marquee-mask) 96%, transparent) 22%,
-      color-mix(in srgb, var(--trusted-marquee-mask) 72%, transparent) 48%,
-      color-mix(in srgb, var(--trusted-marquee-mask) 32%, transparent) 72%,
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 15%,
+      black 85%,
       transparent 100%
     );
   }

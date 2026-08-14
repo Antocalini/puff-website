@@ -21,6 +21,7 @@ Thumbs.db
 src/assets/images/_faq-*
 lighthouse*.json
 lh-*.json
+*.report.html
 .tmp/
 
 # Vercel
