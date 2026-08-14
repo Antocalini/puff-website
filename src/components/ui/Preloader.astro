@@ -23,12 +23,24 @@
     ))
   }
 
-  <!-- Counter -->
-  <div
-    class="preloader-counter-container absolute top-6 right-6 z-[110] font-display text-6xl font-black text-transparent md:top-8 md:right-12 md:text-8xl lg:text-9xl xl:text-[10rem]"
-    style="-webkit-text-stroke: 0.35px #ffd100;"
-  >
-    <span id="preloader-counter">0</span>%
+  <!-- Counter SVG (Razor-thin hairline vector outline) -->
+  <div class="preloader-counter-container absolute top-4 right-4 z-[110] w-44 md:top-6 md:right-8 md:w-64 lg:w-80 pointer-events-none select-none">
+    <svg viewBox="0 0 240 100" class="w-full h-auto overflow-visible">
+      <text
+        id="preloader-counter"
+        x="235"
+        y="82"
+        text-anchor="end"
+        fill="none"
+        stroke="#ffd100"
+        stroke-width="0.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        font-family="'Bebas Neue', sans-serif"
+        font-size="90"
+        font-weight="400"
+      >0%</text>
+    </svg>
   </div>
 </div>
 
@@ -90,7 +102,7 @@
         duration: 1.0,
         ease: "power2.out",
         onUpdate: () => {
-          counterEl.innerText = Math.round(counterObj.value).toString();
+          counterEl.textContent = Math.round(counterObj.value) + "%";
         },
       },
       0
