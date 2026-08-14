@@ -35,6 +35,11 @@
 <script>
   import gsap from "gsap";
 
+  // Track client-side transitions in Astro View Transitions
+  document.addEventListener("astro:before-preparation", () => {
+    (window as any).__puff_is_client_nav = true;
+  });
+
   function initPreloader() {
     const preloader = document.getElementById("puff-preloader");
     const counterEl = document.getElementById("preloader-counter");
@@ -42,9 +47,14 @@
 
     // Only run preloader on main landing page ("/")
     const isLanding = window.location.pathname === "/" || window.location.pathname === "";
-    const hasSeenPreloader = sessionStorage.getItem("puff_preloader_seen");
+    
+    // Check if load is an internal client-side navigation or coming from a work subpage
+    const isClientNav = (window as any).__puff_is_client_nav === true;
+    const referrer = document.referrer;
+    const isFromWork = Boolean(referrer && (referrer.includes("/work/") || referrer.includes("/work")));
 
-    if (!isLanding || hasSeenPreloader) {
+    // If not on landing OR coming from internal work navigation -> hide preloader
+    if (!isLanding || isClientNav || isFromWork) {
       preloader.style.display = "none";
       document.body.style.overflow = "";
       return;
@@ -66,7 +76,6 @@
       onComplete: () => {
         document.body.style.overflow = "";
         preloader.style.display = "none";
-        sessionStorage.setItem("puff_preloader_seen", "true");
         document.dispatchEvent(new CustomEvent("preloader:complete"));
       },
     });
@@ -78,15 +87,15 @@
       counterObj,
       {
         value: 100,
-        duration: 1.0, // Numbers load fast
+        duration: 1.0,
         ease: "power2.out",
         onUpdate: () => {
           counterEl.innerText = Math.round(counterObj.value).toString();
         },
       },
-      0 // Start at time 0
+      0
     )
-    // 1. Draw outline (slow like original)
+    // 1. Draw outline
     .to(
       ".preloader-logo-outline path",
       {
@@ -96,7 +105,7 @@
       },
       0
     )
-    // 2. Fill the logo from bottom to top (slow like original)
+    // 2. Fill the logo from bottom to top
     .to(
       ".preloader-logo-fill",
       {
@@ -106,7 +115,7 @@
       },
       "-=0.4"
     )
-    // 3. Hide the outline stroke as the fill completes
+    // 3. Hide outline stroke
     .to(
       ".preloader-logo-outline",
       {
@@ -117,7 +126,7 @@
     )
     // 4. Pause for a split second
     .to({}, { duration: 0.25 })
-    // 5. Stagger columns sliding up (slow and graceful)
+    // 5. Stagger columns sliding up
     .to(
       ".preloader-col",
       {
@@ -136,7 +145,7 @@
         duration: 1.0,
         ease: "power4.inOut",
       },
-      "-=1.2" // Sync with columns
+      "-=1.2"
     );
   }
 
