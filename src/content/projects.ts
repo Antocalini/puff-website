@@ -11,6 +11,8 @@ import ogiLogo from "../assets/images/logos/ogi-logo.png";
 import ogiBox from "../assets/images/projects/ogi/ogi-box.webp";
 import ogiMatcha from "../assets/images/projects/ogi/ogi-matcha.webp";
 import ogiPlace from "../assets/images/projects/ogi/ogi-place.webp";
+import ogiCoffeeDonuts from "../assets/images/projects/ogi/ogi-coffee-donuts.jpeg";
+import ogiChocolateFrappe from "../assets/images/projects/ogi/ogi-chocolate-frappe.jpeg";
 import ravagoThumb from "../assets/images/ravago-thumbnail.webp";
 import ravagoLogo from "../assets/images/logos/ravago-logo.png";
 import ravagoCorporateKit from "../assets/images/projects/ravago/ravago-corporate-kit.webp";
@@ -179,6 +181,8 @@ export const projects: readonly Project[] = [
       { label: "Delivery Bag Mockup", ratio: "standard", span: "full", src: ogiBox.src },
       { label: "Matcha Product Container", ratio: "portrait", span: "full", position: "upper", src: ogiMatcha.src },
       { label: "Spatial Environment Collateral", ratio: "landscape", span: "full", src: ogiPlace.src },
+      { label: "Branded Coffee Cup & Bakery Selection", ratio: "standard", span: "full", src: ogiCoffeeDonuts.src },
+      { label: "Chocolate Frappé Product Label", ratio: "standard", span: "full", src: ogiChocolateFrappe.src },
     ],
     bg: "bg-purple-900",
     textColor: "text-paper",
