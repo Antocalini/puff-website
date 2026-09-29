@@ -1,0 +1,254 @@
+---
+/**
+ * Cartoon Neo-Brutalist Cursor:
+ * - Playful, chunky cartoon pointer with thick black stroke & neo-brutalist hard drop shadow.
+ * - Dynamic color contrast: flips fill color based on light (yellow/paper) vs dark (ink) backgrounds.
+ * - Cartoon physics: squash on click, tilt & pop on interactive hovers.
+ * - Exact (0, 0) hotspot click alignment.
+ * - Auto-disabled on touch/mobile devices.
+ */
+---
+
+<div
+  id="cartoon-cursor"
+  data-cartoon-cursor
+  class="pointer-events-none fixed left-0 top-0 z-[99999] opacity-0 will-change-transform"
+  aria-hidden="true"
+>
+  <div data-cursor-gfx class="relative origin-top-left will-change-transform">
+    <!-- Cartoon Pointer SVG with thick stroke & hard brutalist shadow -->
+    <svg
+      data-cursor-svg
+      class="size-8 transition-colors duration-150"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style="filter: drop-shadow(2.5px 2.5px 0px #111111);"
+    >
+      <!-- Base Arrow Path with rounded joints & chunky 2.5px border -->
+      <path
+        data-cursor-fill
+        d="M 4 4 L 4 23 L 10.5 17.5 L 14.5 26.5 L 18.5 24.5 L 14.5 15.5 L 22.5 15.5 Z"
+        fill="#111111"
+        stroke="#111111"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <!-- Cartoon Highlight Dot / Streak inside arrow -->
+      <path
+        data-cursor-highlight
+        d="M 6.5 7 L 6.5 15 L 9 13 Z"
+        fill="#ffd100"
+        opacity="0.9"
+      />
+    </svg>
+  </div>
+</div>
+
+<style is:global>
+  /* Hide default cursor only on fine-pointer desktop devices */
+  @media (pointer: fine) and (hover: hover) {
+    html,
+    body,
+    a,
+    button,
+    [role="button"],
+    input,
+    select,
+    textarea,
+    summary,
+    .cursor-pointer,
+    [data-deck-card] {
+      cursor: none !important;
+    }
+
+    #cartoon-cursor {
+      display: block;
+    }
+  }
+
+  /* Keep native cursor/touch on mobile */
+  @media (pointer: coarse), (hover: none) {
+    #cartoon-cursor {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  import { ensureGsap, prefersReducedMotion } from "../../scripts/motion/setup";
+
+  function initCartoonCursor() {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(pointer: coarse), (hover: none)").matches) return;
+    if (prefersReducedMotion()) return;
+
+    const cursor = document.querySelector<HTMLElement>("[data-cartoon-cursor]");
+    const gfx = document.querySelector<HTMLElement>("[data-cursor-gfx]");
+    const fillPath = document.querySelector<SVGPathElement>("[data-cursor-fill]");
+    const highlightPath = document.querySelector<SVGPathElement>("[data-cursor-highlight]");
+    if (!cursor || !gfx || !fillPath || !highlightPath) return;
+
+    const { gsap } = ensureGsap();
+
+    // Ultra-snappy responsive follow (0.04s for instant feel)
+    const xTo = gsap.quickTo(cursor, "x", { duration: 0.04, ease: "power2.out" });
+    const yTo = gsap.quickTo(cursor, "y", { duration: 0.04, ease: "power2.out" });
+
+    let isVisible = false;
+    let isDarkBg = false;
+    let isHovering = false;
+
+    // Palette tokens matching Puff Design System
+    const COLOR_LIME = "#D4FF00";
+    const COLOR_YELLOW = "#FFD100";
+    const COLOR_PINK = "#FF4893";
+    const COLOR_INK = "#111111";
+    const COLOR_WHITE = "#FFFFFF";
+
+    const updateColors = () => {
+      if (isHovering) {
+        // Hover state: energetic pop
+        if (isDarkBg) {
+          fillPath.setAttribute("fill", COLOR_LIME);
+          highlightPath.setAttribute("fill", COLOR_WHITE);
+        } else {
+          fillPath.setAttribute("fill", COLOR_PINK);
+          highlightPath.setAttribute("fill", COLOR_WHITE);
+        }
+      } else {
+        // Normal state: high contrast
+        if (isDarkBg) {
+          fillPath.setAttribute("fill", COLOR_YELLOW);
+          highlightPath.setAttribute("fill", COLOR_INK);
+        } else {
+          fillPath.setAttribute("fill", COLOR_INK);
+          highlightPath.setAttribute("fill", COLOR_YELLOW);
+        }
+      }
+    };
+
+    const showCursor = () => {
+      if (!isVisible) {
+        gsap.to(cursor, { opacity: 1, duration: 0.12 });
+        isVisible = true;
+      }
+    };
+
+    const hideCursor = () => {
+      gsap.to(cursor, { opacity: 0, duration: 0.12 });
+      isVisible = false;
+    };
+
+    let lastCheckTime = 0;
+    const checkBackgroundTone = (clientX: number, clientY: number) => {
+      const now = performance.now();
+      if (now - lastCheckTime < 45) return;
+      lastCheckTime = now;
+
+      const elem = document.elementFromPoint(clientX, clientY);
+      if (!elem) return;
+
+      const darkContext = elem.closest(
+        '[data-nav-tone="ink"], .bg-ink, .bg-charcoal, .bg-black, footer, [data-tone="dark"], .bg-\\[\\#FF5500\\], .bg-\\[\\#2447F5\\]'
+      );
+
+      const newIsDark = darkContext !== null;
+      if (newIsDark !== isDarkBg) {
+        isDarkBg = newIsDark;
+        updateColors();
+      }
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      showCursor();
+      xTo(e.clientX);
+      yTo(e.clientY);
+      checkBackgroundTone(e.clientX, e.clientY);
+    };
+
+    // Cartoon squash & bounce on click
+    const onMouseDown = () => {
+      gsap.to(gfx, {
+        scaleX: 0.82,
+        scaleY: 0.82,
+        rotate: -14,
+        duration: 0.1,
+        ease: "power2.out",
+      });
+    };
+
+    const onMouseUp = () => {
+      gsap.to(gfx, {
+        scaleX: isHovering ? 1.25 : 1,
+        scaleY: isHovering ? 1.25 : 1,
+        rotate: isHovering ? -8 : 0,
+        duration: 0.25,
+        ease: "back.out(2.5)",
+      });
+    };
+
+    // Interactive Hover: tilts and scales with cartoon bounce
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest<HTMLElement>(
+        'a, button, [data-deck-card], [data-cursor], .cursor-pointer, input, select, textarea, summary, [role="button"], [data-faq-trigger]'
+      );
+
+      if (target) {
+        isHovering = true;
+        updateColors();
+        gsap.to(gfx, {
+          scale: 1.25,
+          rotate: -8,
+          duration: 0.22,
+          ease: "back.out(2.2)",
+        });
+      }
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest<HTMLElement>(
+        'a, button, [data-deck-card], [data-cursor], .cursor-pointer, input, select, textarea, summary, [role="button"], [data-faq-trigger]'
+      );
+
+      if (target) {
+        isHovering = false;
+        updateColors();
+        gsap.to(gfx, {
+          scale: 1,
+          rotate: 0,
+          duration: 0.2,
+          ease: "power2.out",
+        });
+      }
+    };
+
+    updateColors();
+
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("mousedown", onMouseDown, { passive: true });
+    window.addEventListener("mouseup", onMouseUp, { passive: true });
+    document.addEventListener("mouseover", handleMouseOver, { passive: true });
+    document.addEventListener("mouseout", handleMouseOut, { passive: true });
+    document.addEventListener("mouseleave", hideCursor);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mouseup", onMouseUp);
+      document.removeEventListener("mouseover", handleMouseOver);
+      document.removeEventListener("mouseout", handleMouseOut);
+      document.removeEventListener("mouseleave", hideCursor);
+    };
+  }
+
+  let cleanup: (() => void) | undefined;
+  const boot = () => {
+    cleanup?.();
+    cleanup = initCartoonCursor();
+  };
+
+  document.addEventListener("astro:page-load", boot);
+  document.addEventListener("astro:before-swap", () => cleanup?.());
+</script>

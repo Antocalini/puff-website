@@ -5,6 +5,19 @@ import faqLoop from "../../assets/images/faq.webm";
 import "../../styles/sections/faq.css";
 
 const { heading, items } = landingContent.faq.value;
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
 ---
 
 <section
@@ -12,6 +25,7 @@ const { heading, items } = landingContent.faq.value;
   data-nav-tone="yellow"
   class="relative w-full bg-brand-yellow flex flex-col pt-24 pb-12 overflow-x-clip"
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
   
   <!-- Header Area -->
   <div class="w-full max-w-screen-2xl mx-auto px-gutter relative z-20 flex flex-col items-center justify-center pt-8 md:pt-16 pb-8 md:pb-16 min-h-[150px] md:min-h-[300px]">
