@@ -6,7 +6,6 @@ import TrustedByMarquee from "../ui/TrustedByMarquee.astro";
 import workSticker from "../../assets/images/stickers/work.webp";
 import cloudSticker from "../../assets/images/stickers/cloud.webp";
 import numberOneSticker from "../../assets/images/stickers/number-one.webp";
-import heroFeatureImage from "../../assets/images/spanish-flowers-packaging.png";
 import "../../styles/sections/hero.css";
 
 const { body, primaryCta } = landingContent.hero.value;
@@ -47,40 +46,70 @@ const heroStickers: HeroSticker[] = [
 >
 
   <div
-    class="hero-shell pointer-events-none relative z-10 mx-auto flex max-w-content flex-col items-center justify-center px-gutter text-center md:min-h-dvh md:pb-24 md:pt-36"
+    class="hero-shell pointer-events-none relative z-10 mx-auto flex min-h-dvh max-w-content flex-col items-center justify-between px-gutter text-center pt-[calc(var(--site-header-h,5.5rem)+1rem)] pb-2 md:pb-4"
   >
-    <div class="hero-title-wrap relative z-20 mx-auto w-full">
-      <!-- Hero peek: tiny 9:16 on mobile only → landscape on desktop -->
-      <span
-        data-media-origin
-        class="pointer-events-none absolute left-1/2 top-[57%] z-[15] aspect-[9/16] w-[min(10.5vw,2.75rem)] -translate-x-1/2 -translate-y-1/2 md:top-[46%] md:z-20 md:aspect-16/10 md:w-[min(32vw,17.5rem)]"
-        aria-hidden="true"
-      >
-        <div
-          data-hero-media
-          data-media-tilted
-          class="hero-media h-full w-full overflow-hidden rounded-[0.65rem] border-[0.2rem] border-accent-pink bg-charcoal md:rounded-[1.25rem] md:border-[0.4rem]"
+    <!-- Center Cluster: Headline + Peek Media + Body + CTA -->
+    <div class="pointer-events-none my-auto flex flex-col items-center w-full pt-2 md:pt-4">
+      <div class="hero-title-wrap relative z-20 mx-auto w-full">
+        <!-- Hero peek: compact landscape tucked in the center between line 1 and 2 -->
+        <span
+          data-media-origin
+          class="pointer-events-none absolute left-1/2 top-[48%] z-20 aspect-video w-[min(20vw,10rem)] md:w-[min(16vw,9.5rem)] -translate-x-1/2 -translate-y-1/2"
+          aria-hidden="true"
         >
-          <div class="relative h-full w-full">
-            <Image
-              src={heroFeatureImage}
-              alt="Spanish Flowers Packaging & Printables"
-              class="h-full w-full object-cover"
-              loading="eager"
-              decoding="async"
-            />
+          <div
+            data-hero-media
+            data-media-tilted
+            class="hero-media h-full w-full overflow-hidden bg-charcoal shadow-ambient"
+          >
+            <div class="relative h-full w-full">
+              <video
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                class="h-full w-full object-cover"
+              >
+                <source src="/hero-loop.mp4" type="video/mp4" />
+              </video>
+            </div>
           </div>
-        </div>
-      </span>
+        </span>
 
-      <h1
-        class="hero-title relative w-full font-display font-black uppercase leading-[0.72] tracking-tight text-charcoal md:font-normal md:leading-[0.82] md:tracking-[0.01em]"
+        <h1
+          class="hero-title relative w-full font-display font-black uppercase tracking-tight text-charcoal"
+        >
+          <span class="relative z-10 block whitespace-nowrap">YOUR ENTIRE CREATIVE</span>
+          <span class="relative z-30 mt-1 block whitespace-nowrap md:mt-2.5">TEAM IN A BOX</span>
+        </h1>
+      </div>
+
+      <p class="relative z-[12] mt-6 max-w-[20rem] text-pretty text-[1.05rem] leading-relaxed text-charcoal/85 md:mt-8 md:max-w-2xl md:text-[1.25rem]">
+        {body}
+      </p>
+
+      <a
+        class="group btn-3d-skeuo btn-shine pointer-events-auto relative z-[12] mt-6 inline-flex min-h-14 items-center justify-center gap-4 rounded-full px-8 py-3.5 text-paper md:mt-7"
+        href={primaryCta.href}
       >
-        <span class="relative z-10 block whitespace-nowrap">Get to know</span>
-        <span class="relative z-30 mt-1 block whitespace-nowrap md:mt-2">your design</span>
-      </h1>
+        <span class="font-label text-sm md:text-base font-bold tracking-wide">
+          {primaryCta.label}
+        </span>
+        <div class="flex size-8 items-center justify-center rounded-full bg-paper/15 text-paper transition-all duration-300 group-hover:translate-x-1 group-hover:bg-brand-yellow group-hover:text-charcoal shadow-sm">
+          <svg class="size-4 stroke-[2.5]" fill="none" viewBox="0 0 16 16">
+            <path d="M3 8h9M8 3.5 12.5 8 8 12.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+      </a>
+
+      <!-- TrustedByMarquee tightly coupled below CTA -->
+      <div class="w-full mt-5 md:mt-7">
+        <TrustedByMarquee class="pointer-events-none relative z-[12] w-full" />
+      </div>
     </div>
 
+    <!-- Floating Stickers dispersed across the hero canvas -->
     {
       heroStickers.map((sticker) => (
         <div
@@ -106,26 +135,6 @@ const heroStickers: HeroSticker[] = [
         </div>
       ))
     }
-
-    <p class="relative z-[12] mt-8 max-w-[20rem] text-pretty text-[1.05rem] leading-relaxed text-charcoal/85 md:mt-12 md:max-w-2xl md:text-[1.35rem]">
-      {body}
-    </p>
-
-    <a
-      class="group btn-3d-skeuo btn-shine pointer-events-auto relative z-[12] mt-8 inline-flex min-h-16 items-center justify-center gap-4 rounded-full px-9 py-4 text-paper md:mt-12"
-      href={primaryCta.href}
-    >
-      <span class="font-label text-sm md:text-base font-bold tracking-wide">
-        {primaryCta.label}
-      </span>
-      <div class="flex size-9 items-center justify-center rounded-full bg-paper/15 text-paper transition-all duration-300 group-hover:translate-x-1 group-hover:bg-brand-yellow group-hover:text-charcoal shadow-sm">
-        <svg class="size-4 stroke-[2.5]" fill="none" viewBox="0 0 16 16">
-          <path d="M3 8h9M8 3.5 12.5 8 8 12.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-      </div>
-    </a>
-
-    <TrustedByMarquee class="pointer-events-none relative z-[12] mt-6 md:mt-10" />
   </div>
 </section>
 

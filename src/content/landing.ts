@@ -150,11 +150,11 @@ export const landingContent = {
     testimonials: needsClientInput,
   },
   hero: draft({
-    eyebrow: "Puff Cross Media / Draft",
-    heading: "Get to know your design",
-    body: "Design: it's all about momentum. Discover Puff—the on-demand creative team that keeps your brand moving.",
+    eyebrow: "Design-as-a-Service / USA & Texas",
+    heading: "Your Entire Creative Team In A Box",
+    body: "From high-impact packaging to digital experiences. World-class senior design delivered continuously in 48 hours. Pause or cancel anytime.",
     primaryCta: { label: "See Plans", href: "#pricing" },
-    secondaryCta: { label: "See how it works", href: "#how-it-works" },
+    secondaryCta: { label: "How It Works", href: "#how-it-works" },
   }),
   process: draft({
     heading: "A simple rhythm for creative work.",

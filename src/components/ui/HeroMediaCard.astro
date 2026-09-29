@@ -1,7 +1,4 @@
 ---
-import { Image } from "astro:assets";
-import heroFeatureImage from "../../assets/images/spanish-flowers-packaging.png";
-
 type Props = {
   class?: string;
 };
@@ -12,18 +9,21 @@ const { class: className } = Astro.props;
 <div
   data-hero-media
   class:list={[
-    "hero-media pointer-events-none absolute left-1/2 top-[46%] z-20 hidden w-[min(38vw,21rem)] -translate-x-1/2 -translate-y-1/2 rotate-[-4deg] overflow-hidden rounded-[1.25rem] border-[0.4rem] border-accent-pink md:block",
+    "hero-media pointer-events-none absolute left-1/2 top-[46%] z-20 hidden w-[min(38vw,21rem)] -translate-x-1/2 -translate-y-1/2 overflow-hidden bg-charcoal md:block",
     className,
   ]}
 >
   <div class="hero-media__frame relative aspect-16/10 bg-charcoal">
-    <Image
-      src={heroFeatureImage}
-      alt="Spanish Flowers Packaging"
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
       class="h-full w-full object-cover"
-      loading="eager"
-      decoding="async"
-    />
+    >
+      <source src="/hero-loop.mp4" type="video/mp4" />
+    </video>
   </div>
 
   <svg

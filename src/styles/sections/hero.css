@@ -20,14 +20,15 @@
 
   .hero-title {
     width: 100%;
-    font-size: clamp(4.85rem, 22.5cqi, 18rem);
-    letter-spacing: -0.02em;
+    font-size: clamp(3.25rem, 16cqi, 5.5rem);
+    letter-spacing: -0.01em;
+    line-height: 0.88;
   }
 
   @media (min-width: 768px) {
     .hero-shell {
-      padding-top: 9rem;
-      padding-bottom: 6rem;
+      padding-top: calc(var(--site-header-h, 5.5rem) + 1rem);
+      padding-bottom: 1rem;
     }
 
     .hero-title-wrap {
@@ -43,9 +44,9 @@
 
     .hero-title {
       width: auto;
-      font-size: clamp(4.5rem, 13.5vw, 11.5rem);
-      letter-spacing: 0.01em;
-      line-height: 0.82;
+      font-size: clamp(4.25rem, 10.5vw, 9rem);
+      letter-spacing: 0.005em;
+      line-height: 0.86;
     }
   }
 
@@ -58,31 +59,14 @@
   }
 
   .hero-media[data-media-tilted] {
-    transform: rotate(-4deg);
-  }
-
-  @media (min-width: 768px) {
-    .hero-media[data-media-tilted]:not([data-media-flying]) {
-      animation: hero-media-float 6.5s ease-in-out infinite;
-    }
-  }
-
-  @keyframes hero-media-float {
-    0%,
-    100% {
-      transform: rotate(-4deg) translate3d(0, 0, 0);
-    }
-
-    50% {
-      transform: rotate(-4deg) translate3d(0, -0.75rem, 0);
-    }
+    transform: rotate(-4.5deg);
   }
 
   .hero-sticker {
     display: block;
-    width: min(42vw, 11.5rem);
+    width: clamp(8.5rem, 24vw, 13rem);
     height: auto;
-    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.16));
+    filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.18));
     transition:
       transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
       filter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -98,14 +82,20 @@
   }
 
   .hero-sticker-pos--work {
+    left: clamp(0.5rem, 2.5vw, 3rem);
+    top: 13%;
     animation-delay: 0s;
   }
 
   .hero-sticker-pos--cloud {
+    right: clamp(0.5rem, 2.5vw, 3rem);
+    top: 8%;
     animation-delay: -2s;
   }
 
   .hero-sticker-pos--one {
+    left: clamp(0.5rem, 3vw, 4rem);
+    bottom: 18%;
     animation-delay: -3.6s;
   }
 
@@ -128,7 +118,7 @@
     }
 
     50% {
-      transform: translate3d(0, -0.55rem, 0);
+      transform: translate3d(0, -0.45rem, 0);
     }
   }
 
@@ -151,7 +141,7 @@
       }
 
       50% {
-        transform: translate3d(0, -0.9rem, 0);
+        transform: translate3d(0, -0.65rem, 0);
       }
     }
 
@@ -162,118 +152,36 @@
       }
 
       50% {
-        transform: rotate(calc(var(--hero-peel-tilt, 0deg) + 2.5deg));
+        transform: rotate(calc(var(--hero-peel-tilt, 0deg) + 2deg));
       }
     }
-  }
 
-  /* Closer to center than hard edges */
-  .hero-sticker-pos--work {
-    left: 0.15rem;
-    top: 14%;
-  }
-
-  .hero-sticker-pos--cloud {
-    right: 0;
-    top: 10%;
-  }
-
-  .hero-sticker-pos--one {
-    left: 0.25rem;
-    top: auto;
-    bottom: 9%;
-  }
-
-  @media (min-width: 768px) {
     .hero-sticker {
-      width: min(24vw, 320px);
+      width: clamp(12rem, 18vw, 19rem);
     }
 
     .hero-sticker-pos--work {
-      left: 1.5%;
-      top: 8%;
+      left: clamp(1rem, 3.5vw, 4.5rem);
+      top: 10%;
     }
 
     .hero-sticker-pos--cloud {
-      right: -0.25rem;
+      right: clamp(1rem, 3.5vw, 4.5rem);
       top: 6%;
     }
 
     .hero-sticker-pos--one {
-      left: 3%;
-      bottom: 28%;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .hero-sticker {
-      width: min(25vw, 380px);
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .hero-sticker {
-      width: 400px;
-    }
-
-    .hero-sticker-pos--work {
-      left: 2%;
-      top: 9%;
-    }
-
-    .hero-sticker-pos--cloud {
-      right: -0.75rem;
-      top: 7%;
-    }
-
-    .hero-sticker-pos--one {
-      left: 4.5%;
-      bottom: 30%;
+      left: clamp(1rem, 4vw, 5.5rem);
+      bottom: 16%;
     }
   }
 
   .hero-sticker-wrap--size-md .hero-sticker {
-    width: min(38vw, 10.25rem);
-  }
-
-  @media (min-width: 768px) {
-    .hero-sticker-wrap--size-md .hero-sticker {
-      width: min(21vw, 280px);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .hero-sticker-wrap--size-md .hero-sticker {
-      width: min(22vw, 320px);
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .hero-sticker-wrap--size-md .hero-sticker {
-      width: 340px;
-    }
+    width: clamp(10.5rem, 16vw, 16.5rem);
   }
 
   .hero-sticker-wrap--size-sm .hero-sticker {
-    width: min(36vw, 9.5rem);
-  }
-
-  @media (min-width: 768px) {
-    .hero-sticker-wrap--size-sm .hero-sticker {
-      width: min(18vw, 230px);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .hero-sticker-wrap--size-sm .hero-sticker {
-      width: min(19vw, 260px);
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .hero-sticker-wrap--size-sm .hero-sticker {
-      width: 280px;
-    }
+    width: clamp(9.5rem, 14.5vw, 15rem);
   }
 
   /* Peel from anchored corner — tilt base + hover lift */

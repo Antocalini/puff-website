@@ -1,7 +1,7 @@
 import type { ScrollTrigger as ScrollTriggerType } from "gsap/ScrollTrigger";
 import { ensureGsap, prefersReducedMotion } from "./setup";
 
-const RADIUS = "1.25rem";
+const RADIUS = "0px";
 
 /** First portion of the scrub is the flight; the rest holds the settled card. */
 const FLIGHT_END_DESKTOP = 0.55;
@@ -41,7 +41,6 @@ export function initMediaHandoff() {
   let lastProgress = 0;
   let scrollDirection: "forward" | "reverse" = "forward";
   const triggers: ScrollTriggerType[] = [];
-  const stage = section.querySelector<HTMLElement>("[data-media-expand-stage]");
 
   const fillStyles = (): Partial<CSSStyleDeclaration> => ({
     display: "block",
@@ -60,18 +59,6 @@ export function initMediaHandoff() {
   const read = (el: HTMLElement): Rect => {
     const r = el.getBoundingClientRect();
     return { left: r.left, top: r.top, width: r.width, height: r.height };
-  };
-
-  /** height / width from computed aspect-ratio (supports 9/16 mobile, 16/9 desktop). */
-  const targetHeightRatio = (): number => {
-    const ratio = getComputedStyle(target).aspectRatio;
-    if (ratio && ratio !== "auto") {
-      const parts = ratio.split("/").map((part) => Number.parseFloat(part.trim()));
-      if (parts.length === 2 && parts[0] > 0 && parts[1] > 0) {
-        return parts[1] / parts[0];
-      }
-    }
-    return isMobile() ? 16 / 9 : 10 / 16;
   };
 
   /** Live hero slot (shell keeps space while media is in flight). */
@@ -98,23 +85,23 @@ export function initMediaHandoff() {
    * Compute the settled (viewport-centered) rect instead of reading live DOM.
    */
   const computeSettledTarget = (): Rect => {
-    const live = read(target);
-    const width = live.width > 8 ? live.width : origin.offsetWidth;
-    const height = live.height > 8 ? live.height : width * targetHeightRatio();
+    const isDesk = !isMobile();
+    const maxW = isDesk
+      ? Math.min(window.innerWidth - (window.innerWidth >= 1024 ? 48 : 32), 1780)
+      : window.innerWidth - 16;
+    const maxH = isDesk
+      ? window.innerHeight - (window.innerHeight >= 900 ? 56 : 40)
+      : window.innerHeight - 32;
 
-    if (!stage || width < 8) return live;
+    let width = maxW;
+    let height = width * (9 / 16);
+    if (height > maxH) {
+      height = maxH;
+      width = height * (16 / 9);
+    }
 
-    const stageStyle = getComputedStyle(stage);
-    const padTop = Number.parseFloat(stageStyle.paddingTop) || 0;
-    const padBottom = Number.parseFloat(stageStyle.paddingBottom) || 0;
-    const contentHeight = stage.clientHeight - padTop - padBottom;
-
-    const container = target.closest<HTMLElement>(".max-w-content");
-    const containerRect = container?.getBoundingClientRect();
-    const left = containerRect
-      ? containerRect.left + (containerRect.width - width) / 2
-      : (window.innerWidth - width) / 2;
-    const top = padTop + (contentHeight - height) / 2;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
 
     return { left, top, width, height };
   };
@@ -128,7 +115,7 @@ export function initMediaHandoff() {
   /** Live target slot — tracks sticky section while scrolling back. */
   const readTargetLive = (): Rect => {
     const live = read(target);
-    if (live.width > 8 && live.height > 8) return live;
+    if (live.width > 100 && live.height > 100) return live;
     return computeSettledTarget();
   };
 
@@ -169,13 +156,13 @@ export function initMediaHandoff() {
       borderRadius: RADIUS,
       margin: 0,
       maxWidth: "none",
-      zIndex: 20,
+      zIndex: 40,
       boxSizing: "border-box",
       pointerEvents: "none",
     });
   };
 
-  const getFlightContainer = () => origin.parentElement || document.body;
+  const getFlightContainer = () => document.body;
 
   const flightRectAt = (flightProgress: number, from: Rect, to: Rect): { rect: Rect; rotate: number } => {
     const sizeStart = sizeFlightStart();
@@ -199,7 +186,7 @@ export function initMediaHandoff() {
         width: currentWidth,
         height: currentHeight,
       },
-      rotate: gsap.utils.interpolate(-4, 0, flightProgress),
+      rotate: 0,
     };
   };
 
@@ -212,7 +199,7 @@ export function initMediaHandoff() {
 
     const rect = lockOriginRect();
     getFlightContainer().appendChild(media);
-    setFlight(rect, -4);
+    setFlight(rect, 0);
   };
 
   const park = () => {
