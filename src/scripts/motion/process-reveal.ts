@@ -30,17 +30,88 @@ function buildTimeline(
   gsap: typeof import("gsap").default,
   section: HTMLElement,
   circle: HTMLElement,
+  stage1: HTMLElement | null,
   lines1: HTMLElement[],
   lines2: HTMLElement[],
+  hint: HTMLElement | null,
+  deckMaskInner: HTMLElement | null,
+  sticker1: HTMLElement | null,
   stickers: HTMLElement[],
   faces: HTMLElement[],
   overlays: HTMLElement[],
   badges: HTMLElement[],
   options: { pin: boolean; end: string },
 ) {
+  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+  const deckCards = isMobile ? [] : section.querySelectorAll<HTMLElement>("[data-deck-card]");
+  const mobileTrack = section.querySelector<HTMLElement>("[data-mobile-cards-track]");
+  const mobileDots = section.querySelectorAll<HTMLElement>("[data-dot-index]");
+
+  // Stage 1 initial state (completely hidden before scroll entry, NO pre-leak)
+  gsap.set(lines1, {
+    yPercent: 125,
+    force3D: true,
+  });
+
+  if (sticker1) {
+    gsap.set(sticker1, {
+      yPercent: 125,
+      autoAlpha: 0,
+      force3D: true,
+    });
+  }
+
+  if (hint) {
+    gsap.set(hint, {
+      yPercent: 125,
+      force3D: true,
+    });
+  }
+
+  if (deckMaskInner) {
+    gsap.set(deckMaskInner, {
+      yPercent: 115,
+      autoAlpha: 1,
+      force3D: true,
+    });
+  }
+
+  if (deckCards.length) {
+    gsap.set(deckCards, {
+      x: (_i, el) => parseFloat(el.dataset.stackX || "0"),
+      y: (_i, el) => parseFloat(el.dataset.stackY || "0"),
+      rotation: (_i, el) => parseFloat(el.dataset.stackRot || "0"),
+      autoAlpha: 1,
+      scale: 1,
+      force3D: true,
+    });
+  }
+
+  if (mobileTrack) {
+    gsap.set([mobileTrack, ...mobileDots], {
+      y: 40,
+      autoAlpha: 0,
+      force3D: true,
+    });
+  }
+
+  if (stage1) {
+    gsap.set(stage1, {
+      autoAlpha: 1,
+      y: 0,
+      force3D: true,
+    });
+  }
+
+  // Stage 2 initial state
+  gsap.set(lines2, {
+    yPercent: 120,
+    force3D: true,
+  });
+
   gsap.set(stickers, {
     y: -36,
-    autoAlpha: 1,
+    autoAlpha: 0,
     force3D: true,
   });
   gsap.set(faces.length ? faces : stickers, {
@@ -80,102 +151,248 @@ function buildTimeline(
       section.dataset.navTone = "yellow";
     }, 0)
 
-    // 1) Yellow stage
+    // 1) Yellow stage - Title & Sticker enter through bottom mask
     .to(lines1, {
-      y: "0%",
       yPercent: 0,
       ease: "power3.out",
-      duration: 0.8,
-      stagger: 0.15,
-    })
-    .to({}, { duration: options.pin ? 0.55 : 0.3 })
-    .to(lines1, {
-      y: "-120%",
-      yPercent: -120,
-      ease: "power3.in",
-      duration: 0.6,
-      stagger: 0.1,
-    })
+      duration: 0.9,
+      stagger: 0.08,
+    });
 
-    // 2) Black circle → solid ink
-    .to(
-      circle,
+  if (sticker1) {
+    tl.to(
+      sticker1,
       {
-        scale: options.pin ? 250 : 180,
-        ease: "expo.inOut",
-        duration: options.pin ? 1.85 : 1.35,
-        force3D: true,
-      },
-      "+=0.05",
-    )
-    .set(section, { backgroundColor: INK }, "ink-bg")
-
-    // 3) Second copy
-    .to(lines2, {
-      y: "0%",
-      yPercent: 0,
-      ease: "power3.out",
-      duration: 0.8,
-      stagger: 0.15,
-    })
-
-    // 4) Real sticker stick: drop in + clip reveal top→bottom + backing peel
-    .to(
-      stickers,
-      {
-        y: 0,
+        yPercent: 0,
+        autoAlpha: 1,
         ease: "power3.out",
-        duration: options.pin ? 0.9 : 0.7,
-        stagger: 0.16,
+        duration: 0.9,
       },
-      "+=0.05",
-    )
-    .to(
-      faces.length ? faces : stickers,
+      "<"
+    );
+  }
+
+  if (deckMaskInner) {
+    // Deck rises simultaneously through bottom mask
+    tl.to(
+      deckMaskInner,
       {
-        clipPath: CLIP_SHOWN,
-        WebkitClipPath: CLIP_SHOWN,
-        ease: "power2.inOut",
-        duration: options.pin ? 1.05 : 0.85,
-        stagger: 0.16,
+        yPercent: 0,
+        ease: "power3.out",
+        duration: 0.9,
       },
       "<",
-    )
-    .to(
-      overlays,
-      {
-        yPercent: 105,
-        ease: "power2.inOut",
-        duration: options.pin ? 1.05 : 0.85,
-        stagger: 0.16,
-      },
-      "<0.05",
-    )
-    .to(
-      badges,
-      {
-        autoAlpha: 1,
-        scale: 1,
-        ease: "back.out(2)",
-        duration: 0.35,
-        stagger: 0.16,
-      },
-      "<0.45",
-    )
+    );
+  }
 
-    // Stay mounted while scrolling forward; reverse scrub undoes the stick
-    .to({}, { duration: options.pin ? 1.1 : 0.5 });
+  if (deckCards.length) {
+    // Simultaneously as deck rises, cards smoothly fan out into their arc
+    tl.to(
+      deckCards,
+      {
+        x: (_i, el) => parseFloat(el.dataset.spreadX || "0"),
+        y: (_i, el) => parseFloat(el.dataset.spreadY || "0"),
+        rotation: (_i, el) => parseFloat(el.dataset.spreadRot || "0"),
+        ease: "power3.out",
+        duration: 0.95,
+        stagger: 0.04,
+      },
+      "<0.1",
+    );
+  }
+
+  if (hint) {
+    tl.to(
+      hint,
+      {
+        yPercent: 0,
+        ease: "power3.out",
+        duration: 0.7,
+      },
+      "<0.2",
+    );
+  }
+
+  if (mobileTrack) {
+    tl.to(
+      [mobileTrack, ...mobileDots],
+      {
+        y: 0,
+        autoAlpha: 1,
+        ease: "power3.out",
+        duration: 0.8,
+      },
+      "<",
+    );
+  }
+
+  // Hold for interaction / reading
+  tl.to({}, { duration: options.pin ? 0.75 : 0.4 })
+
+    // 1b) SMOOTH MASK EXIT: All stage 1 elements slide up through their masks cleanly
+    .to(lines1, {
+      yPercent: -130,
+      ease: "power3.in",
+      duration: 0.65,
+      stagger: 0.05,
+    });
+
+  if (sticker1) {
+    tl.to(
+      sticker1,
+      {
+        yPercent: -130,
+        autoAlpha: 0,
+        ease: "power3.in",
+        duration: 0.65,
+      },
+      "<"
+    );
+  }
+
+  if (deckMaskInner) {
+    tl.to(
+      deckMaskInner,
+      {
+        yPercent: -125,
+        ease: "power3.in",
+        duration: 0.65,
+      },
+      "<",
+    );
+  }
+
+  if (hint) {
+    tl.to(
+      hint,
+      {
+        yPercent: -130,
+        ease: "power3.in",
+        duration: 0.55,
+      },
+      "<",
+    );
+  }
+
+  if (deckCards.length) {
+    tl.to(
+      deckCards,
+      {
+        autoAlpha: 0,
+        duration: 0.45,
+        ease: "power2.in",
+      },
+      "<0.15",
+    );
+  }
+
+  if (mobileTrack) {
+    tl.to(
+      [mobileTrack, ...mobileDots],
+      {
+        y: -50,
+        autoAlpha: 0,
+        ease: "power2.in",
+        duration: 0.55,
+      },
+      "<",
+    );
+  }
+
+  if (stage1) {
+    tl.to(
+      stage1,
+      {
+        autoAlpha: 0,
+        duration: 0.1,
+      },
+      ">",
+    );
+  }
+
+  // 2) Black circle → solid ink
+  tl.to(
+    circle,
+    {
+      scale: options.pin ? 250 : 180,
+      ease: "expo.inOut",
+      duration: options.pin ? 1.85 : 1.35,
+      force3D: true,
+    },
+    "+=0.05",
+  )
+  .set(section, { backgroundColor: INK }, "ink-bg")
+
+  // 3) Second copy enters through mask
+  .to(lines2, {
+    yPercent: 0,
+    ease: "power3.out",
+    duration: 0.8,
+    stagger: 0.15,
+  })
+
+  // 4) Real sticker stick: drop in + clip reveal top→bottom + backing peel
+  .to(
+    stickers,
+    {
+      y: 0,
+      autoAlpha: 1,
+      ease: "power3.out",
+      duration: options.pin ? 0.9 : 0.7,
+      stagger: 0.16,
+    },
+    "+=0.05",
+  )
+  .to(
+    faces.length ? faces : stickers,
+    {
+      clipPath: CLIP_SHOWN,
+      WebkitClipPath: CLIP_SHOWN,
+      ease: "power2.inOut",
+      duration: options.pin ? 1.05 : 0.85,
+      stagger: 0.16,
+    },
+    "<",
+  )
+  .to(
+    overlays,
+    {
+      yPercent: 105,
+      ease: "power2.inOut",
+      duration: options.pin ? 1.05 : 0.85,
+      stagger: 0.16,
+    },
+    "<0.05",
+  )
+  .to(
+    badges,
+    {
+      autoAlpha: 1,
+      scale: 1,
+      ease: "back.out(2)",
+      duration: 0.35,
+      stagger: 0.16,
+    },
+    "<0.45",
+  )
+
+  // Stay mounted while scrolling forward; reverse scrub undoes the stick
+  .to({}, { duration: options.pin ? 1.1 : 0.5 });
 
   return tl;
 }
 
-export async function initProcessReveal() {
-  const { gsap, ScrollTrigger } = await ensureGsap();
+export function initProcessReveal() {
+  const { gsap, ScrollTrigger } = ensureGsap();
 
   const section = document.querySelector<HTMLElement>("[data-process-section]");
   const circle = document.querySelector<HTMLElement>("[data-process-circle]");
+  const stage1 = document.querySelector<HTMLElement>("[data-process-stage-1]");
   const lines1 = gsap.utils.toArray<HTMLElement>("[data-process-line-1]");
   const lines2 = gsap.utils.toArray<HTMLElement>("[data-process-line-2]");
+  const hint = document.querySelector<HTMLElement>("[data-benefits-hint]");
+  const deckMaskInner = document.querySelector<HTMLElement>("[data-deck-mask-inner]");
+  const sticker1 = document.querySelector<HTMLElement>("[data-process-sticker-1]");
 
   if (!section || !circle || lines1.length === 0 || lines2.length === 0) {
     return () => undefined;
@@ -198,7 +415,10 @@ export async function initProcessReveal() {
     if (prefersReducedMotion()) {
       gsap.set(section, { backgroundColor: INK });
       gsap.set(circle, { autoAlpha: 0, scale: 200 });
+      if (stage1) gsap.set(stage1, { display: "none" });
       gsap.set(lines1, { display: "none" });
+      if (hint) gsap.set(hint, { display: "none" });
+      if (deckMaskInner) gsap.set(deckMaskInner, { display: "none" });
       gsap.set(lines2, { yPercent: 0, y: 0, autoAlpha: 1 });
       gsap.set(stickers, { autoAlpha: 1, y: 0 });
       gsap.set(faces.length ? faces : stickers, {
@@ -215,8 +435,12 @@ export async function initProcessReveal() {
       gsap,
       section,
       circle,
+      stage1,
       lines1,
       lines2,
+      hint,
+      deckMaskInner,
+      sticker1,
       stickers,
       faces,
       overlays,
@@ -242,6 +466,12 @@ export async function initProcessReveal() {
       tl.kill();
       gsap.set(section, { clearProps: "backgroundColor" });
       gsap.set(circle, { clearProps: "opacity,visibility,transform" });
+      if (stage1) gsap.set(stage1, { clearProps: "all" });
+      gsap.set(lines1, { clearProps: "all" });
+      if (sticker1) gsap.set(sticker1, { clearProps: "all" });
+      gsap.set(lines2, { clearProps: "all" });
+      if (hint) gsap.set(hint, { clearProps: "all" });
+      if (deckMaskInner) gsap.set(deckMaskInner, { clearProps: "all" });
       gsap.set(stickers, { clearProps: "transform,opacity,visibility" });
       gsap.set(faces, { clearProps: "clipPath" });
     };

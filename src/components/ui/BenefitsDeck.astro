@@ -1,0 +1,383 @@
+---
+/**
+ * Benefits Presentation:
+ * - Desktop: GSAP-driven deck that enters stacked with ScrollTrigger,
+ *   fans out automatically into an arc spread, and enables focused hover inspection.
+ * - Mobile: Ultra-smooth touch swipeable snap carousel with active pagination dots.
+ */
+const benefits = [
+  {
+    icon: "lightbulb",
+    num: "01",
+    tag: "UNLIMITED",
+    title: "Unlimited Requests",
+    description:
+      "Submit as many packaging, branding, and web tasks as you need. We work through your queue continuously with zero hidden fees.",
+    bg: "bg-paper text-charcoal border-charcoal",
+    iconColor: "text-charcoal",
+    stackX: -48,
+    stackY: 8,
+    stackRot: -12,
+    spreadX: -320,
+    spreadY: -12,
+    spreadRot: -15,
+    z: 10,
+  },
+  {
+    icon: "lightning",
+    num: "02",
+    tag: "SPEED",
+    title: "48-Hour Turnaround",
+    description:
+      "Get complete production-ready packaging mockups, marketing collateral, and web updates delivered in 48 hours or less.",
+    bg: "bg-brand-yellow text-charcoal border-charcoal",
+    iconColor: "text-charcoal",
+    stackX: -24,
+    stackY: 4,
+    stackRot: -7,
+    spreadX: -192,
+    spreadY: -6,
+    spreadRot: -9,
+    z: 20,
+  },
+  {
+    icon: "brain",
+    num: "03",
+    tag: "SENIOR TALENT",
+    title: "Dedicated Designers",
+    description:
+      "Work with experienced senior creative talent dedicated to your brand identity. Consistent aesthetic without rotating freelancers.",
+    bg: "bg-accent-pink text-charcoal border-charcoal",
+    iconColor: "text-charcoal",
+    stackX: -4,
+    stackY: 0,
+    stackRot: -2,
+    spreadX: -64,
+    spreadY: 0,
+    spreadRot: -3,
+    z: 30,
+  },
+  {
+    icon: "infinity",
+    num: "04",
+    tag: "PERFECTION",
+    title: "Unlimited Revisions",
+    description:
+      "Not 100% in love with the first draft? We revise, refine, and iterate on every single detail until it aligns with your exact vision.",
+    bg: "bg-accent-lime text-charcoal border-charcoal",
+    iconColor: "text-charcoal",
+    stackX: 12,
+    stackY: 0,
+    stackRot: 3,
+    spreadX: 64,
+    spreadY: 0,
+    spreadRot: 3,
+    z: 40,
+  },
+  {
+    icon: "chat",
+    num: "05",
+    tag: "WORKFLOW",
+    title: "Direct Communication",
+    description:
+      "No bureaucratic ticketing systems. Message your creative team directly via your private dashboard for fast and crystal-clear feedback.",
+    bg: "bg-accent-cobalt text-paper border-charcoal",
+    iconColor: "text-paper",
+    stackX: 32,
+    stackY: 4,
+    stackRot: 8,
+    spreadX: 192,
+    spreadY: -6,
+    spreadRot: 9,
+    z: 50,
+  },
+  {
+    icon: "check",
+    num: "06",
+    tag: "FLEXIBILITY",
+    title: "Pause or Cancel Anytime",
+    description:
+      "Scale up when launching a new product line, pause during quiet quarters, or cancel whenever needed with just one click.",
+    bg: "bg-ink text-paper border-charcoal",
+    iconColor: "text-brand-yellow",
+    stackX: 56,
+    stackY: 12,
+    stackRot: 14,
+    spreadX: 320,
+    spreadY: -12,
+    spreadRot: 15,
+    z: 60,
+  },
+] as const;
+---
+
+<div
+  class="relative mt-4 flex flex-col items-center justify-center w-full max-w-6xl select-none md:mt-6 overflow-visible py-2"
+  data-benefits-deck
+>
+  <!-- ==================== DESKTOP GSAP DECK ==================== -->
+  <div class="relative hidden md:flex h-[22rem] w-full items-center justify-center overflow-visible">
+    <!-- Inner deck core -->
+    <div class="relative flex h-[19.5rem] w-56 items-center justify-center overflow-visible">
+      {
+        benefits.map((card, i) => (
+          <article
+            tabindex="0"
+            data-deck-card
+            data-card-index={i}
+            data-stack-x={card.stackX}
+            data-stack-y={card.stackY}
+            data-stack-rot={card.stackRot}
+            data-spread-x={card.spreadX}
+            data-spread-y={card.spreadY}
+            data-spread-rot={card.spreadRot}
+            data-card-z={card.z}
+            style={`z-index: ${card.z};`}
+            class:list={[
+              "absolute inset-0 flex flex-col justify-between rounded-[1.4rem] border-2 p-4.5 text-left shadow-md will-change-transform cursor-pointer",
+              card.bg,
+            ]}
+          >
+            <!-- Top Row: Tag + Number -->
+            <div class="flex items-center justify-between border-b border-current/15 pb-2">
+              <span class="font-label text-[0.62rem] font-bold uppercase tracking-[0.14em] opacity-75">
+                {card.tag}
+              </span>
+              <span class="font-display text-xs font-black tracking-wider opacity-60">
+                0{i + 1}
+              </span>
+            </div>
+
+            <!-- Center: Big Clean Icon -->
+            <div class="my-auto flex items-center justify-center py-1">
+              {card.icon === "lightbulb" && (
+                <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+                  <path d="M9 18h6" />
+                  <path d="M10 22h4" />
+                </svg>
+              )}
+              {card.icon === "lightning" && (
+                <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+              )}
+              {card.icon === "brain" && (
+                <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04" />
+                  <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04" />
+                </svg>
+              )}
+              {card.icon === "infinity" && (
+                <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" />
+                </svg>
+              )}
+              {card.icon === "chat" && (
+                <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              )}
+              {card.icon === "check" && (
+                <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              )}
+            </div>
+
+            <!-- Bottom: Bold Title + Clear Explanatory Body -->
+            <div class="mt-auto pt-1">
+              <h3 class="font-display text-lg font-black uppercase leading-[0.95] tracking-tight">
+                {card.title}
+              </h3>
+              <p class="mt-1 font-body text-[0.74rem] font-medium leading-relaxed opacity-85">
+                {card.description}
+              </p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ==================== MOBILE SWIPEABLE CAROUSEL ==================== -->
+  <div
+    class="flex md:hidden w-full overflow-x-auto snap-x snap-mandatory gap-3 px-4 py-2 scrollbar-none"
+    data-mobile-cards-track
+  >
+    {
+      benefits.map((card, i) => (
+        <article
+          class:list={[
+            "flex-shrink-0 w-[78vw] max-w-[17.5rem] h-[19rem] flex flex-col justify-between rounded-2xl border-2 p-4.5 text-left shadow-lg snap-center",
+            card.bg,
+          ]}
+        >
+          <!-- Top Row: Tag + Number -->
+          <div class="flex items-center justify-between border-b border-current/15 pb-2">
+            <span class="font-label text-[0.62rem] font-bold uppercase tracking-[0.14em] opacity-75">
+              {card.tag}
+            </span>
+            <span class="font-display text-xs font-black tracking-wider opacity-60">
+              0{i + 1} / 06
+            </span>
+          </div>
+
+          <!-- Center: Big Clean Icon -->
+          <div class="my-auto flex items-center justify-center py-2">
+            {card.icon === "lightbulb" && (
+              <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+                <path d="M9 18h6" />
+                <path d="M10 22h4" />
+              </svg>
+            )}
+            {card.icon === "lightning" && (
+              <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+              </svg>
+            )}
+            {card.icon === "brain" && (
+              <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04" />
+                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04" />
+              </svg>
+            )}
+            {card.icon === "infinity" && (
+              <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" />
+              </svg>
+            )}
+            {card.icon === "chat" && (
+              <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+            )}
+            {card.icon === "check" && (
+              <svg class:list={["size-12", card.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            )}
+          </div>
+
+          <!-- Bottom: Bold Title + Clear Explanatory Body -->
+          <div class="mt-auto pt-1">
+            <h3 class="font-display text-lg font-black uppercase leading-[0.95] tracking-tight">
+              {card.title}
+            </h3>
+            <p class="mt-1 font-body text-[0.74rem] font-medium leading-relaxed opacity-85">
+              {card.description}
+            </p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <!-- Mobile Swipe Pagination Dots -->
+  <div class="flex md:hidden items-center justify-center gap-1.5 mt-3">
+    {
+      benefits.map((_, i) => (
+        <span
+          data-dot-index={i}
+          class:list={[
+            "size-2 rounded-full transition-all duration-300",
+            i === 0 ? "bg-charcoal w-5" : "bg-charcoal/30",
+          ]}
+        />
+      ))
+    }
+  </div>
+
+  <!-- Bottom hint: Handwriting font matching Designs at your pace -->
+  <div
+    class="text-highlight pointer-events-none mt-10 md:mt-14 text-center text-2xl md:text-3xl lg:text-[2.1rem] font-bold leading-[0.95] tracking-[0.01em] text-charcoal/90 overflow-hidden pb-1"
+  >
+    <span class="block will-change-transform" data-benefits-hint>
+      <span class="hidden md:inline">Hover any perk to inspect</span>
+      <span class="inline md:hidden">Swipe to explore benefits</span>
+    </span>
+  </div>
+</div>
+
+<script>
+  import { ensureGsap, prefersReducedMotion } from "../../scripts/motion/setup";
+
+  // Individual card hover setup (elevate and focus card)
+  function setupDeckHover() {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(max-width: 767px)").matches) return;
+    if (prefersReducedMotion()) return;
+
+    const cards = document.querySelectorAll<HTMLElement>("[data-deck-card]");
+    if (!cards.length) return;
+
+    const { gsap } = ensureGsap();
+
+    cards.forEach((card) => {
+      card.addEventListener("mouseenter", () => {
+        const spreadY = parseFloat(card.dataset.spreadY || "0");
+        gsap.to(card, {
+          y: spreadY - 32,
+          rotation: 0,
+          scale: 1.1,
+          zIndex: 100,
+          duration: 0.32,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      });
+
+      card.addEventListener("mouseleave", () => {
+        const spreadY = parseFloat(card.dataset.spreadY || "0");
+        const spreadRot = parseFloat(card.dataset.spreadRot || "0");
+        const z = card.dataset.cardZ || "10";
+        gsap.to(card, {
+          y: spreadY,
+          rotation: spreadRot,
+          scale: 1,
+          zIndex: z,
+          duration: 0.36,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      });
+    });
+  }
+
+  // Sync mobile swipe dot indicators with scroll position
+  function setupMobileSwipeDots() {
+    const track = document.querySelector<HTMLElement>("[data-mobile-cards-track]");
+    const dots = document.querySelectorAll<HTMLElement>("[data-dot-index]");
+    if (!track || !dots.length) return;
+
+    track.addEventListener("scroll", () => {
+      const scrollLeft = track.scrollLeft;
+      const cardWidth = track.firstElementChild ? (track.firstElementChild as HTMLElement).offsetWidth + 12 : 280;
+      const activeIndex = Math.round(scrollLeft / cardWidth);
+
+      dots.forEach((dot, idx) => {
+        if (idx === activeIndex) {
+          dot.className = "size-2 rounded-full transition-all duration-300 bg-charcoal w-5";
+        } else {
+          dot.className = "size-2 rounded-full transition-all duration-300 bg-charcoal/30";
+        }
+      });
+    }, { passive: true });
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    setupDeckHover();
+    setupMobileSwipeDots();
+  });
+</script>
+
+<style>
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
