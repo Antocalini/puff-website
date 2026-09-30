@@ -12,7 +12,7 @@ const { brandName } = landingContent.header.value;
 const primaryCta = landingContent.hero.value.primaryCta;
 
 const navLinkClass =
-  "nav-pill-link whitespace-nowrap rounded-pill px-3.5 py-2 text-[0.8125rem] font-medium tracking-tight transition-colors duration-standard ease-out hover:bg-charcoal/8";
+  "nav-pill-link whitespace-nowrap rounded-pill px-4 py-2 text-[0.95rem] md:text-[1.05rem] font-semibold tracking-tight transition-colors duration-standard ease-out hover:bg-charcoal/8";
 
 const mobilePanelLinkClass =
   "nav-mobile-panel-link nav-pill-link block rounded-pill px-3.5 py-2.5 text-[0.9375rem] font-semibold tracking-tight transition-colors duration-standard ease-out hover:bg-charcoal/8";
@@ -37,10 +37,10 @@ const mobilePanelLinkClass =
         />
       </a>
 
-      <div class="nav-pill-collapse" data-nav-collapse>
-        <div class="nav-pill-collapse-inner">
-          <div class="nav-pill-collapse-content flex items-center gap-1">
-            <ul class="flex items-center">
+      <div class="nav-pill-collapse w-full" data-nav-collapse>
+        <div class="nav-pill-collapse-inner w-full">
+          <div class="nav-pill-collapse-content flex w-full items-center justify-between">
+            <ul class="flex items-center mx-auto">
               {
                 items.map(({ href, label }) => (
                   <li>
@@ -53,11 +53,11 @@ const mobilePanelLinkClass =
             </ul>
 
             <a
-              class="group btn-3d-skeuo btn-shine nav-pill-cta ml-1 inline-flex shrink-0 items-center justify-center gap-2 rounded-full py-2 pl-4 pr-2"
+              class="group btn-3d-skeuo btn-shine nav-pill-cta shrink-0 inline-flex items-center justify-center gap-2 rounded-full py-2 pl-4 pr-2"
               href={primaryCta.href}
               data-nav-cta
             >
-              <span class="nav-pill-cta-label font-label text-xs font-bold tracking-wide">
+              <span class="nav-pill-cta-label font-label text-xs font-bold tracking-wide md:text-sm">
                 {primaryCta.label}
               </span>
               <div class="nav-pill-cta-arrow flex size-7 shrink-0 items-center justify-center rounded-full shadow-sm">
