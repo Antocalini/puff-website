@@ -16,6 +16,8 @@ dist/
 .DS_Store
 Thumbs.db
 *.log
+__pycache__/
+*.py[cod]
 
 # Probe / temp assets
 src/assets/images/_faq-*

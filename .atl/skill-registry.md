@@ -43,6 +43,8 @@ Phase: **PLANNING** (skills + boundaries only)
 | `design-taste-frontend` | leonxlnx/taste-skill | Landing/redesign anti-slop, brief inference | `.agents/skills/design-taste-frontend/SKILL.md` | Safe |
 | `high-end-visual-design` | leonxlnx/taste-skill | Visual polish, motion, premium layouts | `.agents/skills/high-end-visual-design/SKILL.md` | Safe |
 | `copywriting` | local/daas | Landing page copy, hooks, CTAs, conversion | `.agents/skills/copywriting/SKILL.md` | Safe |
+| `cro` | coreyhaines31/marketingskills | Conversion rate optimization, architecture, CTAs | `.agents/skills/cro/SKILL.md` | Safe |
+| `frontend-design` | anthropics/skills | Distinctive visual craft, anti-slop, intentional UI | `.agents/skills/frontend-design/SKILL.md` | Safe |
 
 ## Cuándo cargar cada imported skill
 
@@ -50,7 +52,8 @@ Phase: **PLANNING** (skills + boundaries only)
 |-------|--------|
 | Auditar UI existente / a11y | `web-design-guidelines` |
 | Elegir palette, fonts, layout patterns | `ui-ux-pro-max` |
-| Rediseño landing (evitar AI slop) | `design-taste-frontend` + `puff-brand` |
+| Rediseño landing (evitar AI slop) | `design-taste-frontend` + `frontend-design` + `puff-brand` |
+| Conversión / Estructura marketing / CRO | `cro` + `copywriting` |
 | Motion, micro-interactions, polish | `high-end-visual-design` + `puff-brand` |
 | Review pre-deploy | `web-design-guidelines` + `puff-a11y` (futura) |
 
