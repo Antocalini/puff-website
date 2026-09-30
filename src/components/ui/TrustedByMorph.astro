@@ -1,0 +1,179 @@
+---
+import { clientLogos } from "../../content/clientLogos";
+
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const {
+  label = "Over 40+ fast-growing brands & creative teams use Puff",
+  class: className = "",
+} = Astro.props;
+
+// Pass logo pool as JSON for client-side morph animation
+const logoPool = clientLogos.map((c) => ({
+  name: c.name,
+  src: c.image.src,
+}));
+
+// Initial 5 slots
+const initialSlots = logoPool.slice(0, 5);
+---
+
+<div class:list={["trusted-morph-container w-full max-w-6xl mx-auto px-4 select-none", className]} data-trusted-morph>
+  <!-- Full Jitter-style divider line with centered label -->
+  <div class="relative w-full flex items-center justify-center mb-6 md:mb-8">
+    <div class="absolute inset-x-0 h-px bg-charcoal/20"></div>
+    <span class="relative bg-brand-yellow px-5 text-center font-label text-xs sm:text-sm md:text-base font-semibold normal-case tracking-normal text-charcoal/75">
+      {label}
+    </span>
+  </div>
+
+  <!-- Logos Grid: 5 slots, pure scale morph without any opacity animation -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 items-center justify-items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 py-2">
+    {
+      initialSlots.map((item, idx) => (
+        <div
+          class="trusted-morph-slot flex items-center justify-center h-14 sm:h-16 md:h-18 lg:h-20 w-full max-w-[10rem] sm:max-w-[12rem] md:max-w-[14rem]"
+          data-slot-index={idx}
+        >
+          <img
+            src={item.src}
+            alt={item.name}
+            class="trusted-morph-img h-9 sm:h-11 md:h-13 lg:h-15 w-auto max-w-[8.5rem] sm:max-w-[10.5rem] md:max-w-[12rem] lg:max-w-[13.5rem] object-contain opacity-60 grayscale contrast-125 transition-[filter,opacity] duration-300 will-change-transform"
+            data-morph-img
+          />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .trusted-morph-img:hover {
+    opacity: 1 !important;
+    filter: grayscale(0%) contrast(100%) !important;
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { clientLogos } from "../../content/clientLogos";
+
+  const allLogos = clientLogos.map((c) => ({
+    name: c.name,
+    src: c.image.src,
+  }));
+
+  // Preload and decode all logo assets in browser memory immediately
+  allLogos.forEach((logo) => {
+    const preImg = new Image();
+    preImg.src = logo.src;
+    if ("decode" in preImg) {
+      preImg.decode().catch(() => {});
+    }
+  });
+
+  function initLogoMorph() {
+    const containers = document.querySelectorAll<HTMLElement>("[data-trusted-morph]");
+    if (!containers.length) return;
+
+    containers.forEach((container) => {
+      // Guard against duplicate initialization
+      if (container.dataset.morphReady === "true") return;
+      container.dataset.morphReady = "true";
+
+      const slots = Array.from(container.querySelectorAll<HTMLElement>("[data-slot-index]"));
+      if (!slots.length) return;
+
+      const numSlots = slots.length;
+      const allImages = slots
+        .map((s) => s.querySelector<HTMLImageElement>("[data-morph-img]"))
+        .filter(Boolean) as HTMLImageElement[];
+      if (allImages.length === 0) return;
+
+      // Initial hardware setup: scale 1, no opacity changes in GSAP
+      gsap.set(allImages, {
+        scale: 1,
+        force3D: true,
+        transformOrigin: "50% 50%",
+      });
+
+      let currentBatchOffset = 0;
+      let activeTimeline: gsap.core.Timeline | null = null;
+
+      // Pacing: smooth 4.2s interval
+      const intervalId = setInterval(() => {
+        // Pause if container is offscreen
+        if (!container.offsetParent) return;
+
+        const nextBatchOffset = (currentBatchOffset + numSlots) % allLogos.length;
+        const nextLogos = Array.from({ length: numSlots }, (_, i) => {
+          return allLogos[(nextBatchOffset + i) % allLogos.length];
+        });
+
+        // Reduced motion fallback: instant swap without transform
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          allImages.forEach((img, i) => {
+            img.src = nextLogos[i].src;
+            img.alt = nextLogos[i].name;
+          });
+          currentBatchOffset = nextBatchOffset;
+          return;
+        }
+
+        if (activeTimeline) {
+          activeTimeline.kill();
+        }
+
+        activeTimeline = gsap.timeline({
+          defaults: {
+            force3D: true,
+            transformOrigin: "50% 50%",
+          },
+        });
+
+        // 1. Grande a pequeño: todos se reducen al centro con amortiguación suave (scale 1 -> 0)
+        activeTimeline.to(allImages, {
+          scale: 0,
+          duration: 0.62,
+          ease: "back.in(1.1)",
+        })
+        // 2. Se hace el cambio de imagen exactamente en escala 0 (invisible por tamaño)
+        .add(() => {
+          allImages.forEach((img, i) => {
+            img.src = nextLogos[i].src;
+            img.alt = nextLogos[i].name;
+          });
+          currentBatchOffset = nextBatchOffset;
+        }, "+=0.03")
+        // 3. Pequeño a grande: todos brotan con rebote elástico suave y natural (scale 0 -> 1)
+        .to(allImages, {
+          scale: 1,
+          duration: 0.82,
+          ease: "back.out(1.22)",
+        });
+      }, 4200);
+
+      // Clean up when navigating
+      document.addEventListener(
+        "astro:before-swap",
+        () => {
+          clearInterval(intervalId);
+          if (activeTimeline) activeTimeline.kill();
+          delete container.dataset.morphReady;
+        },
+        { once: true }
+      );
+    });
+  }
+
+  // Ensure single setup across Astro navigation cycles
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initLogoMorph, { once: true });
+  } else {
+    initLogoMorph();
+  }
+  document.addEventListener("astro:page-load", initLogoMorph);
+</script>

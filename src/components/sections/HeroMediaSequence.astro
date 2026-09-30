@@ -1,10 +1,8 @@
 ---
 /**
- * Hero + MediaExpand share one prism layer across both sections.
- * Grid lines are pure CSS (always visible). React only paints hover cells.
+ * Hero with interactive PrismGrid layer.
  */
 import Hero from "./Hero.astro";
-import MediaExpand from "./MediaExpand.astro";
 import PrismGrid from "../ui/PrismGrid";
 ---
 
@@ -24,7 +22,6 @@ import PrismGrid from "../ui/PrismGrid";
 
   <div class="relative z-10 pointer-events-none">
     <Hero />
-    <MediaExpand />
   </div>
 </div>
 

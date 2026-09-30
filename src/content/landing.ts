@@ -119,7 +119,7 @@ export const landingContent = {
   primaryNavigation: [
     { label: "How it works", href: "#how-it-works" },
     { label: "Pricing", href: "#pricing" },
-    { label: "Work", href: "#work" },
+    // { label: "Work", href: "#work" },
     { label: "FAQ", href: "#faq" },
   ],
   header: draft({
@@ -152,7 +152,7 @@ export const landingContent = {
   hero: draft({
     eyebrow: "Design-as-a-Service / USA & Texas",
     heading: "Your Entire Creative Team In A Box",
-    body: "From high-impact packaging to digital experiences. World-class senior design delivered continuously in 48 hours. Pause or cancel anytime.",
+    body: "High-impact packaging, brand identities, and modern digital design delivered on demand. Senior creative firepower in 48 hours. Pause or cancel anytime.",
     primaryCta: { label: "See Plans", href: "#pricing" },
     secondaryCta: { label: "How It Works", href: "#how-it-works" },
   }),
@@ -196,13 +196,29 @@ export const landingContent = {
     emptyState: "Client stories coming soon",
   }),
   faq: draft({
-    heading: "Questions, answered clearly.",
-    intro: "These draft answers describe the model at a high level; final commercial and policy terms are pending confirmation.",
+    heading: "Frequently Asked Questions",
+    intro: "Everything you need to know about the product, delivery speed, unlimited revisions, and our pause-or-cancel membership.",
     items: [
-      { question: "What is Puff?", answer: "Puff is presented as an on-demand creative subscription. The final service scope is pending confirmation." },
-      { question: "How fast is delivery?", answer: "Current draft positioning references a 48-hour delivery window. Final service levels are pending confirmation." },
-      { question: "What counts as a project?", answer: "The definition of a project is pending client approval and will be published with final plan terms." },
-      { question: "Can I pause or cancel?", answer: "Pause and cancellation terms are pending client approval; this page does not establish a policy." },
+      {
+        question: "How does the subscription work?",
+        answer: "Once subscribed, you get access to your private creative queue where you can add as many design requests as you like. We tackle them sequentially and deliver high-impact creative within 48 hours.",
+      },
+      {
+        question: "How fast will I receive my designs?",
+        answer: "On average, most design requests are completed in just 48 hours or less. Complex deliverables like 3D animations, full brand identity packages, or multi-page websites are delivered in continuous 48-hour milestones.",
+      },
+      {
+        question: "What does 'unlimited requests' mean?",
+        answer: "There are no caps on how many projects you can add to your backlog. We work through your queue actively, and revisions are completely unlimited until you are 100% thrilled with the outcome.",
+      },
+      {
+        question: "How does the pause feature work?",
+        answer: "We know creative workloads fluctuate. If you only need design work for two weeks, simply pause your billing cycle and bank the remaining days for whenever you have new design needs down the road.",
+      },
+      {
+        question: "Who designs my work?",
+        answer: "No junior interns or outsourced agencies. Your work is handled directly by senior creative specialists with 10+ years of craft in brand design, packaging, UI/UX, and motion.",
+      },
     ],
   }),
   cta: draft({

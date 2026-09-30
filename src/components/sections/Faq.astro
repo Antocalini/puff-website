@@ -23,85 +23,126 @@ const faqSchema = {
 <section
   id="faq"
   data-nav-tone="yellow"
-  class="relative w-full bg-brand-yellow flex flex-col pt-24 pb-12 overflow-x-clip"
+  class="relative w-full bg-brand-yellow flex flex-col py-20 md:py-32 overflow-x-clip scroll-mt-6"
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
-  
-  <!-- Header Area -->
-  <div class="w-full max-w-screen-2xl mx-auto px-gutter relative z-20 flex flex-col items-center justify-center pt-8 md:pt-16 pb-8 md:pb-16 min-h-[150px] md:min-h-[300px]">
-    
-    <div class="absolute left-1/2 top-0 z-30 -translate-x-[115%] transition-transform duration-500 ease-out hover:scale-110 md:left-12 md:top-[22%] md:translate-x-0 lg:left-32" aria-hidden="true">
-      <PuffSticker tone="lime" rotate="-rotate-[8deg]" class="faq-header-sticker">
-        Questions
-      </PuffSticker>
-    </div>
 
-    <div class="absolute left-1/2 top-0 z-30 translate-x-[15%] transition-transform duration-500 ease-out hover:scale-110 md:left-auto md:right-12 md:top-[62%] md:translate-x-0 lg:right-32" aria-hidden="true">
-      <PuffSticker tone="lavender" rotate="rotate-[9deg]" class="faq-header-sticker">
-        Information
-      </PuffSticker>
-    </div>
+  <div class="mx-auto max-w-content px-gutter w-full relative z-20">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+      
+      <!-- Columna Izquierda: Sticky Sidebar con Brand Identity, Mascota y Contacto -->
+      <div class="lg:col-span-5 flex flex-col items-start lg:sticky lg:top-28">
+        
+        <!-- Stickers con rotación juguetona -->
+        <div class="flex items-center gap-3">
+          <PuffSticker tone="lime" rotate="-rotate-[6deg]">
+            Questions
+          </PuffSticker>
+          <PuffSticker tone="lavender" rotate="rotate-[8deg]">
+            Answers
+          </PuffSticker>
+        </div>
 
-    <!-- Título FAQ -->
-    <h2 class="font-display text-[clamp(3.5rem,18vw,10rem)] font-black uppercase text-ink leading-none tracking-normal text-center w-full select-none relative z-10 px-2 md:px-4 mt-10 md:mt-0">
-      {heading}
-    </h2>
-  </div>
+        <!-- Heading con escala y tracking alineado a la marca -->
+        <h2 class="mt-4 font-display text-[clamp(3.25rem,6.5vw,5.75rem)] font-black uppercase leading-[0.88] tracking-tight text-charcoal">
+          {heading}
+        </h2>
 
-  <!-- Centered FAQ; mascot overlays bottom-right of the tiles -->
-  <div class="faq-layout w-full max-w-6xl mx-auto px-4 md:px-8 lg:px-12 relative z-10 pb-16 md:pb-24">
+        <p class="mt-4 max-w-md font-body text-base md:text-lg leading-relaxed text-charcoal/80">
+          Everything you need to know about our subscription model, 48-hour delivery, unlimited revisions, and pause-anytime policy.
+        </p>
 
-    <div class="faq-container flex flex-col">
-      {items.map((item) => (
-        <div class="faq-item group border-b border-ink/25 last:border-b-0 cursor-pointer">
-          <div class="faq-trigger flex items-center justify-center py-6 md:py-9 px-2 md:px-4 transition-colors duration-500 hover:bg-ink/5 group-[.is-active]:hover:bg-transparent w-full text-center rounded-[inherit]">
-            <div class="faq-trigger-row">
-            <div class="faq-trigger-icon flex-shrink-0 flex items-center text-ink group-[.is-active]:text-brand-yellow transition-colors transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-[.is-active]:rotate-90">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 md:w-7 md:h-7">
-                <path d="M5 12h14"></path>
-                <path d="m12 5 7 7-7 7"></path>
-              </svg>
-            </div>
-            
-            <h3 class="faq-trigger-question font-body text-2xl md:text-4xl lg:text-[2.5rem] font-bold tracking-normal text-ink group-[.is-active]:text-brand-yellow transition-colors duration-500 leading-tight">
-              {item.question}
-            </h3>
-              
-            <div class="faq-trigger-icon w-6 h-6 md:w-8 md:h-8 flex-shrink-0 flex items-center justify-center text-ink group-[.is-active]:text-brand-yellow transition-colors transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-[.is-active]:rotate-90">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
-                <path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z"></path>
-              </svg>
-            </div>
-            </div>
+        <!-- Direct Contact: 3D Depth Button + Enlarged Mascot Video in space to the right -->
+        <div class="relative mt-10 md:mt-14 flex flex-col items-start w-full">
+          <p class="font-display text-2xl md:text-3xl lg:text-[2rem] font-black uppercase tracking-tight text-charcoal leading-none">
+            Have a custom request?
+          </p>
+          <p class="font-body text-sm md:text-base text-charcoal/80 mt-1.5 max-w-sm">
+            Talk directly with our senior creative team.
+          </p>
 
-          </div>
-          
-          <div class="faq-content-wrapper">
-            <div class="faq-content">
-              <div class="pb-6 pt-2 text-center md:pb-8">
-                <p class="font-body text-ink/80 group-[.is-active]:text-brand-yellow text-base md:text-xl leading-relaxed max-w-xl mx-auto transition-colors duration-500">
-                  {item.answer}
-                </p>
+          <div class="relative mt-5 flex items-center">
+            <a
+              href="mailto:hello@puffcrossmedia.com"
+              class="group btn-3d-skeuo btn-shine relative z-10 inline-flex items-center gap-3.5 rounded-full px-7 py-3.5 text-paper shadow-xl"
+            >
+              <span class="font-label text-sm md:text-base font-bold tracking-wide">
+                Get in touch
+              </span>
+              <div class="flex size-7 md:size-8 items-center justify-center rounded-full bg-paper/15 text-paper transition-all duration-300 group-hover:translate-x-1 group-hover:bg-brand-yellow group-hover:text-charcoal shadow-sm">
+                <svg class="size-3.5 md:size-4 stroke-[2.5]" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h9M8 3.5 12.5 8 8 12.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
               </div>
-            </div>
+            </a>
           </div>
         </div>
-      ))}
 
-      <!-- Overlay — bottom-right of FAQ tiles, no layout space -->
-      <div class="faq-media" aria-hidden="true">
-        <video
-          data-faq-loop
-          src={faqLoop}
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="auto"
-        ></video>
       </div>
-    </div>
 
+      <!-- Columna Derecha: Stack de Cards Táctiles en Brand Ink + Mascota solapando -->
+      <div class="relative lg:col-span-7 flex flex-col gap-4 md:gap-5 w-full overflow-visible">
+        {items.map((item, idx) => (
+          <div class="faq-item group rounded-2xl md:rounded-[1.75rem] border border-paper/10 bg-ink shadow-lg cursor-pointer overflow-hidden">
+            
+            <div class="faq-trigger flex items-center justify-between gap-4 p-5 md:p-7 text-left w-full select-none">
+              <div class="flex items-center gap-4 md:gap-5">
+                <span class="font-display text-2xl md:text-3xl font-black text-brand-yellow group-[.is-active]:text-brand-yellow transition-colors shrink-0">
+                  0{idx + 1}
+                </span>
+                <h3 class="font-body text-lg md:text-2xl font-bold tracking-tight text-paper group-hover:text-brand-yellow group-[.is-active]:text-brand-yellow transition-colors duration-300">
+                  {item.question}
+                </h3>
+              </div>
+              
+              <!-- Circular toggle button -->
+              <div class="size-9 md:size-11 shrink-0 rounded-full border border-paper/15 bg-charcoal/80 flex items-center justify-center text-brand-yellow group-hover:bg-brand-yellow group-hover:text-charcoal group-[.is-active]:bg-brand-yellow group-[.is-active]:text-charcoal group-[.is-active]:border-transparent transition-all duration-300">
+                <svg
+                  class="size-4 md:size-5 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-[.is-active]:rotate-45"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </div>
+            </div>
+
+            <div class="faq-content-wrapper">
+              <div class="faq-content">
+                <div class="px-5 pb-6 pt-0 md:px-7 md:pb-8">
+                  <div class="border-t border-paper/15 pt-4 transition-colors">
+                    <p class="font-body text-sm md:text-base leading-relaxed text-paper/85 transition-colors duration-300">
+                      {item.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        ))}
+
+        <!-- Enlarged Mascot Video overlapping the last tile on the right -->
+        <div class="pointer-events-none absolute -bottom-10 -right-3 md:-bottom-14 md:-right-8 lg:-bottom-16 lg:-right-10 z-30 size-32 md:size-44 lg:size-52">
+          <video
+            data-faq-loop
+            src={faqLoop}
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            class="size-full object-contain filter drop-shadow(0 16px 30px rgba(0,0,0,0.28))"
+          ></video>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 

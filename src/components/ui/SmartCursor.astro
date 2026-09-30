@@ -47,23 +47,32 @@
 </div>
 
 <style is:global>
-  /* Hide default cursor only on fine-pointer desktop devices */
+  /* Hidden by default until JavaScript verifies and activates it */
+  #cartoon-cursor {
+    display: none;
+  }
+
+  /* Only hide native cursor when custom cursor has successfully initialized */
   @media (pointer: fine) and (hover: hover) {
-    html,
-    body,
-    a,
-    button,
-    [role="button"],
-    input,
-    select,
-    textarea,
-    summary,
-    .cursor-pointer,
-    [data-deck-card] {
+    html.has-custom-cursor,
+    html.has-custom-cursor body,
+    html.has-custom-cursor a,
+    html.has-custom-cursor button,
+    html.has-custom-cursor [role="button"],
+    html.has-custom-cursor summary,
+    html.has-custom-cursor .cursor-pointer,
+    html.has-custom-cursor [data-deck-card] {
       cursor: none !important;
     }
 
-    #cartoon-cursor {
+    /* Preserve standard text selection cursor for inputs */
+    html.has-custom-cursor input,
+    html.has-custom-cursor select,
+    html.has-custom-cursor textarea {
+      cursor: text !important;
+    }
+
+    html.has-custom-cursor #cartoon-cursor {
       display: block;
     }
   }
@@ -81,16 +90,38 @@
 
   function initCartoonCursor() {
     if (typeof window === "undefined") return;
-    if (window.matchMedia("(pointer: coarse), (hover: none)").matches) return;
-    if (prefersReducedMotion()) return;
+    if (window.matchMedia("(pointer: coarse), (hover: none)").matches) {
+      document.documentElement.classList.remove("has-custom-cursor");
+      return;
+    }
+    if (prefersReducedMotion()) {
+      document.documentElement.classList.remove("has-custom-cursor");
+      return;
+    }
 
     const cursor = document.querySelector<HTMLElement>("[data-cartoon-cursor]");
     const gfx = document.querySelector<HTMLElement>("[data-cursor-gfx]");
     const fillPath = document.querySelector<SVGPathElement>("[data-cursor-fill]");
     const highlightPath = document.querySelector<SVGPathElement>("[data-cursor-highlight]");
-    if (!cursor || !gfx || !fillPath || !highlightPath) return;
+    if (!cursor || !gfx || !fillPath || !highlightPath) {
+      document.documentElement.classList.remove("has-custom-cursor");
+      return;
+    }
 
-    const { gsap } = ensureGsap();
+    let gsap;
+    try {
+      gsap = ensureGsap().gsap;
+    } catch {
+      document.documentElement.classList.remove("has-custom-cursor");
+      return;
+    }
+    if (!gsap) {
+      document.documentElement.classList.remove("has-custom-cursor");
+      return;
+    }
+
+    // Verified runtime: safely activate custom cursor class
+    document.documentElement.classList.add("has-custom-cursor");
 
     // Ultra-snappy responsive follow (0.04s for instant feel)
     const xTo = gsap.quickTo(cursor, "x", { duration: 0.04, ease: "power2.out" });
@@ -234,6 +265,7 @@
     document.addEventListener("mouseleave", hideCursor);
 
     return () => {
+      document.documentElement.classList.remove("has-custom-cursor");
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseup", onMouseUp);
@@ -250,5 +282,8 @@
   };
 
   document.addEventListener("astro:page-load", boot);
-  document.addEventListener("astro:before-swap", () => cleanup?.());
+  document.addEventListener("astro:before-swap", () => {
+    document.documentElement.classList.remove("has-custom-cursor");
+    cleanup?.();
+  });
 </script>

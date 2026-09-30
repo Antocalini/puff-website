@@ -1,0 +1,251 @@
+---
+// src/components/ui/HeroLayoutSwitcher.astro
+---
+
+<!-- Floating Bottom-Left Settings Overlay Widget -->
+<div id="hero-lab-widget" class="pointer-events-auto fixed bottom-5 left-5 z-[9999] font-body select-none">
+  <!-- Minimized Trigger Button -->
+  <button
+    id="hero-lab-toggle-btn"
+    type="button"
+    class="group flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-ink/95 hover:bg-ink text-paper border-2 border-brand-yellow/80 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+    aria-label="Abrir opciones de layout del Hero"
+  >
+    <span class="flex size-6 items-center justify-center rounded-full bg-brand-yellow text-charcoal font-bold text-xs transition-transform duration-300 group-hover:rotate-90">
+      ⚙️
+    </span>
+    <span class="font-label text-xs font-bold tracking-wide">Hero Settings</span>
+    <span id="hero-lab-active-tag" class="px-2 py-0.5 rounded-full bg-brand-yellow text-[0.68rem] font-bold text-charcoal">
+      Opción 1
+    </span>
+  </button>
+
+  <!-- Expanded Settings Drawer / Modal Card -->
+  <div
+    id="hero-lab-drawer"
+    class="hidden flex-col w-[min(92vw,22.5rem)] rounded-2xl bg-ink/95 backdrop-blur-xl border border-paper/20 p-4 text-paper shadow-[0_20px_50px_rgba(0,0,0,0.6)] transition-all duration-200"
+  >
+    <!-- Header -->
+    <div class="flex items-center justify-between pb-3 border-b border-paper/10">
+      <div class="flex items-center gap-2">
+        <span class="flex size-6 items-center justify-center rounded-full bg-brand-yellow text-charcoal text-xs font-bold">
+          ⚙️
+        </span>
+        <div>
+          <h2 class="font-label text-xs font-bold uppercase tracking-wider text-paper">Hero Layouts</h2>
+          <p class="text-[0.68rem] text-paper/60">Tocá una opción para previsualizarla en vivo</p>
+        </div>
+      </div>
+      <button
+        id="hero-lab-close-btn"
+        type="button"
+        class="flex size-7 items-center justify-center rounded-full bg-paper/10 hover:bg-paper/20 text-paper/70 hover:text-paper transition-colors cursor-pointer"
+        title="Minimizar panel"
+      >
+        <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Option List -->
+    <div class="flex flex-col gap-2 pt-3 max-h-[60vh] overflow-y-auto pr-1">
+      <!-- Option 1 -->
+      <button
+        type="button"
+        data-hero-option="1"
+        class="lab-option-card group relative flex flex-col text-left p-3 rounded-xl border border-paper/10 bg-paper/[0.04] hover:bg-paper/[0.08] transition-all cursor-pointer"
+      >
+        <div class="flex items-center justify-between w-full">
+          <span class="font-label text-xs font-bold text-paper group-hover:text-brand-yellow transition-colors">
+            Opción 1: Classic Original
+          </span>
+          <span class="status-indicator size-2 rounded-full bg-paper/20"></span>
+        </div>
+        <p class="mt-1 text-[0.72rem] leading-snug text-paper/60 font-body">
+          Bloque industrial condensado uniforme (Bebas Neue) tal como está en producción.
+        </p>
+      </button>
+
+      <!-- Option 2 -->
+      <button
+        type="button"
+        data-hero-option="2"
+        class="lab-option-card group relative flex flex-col text-left p-3 rounded-xl border border-paper/10 bg-paper/[0.04] hover:bg-paper/[0.08] transition-all cursor-pointer"
+      >
+        <div class="flex items-center justify-between w-full">
+          <span class="font-label text-xs font-bold text-paper group-hover:text-brand-yellow transition-colors">
+            Opción 2: Jitter Style (Sin Video + Logo Morph)
+          </span>
+          <span class="status-indicator size-2 rounded-full bg-paper/20"></span>
+        </div>
+        <p class="mt-1 text-[0.72rem] leading-snug text-paper/60 font-body">
+          Navbar largo con tipografía grande. Sin video en H1. Logos con animación que se achican, rotan suave y vuelven con rebote.
+        </p>
+      </button>
+
+      <!-- Option 3 -->
+      <button
+        type="button"
+        data-hero-option="3"
+        class="lab-option-card group relative flex flex-col text-left p-3 rounded-xl border border-paper/10 bg-paper/[0.04] hover:bg-paper/[0.08] transition-all cursor-pointer"
+      >
+        <div class="flex items-center justify-between w-full">
+          <span class="font-label text-xs font-bold text-paper group-hover:text-brand-yellow transition-colors">
+            Opción 3: Packaging Sticker
+          </span>
+          <span class="status-indicator size-2 rounded-full bg-paper/20"></span>
+        </div>
+        <p class="mt-1 text-[0.72rem] leading-snug text-paper/60 font-body">
+          Sticker físico 3D en cobalto con borde y sombra dura (<em>"IN A BOX 📦"</em>), reforzando el servicio de diseño en caja.
+        </p>
+      </button>
+
+      <!-- Option 4 -->
+      <button
+        type="button"
+        data-hero-option="4"
+        class="lab-option-card group relative flex flex-col text-left p-3 rounded-xl border border-paper/10 bg-paper/[0.04] hover:bg-paper/[0.08] transition-all cursor-pointer"
+      >
+        <div class="flex items-center justify-between w-full">
+          <span class="font-label text-xs font-bold text-paper group-hover:text-brand-yellow transition-colors">
+            Opción 4: Bold Marker Underline
+          </span>
+          <span class="status-indicator size-2 rounded-full bg-paper/20"></span>
+        </div>
+        <p class="mt-1 text-[0.72rem] leading-snug text-paper/60 font-body">
+          Tipografía uniforme con trazo curvo de marcador cobalto que subraya dinámicamente *"IN A BOX"*.
+        </p>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-3 pt-2 border-t border-paper/10 flex items-center justify-between text-[0.65rem] text-paper/50">
+      <span>Podés cambiar sin recargar</span>
+      <button id="hero-lab-collapse-text-btn" type="button" class="text-brand-yellow hover:underline cursor-pointer">
+        Minimizar
+      </button>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .lab-option-card.active {
+    border-color: var(--color-brand-yellow, #ffd100) !important;
+    background-color: rgba(255, 209, 0, 0.14) !important;
+  }
+
+  .lab-option-card.active .status-indicator {
+    background-color: var(--color-brand-yellow, #ffd100) !important;
+    box-shadow: 0 0 10px rgba(255, 209, 0, 0.8) !important;
+  }
+
+  .lab-option-card.active span:first-child {
+    color: var(--color-brand-yellow, #ffd100) !important;
+  }
+</style>
+
+<script>
+  function setupHeroSwitcher() {
+    const toggleBtn = document.getElementById("hero-lab-toggle-btn");
+    const closeBtn = document.getElementById("hero-lab-close-btn");
+    const collapseTextBtn = document.getElementById("hero-lab-collapse-text-btn");
+    const drawer = document.getElementById("hero-lab-drawer");
+    const activeTag = document.getElementById("hero-lab-active-tag");
+    const optionCards = document.querySelectorAll<HTMLButtonElement>("[data-hero-option]");
+    const headlineLines = document.querySelectorAll<HTMLElement>("[data-hero-variant-line]");
+
+    function setOpen(isOpen: boolean) {
+      if (isOpen) {
+        drawer?.classList.remove("hidden");
+        drawer?.classList.add("flex");
+        toggleBtn?.classList.add("hidden");
+      } else {
+        drawer?.classList.add("hidden");
+        drawer?.classList.remove("flex");
+        toggleBtn?.classList.remove("hidden");
+      }
+    }
+
+    toggleBtn?.addEventListener("click", () => setOpen(true));
+    closeBtn?.addEventListener("click", () => setOpen(false));
+    collapseTextBtn?.addEventListener("click", () => setOpen(false));
+
+    function switchHero(variantId: string) {
+      // 1. Update option cards in drawer
+      optionCards.forEach((card) => {
+        if (card.dataset.heroOption === variantId) {
+          card.classList.add("active");
+          const title = card.querySelector("span")?.textContent?.trim() || `Opción ${variantId}`;
+          if (activeTag) {
+            activeTag.textContent = title.split(":")[0];
+          }
+        } else {
+          card.classList.remove("active");
+        }
+      });
+
+      // 2. Switch visible headline in Hero
+      headlineLines.forEach((line) => {
+        if (line.dataset.heroVariantLine === variantId) {
+          line.classList.remove("hidden");
+        } else {
+          line.classList.add("hidden");
+        }
+      });
+
+      // 3. Toggle video peek and logo section explicitly
+      const mediaOrigin = document.querySelector<HTMLElement>("[data-media-origin]");
+      const marqueeWrap = document.querySelector<HTMLElement>("[data-hero-marquee-wrap]");
+      const morphWrap = document.querySelector<HTMLElement>("[data-hero-morph-wrap]");
+
+      if (variantId === "2") {
+        mediaOrigin?.classList.add("hidden");
+        marqueeWrap?.classList.add("hidden");
+        morphWrap?.classList.remove("hidden");
+      } else {
+        mediaOrigin?.classList.remove("hidden");
+        marqueeWrap?.classList.remove("hidden");
+        morphWrap?.classList.add("hidden");
+      }
+
+      // 4. Set data-hero-option on root html element for navbar & hero CSS rules
+      document.documentElement.dataset.heroOption = variantId;
+
+      try {
+        localStorage.setItem("puff_hero_option", variantId);
+        const url = new URL(window.location.href);
+        url.searchParams.set("option", variantId);
+        window.history.replaceState({}, "", url.toString());
+      } catch {}
+    }
+
+    optionCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const opt = card.dataset.heroOption;
+        if (opt) switchHero(opt);
+      });
+    });
+
+    // Check URL param first, then stored choice, or default to 2 (direct high-converting layout)
+    const params = new URLSearchParams(window.location.search);
+    let saved = params.get("option") || "2";
+    if (!params.has("option")) {
+      try {
+        saved = localStorage.getItem("puff_hero_option") || "2";
+      } catch {}
+    }
+    switchHero(saved);
+
+    // Click outside to collapse
+    document.addEventListener("click", (e) => {
+      const widget = document.getElementById("hero-lab-widget");
+      if (widget && !widget.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    });
+  }
+
+  document.addEventListener("astro:page-load", setupHeroSwitcher);
+  setupHeroSwitcher();
+</script>

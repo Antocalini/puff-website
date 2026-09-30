@@ -6,7 +6,7 @@
   .hero-shell {
     box-sizing: border-box;
     min-height: 100dvh;
-    padding-top: calc(var(--site-header-h, 5.5rem) + clamp(0.5rem, 2dvh, 1rem));
+    padding-top: calc(var(--site-header-h, 5.5rem) + clamp(1.5rem, 4dvh, 2.5rem));
     padding-bottom: max(1.25rem, calc(env(safe-area-inset-bottom, 0px) + 1rem));
   }
 
@@ -20,15 +20,15 @@
 
   .hero-title {
     width: 100%;
-    font-size: clamp(3.25rem, 16cqi, 5.5rem);
-    letter-spacing: -0.01em;
+    font-size: clamp(3.25rem, 15cqi, 5.5rem);
+    letter-spacing: -0.015em;
     line-height: 0.88;
   }
 
   @media (min-width: 768px) {
     .hero-shell {
-      padding-top: calc(var(--site-header-h, 5.5rem) + 1rem);
-      padding-bottom: 1rem;
+      padding-top: calc(var(--site-header-h, 5.5rem) + clamp(2rem, 5vh, 4rem));
+      padding-bottom: 2rem;
     }
 
     .hero-title-wrap {
@@ -44,9 +44,9 @@
 
     .hero-title {
       width: auto;
-      font-size: clamp(4.25rem, 10.5vw, 9rem);
+      font-size: clamp(3.75rem, 8.5vw, 7.5rem);
       letter-spacing: 0.005em;
-      line-height: 0.86;
+      line-height: 0.88;
     }
   }
 
@@ -157,31 +157,38 @@
     }
 
     .hero-sticker {
-      width: clamp(12rem, 18vw, 19rem);
+      width: clamp(10rem, 15vw, 16rem);
     }
 
+    /* Work Play Create Repeat: moved a bit closer toward the center */
     .hero-sticker-pos--work {
-      left: clamp(1rem, 3.5vw, 4.5rem);
-      top: 10%;
+      left: clamp(3rem, 6.8vw, 8.75rem);
+      top: clamp(8.5rem, 19vh, 14.5rem);
     }
 
+    /* Cloud: moved slightly inward from the right edge */
     .hero-sticker-pos--cloud {
-      right: clamp(1rem, 3.5vw, 4.5rem);
-      top: 6%;
+      right: clamp(1.25rem, 3.2vw, 4.75rem);
+      top: clamp(11rem, 25vh, 18.5rem);
     }
 
+    /* Foam Finger (#1 Glove): moved a bit closer toward the center */
     .hero-sticker-pos--one {
-      left: clamp(1rem, 4vw, 5.5rem);
-      bottom: 16%;
+      left: clamp(2.75rem, 6.2vw, 8rem);
+      bottom: clamp(9.5rem, 23vh, 16.5rem);
     }
+  }
+
+  .hero-sticker-wrap--size-lg .hero-sticker {
+    width: clamp(13rem, 18.5vw, 21rem);
   }
 
   .hero-sticker-wrap--size-md .hero-sticker {
-    width: clamp(10.5rem, 16vw, 16.5rem);
+    width: clamp(9.5rem, 13.5vw, 14.5rem);
   }
 
   .hero-sticker-wrap--size-sm .hero-sticker {
-    width: clamp(9.5rem, 14.5vw, 15rem);
+    width: clamp(12.5rem, 17.5vw, 19rem);
   }
 
   /* Peel from anchored corner — tilt base + hover lift */
@@ -196,7 +203,7 @@
   }
 
   .hero-sticker-wrap--peel-bl .hero-sticker {
-    --hero-peel-tilt: -14deg;
+    --hero-peel-tilt: -24deg;
     transform-origin: 22% 92%;
   }
 
@@ -266,3 +273,9 @@
       filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.16));
     }
   }
+
+  /* Clean hero typography without video peek intrusion */
+  [data-media-origin] {
+    display: none !important;
+  }
+

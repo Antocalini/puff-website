@@ -52,8 +52,8 @@ const services: ServiceCard[] = [
   {
     num: "02",
     category: "WEB DESIGN",
-    title: "HIGH-CONVERSION WEBSITES",
-    description: "Custom code, sub-second load times, and responsive layouts.",
+    title: "MODERN & BESPOKE WEBSITES",
+    description: "Custom code, sub-second load times, and interactive responsive layouts.",
     cols: "lg:col-span-6",
     minHeight: "min-h-[14.5rem] md:min-h-[20rem]",
     bgClass: "bg-brand-yellow text-charcoal",
@@ -120,32 +120,32 @@ const services: ServiceCard[] = [
 <section
   id="services"
   data-nav-tone="ink"
-  class="relative z-10 w-full scroll-mt-6 overflow-hidden bg-ink py-12 text-paper md:py-16"
+  class="relative z-10 w-full scroll-mt-6 overflow-hidden bg-ink py-24 text-paper md:py-36"
 >
   <div class="mx-auto w-full max-w-content px-gutter">
     <div
-      class="flex flex-col gap-4 border-b border-white/15 pb-6 md:flex-row md:items-end md:justify-between md:pb-8"
+      class="flex flex-col gap-6 border-b border-white/15 pb-8 md:flex-row md:items-end md:justify-between md:pb-12"
     >
       <div>
         <PuffSticker tone="lime" rotate="-rotate-[6deg]">
           Capabilities & Services
         </PuffSticker>
         <h2
-          class="mt-4 font-display text-[clamp(2.5rem,5.5vw,5rem)] font-black uppercase leading-[0.88] tracking-tight text-brand-yellow"
+          class="mt-4 font-display text-[clamp(3.25rem,8vw,6.75rem)] font-black uppercase leading-[0.86] tracking-tight text-brand-yellow"
         >
           What We Do Best
         </h2>
       </div>
 
       <p
-        class="max-w-md font-body text-sm leading-relaxed text-paper md:pb-1 md:text-base"
+        class="max-w-lg font-body text-base leading-relaxed text-paper/85 md:pb-1 md:text-lg lg:text-xl"
       >
         Full-stack creative execution delivered through a seamless subscription
         model. Design, code, motion, and brand strategy under one roof.
       </p>
     </div>
 
-    <div class="mt-6 grid gap-4 md:mt-8 lg:grid-cols-12">
+    <div class="mt-10 grid gap-5 md:mt-14 md:gap-6 lg:grid-cols-12">
       {
         services.map((item) => (
           <article
