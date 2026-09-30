@@ -6,7 +6,7 @@ import PuffSticker from "../ui/PuffSticker.astro";
 <section
   id="book-meeting"
   data-nav-tone="yellow"
-  class="relative w-full scroll-anchor-offset overflow-x-clip bg-brand-yellow py-16 md:py-20"
+  class="relative w-full scroll-anchor-offset overflow-x-clip bg-brand-yellow pt-20 pb-12 md:pt-32 md:pb-16"
 >
   <div class="mx-auto max-w-content px-gutter">
     <div class="relative">
@@ -20,7 +20,7 @@ import PuffSticker from "../ui/PuffSticker.astro";
         </PuffSticker>
       </div>
 
-    <div class="relative w-full overflow-hidden rounded-panel bg-ink p-8 shadow-ambient md:rounded-[3rem] md:p-12 lg:p-16">
+    <div class="relative w-full overflow-hidden rounded-panel bg-ink p-8 shadow-ambient md:rounded-[3rem] md:p-14 lg:p-18">
 
       <div class="pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-brand-yellow/10 blur-3xl" aria-hidden="true"></div>
 
@@ -38,14 +38,14 @@ import PuffSticker from "../ui/PuffSticker.astro";
             decoding="async"
           />
 
-          <h2 class="font-display text-[clamp(2.25rem,5vw,4.5rem)] font-black uppercase leading-[0.92] tracking-tight text-paper">
+          <h2 class="font-display text-[clamp(2.85rem,6.5vw,5.5rem)] font-black uppercase leading-[0.88] tracking-tight text-paper">
             See if Puff is the right fit for you
             <span class="text-highlight mt-1 block text-[0.62em] font-semibold normal-case leading-[0.95] tracking-normal text-brand-yellow">
               (it totally is)
             </span>
           </h2>
 
-          <p class="mt-6 max-w-md font-body text-lg leading-relaxed text-paper/75 md:text-xl">
+          <p class="mt-6 max-w-lg font-body text-lg leading-relaxed text-paper/85 md:text-xl">
             Schedule a quick, 15 minute guided tour through Puff.
           </p>
         </div>
@@ -59,15 +59,15 @@ import PuffSticker from "../ui/PuffSticker.astro";
               Next step
             </span>
 
-            <h3 class="relative font-display text-[clamp(2rem,4vw,3rem)] font-black uppercase leading-[0.9] tracking-tight text-paper">
+            <h3 class="relative font-display text-[clamp(2.25rem,4.5vw,3.25rem)] font-black uppercase leading-[0.88] tracking-tight text-paper">
               Pick a time that works for you
             </h3>
 
-            <p class="relative max-w-sm font-body text-base leading-relaxed text-paper/70">
+            <p class="relative max-w-sm font-body text-base leading-relaxed text-paper/80 md:text-lg">
               Opens a calendar overlay — pick a day, choose a slot, done.
             </p>
 
-            <ul class="relative flex flex-col gap-3 font-body text-sm text-paper/75">
+            <ul class="relative flex flex-col gap-3 font-body text-sm text-paper/80 md:text-base">
               <li class="flex items-center gap-2.5">
                 <span class="h-1.5 w-1.5 rounded-full bg-brand-yellow"></span>
                 15 minutes · Cal Video
@@ -82,7 +82,7 @@ import PuffSticker from "../ui/PuffSticker.astro";
               type="button"
               data-cal-link="antonio-c-n5qpwr/15min"
               data-cal-config='{"layout":"month_view","theme":"dark"}'
-              class="btn-3d-skeuo-yellow btn-shine relative mt-2 inline-flex min-h-14 items-center justify-center rounded-full px-8 py-3.5 font-label text-sm font-bold tracking-wide text-ink"
+              class="btn-3d-skeuo-yellow btn-shine relative mt-2 inline-flex min-h-14 items-center justify-center rounded-full px-9 py-4 font-label text-base font-bold tracking-wide text-ink md:text-lg"
             >
               Book 15 Min Intro
             </button>
