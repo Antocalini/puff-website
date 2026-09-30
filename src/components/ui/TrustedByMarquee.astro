@@ -20,37 +20,37 @@ const track = [...logos, ...logos];
 ---
 
 <div
-  class:list={["trusted-marquee mx-auto w-full max-w-md md:max-w-lg lg:max-w-xl", className]}
+  class:list={["trusted-marquee mx-auto w-full max-w-lg md:max-w-xl lg:max-w-2xl", className]}
   style={`--trusted-marquee-mask: ${maskColor}`}
 >
   <p
-    class="mb-3 text-center font-label text-[0.8rem] font-semibold normal-case tracking-normal text-charcoal/55 md:mb-4 md:text-sm"
+    class="mb-3.5 text-center font-label text-xs font-semibold normal-case tracking-normal text-charcoal/65 sm:text-sm md:mb-4 md:text-base"
   >
     {label}
   </p>
 
   <div class="trusted-marquee-viewport relative overflow-hidden">
     <div class="flex overflow-hidden whitespace-nowrap select-none" aria-hidden="false">
-      <div class="trusted-marquee-track flex shrink-0 items-center gap-5 pr-5 md:gap-7 md:pr-7">
+      <div class="trusted-marquee-track flex shrink-0 items-center gap-6 pr-6 md:gap-8 md:pr-8">
         {
           track.map((item) => (
             <Image
               src={item.image}
               alt={item.name}
-              class="marquee-logo-img h-8 w-auto max-w-[9rem] object-contain md:h-11 md:max-w-[12rem] opacity-60 grayscale contrast-125 transition-opacity"
+              class="marquee-logo-img h-14 w-auto max-w-[13rem] object-contain opacity-60 grayscale contrast-125 transition-opacity md:h-18 md:max-w-[17rem]"
               loading="eager"
               decoding="async"
             />
           ))
         }
       </div>
-      <div class="trusted-marquee-track flex shrink-0 items-center gap-5 pr-5 md:gap-7 md:pr-7" aria-hidden="true">
+      <div class="trusted-marquee-track flex shrink-0 items-center gap-6 pr-6 md:gap-8 md:pr-8" aria-hidden="true">
         {
           track.map((item) => (
             <Image
               src={item.image}
               alt=""
-              class="marquee-logo-img h-8 w-auto max-w-[9rem] object-contain md:h-11 md:max-w-[12rem] opacity-60 grayscale contrast-125 transition-opacity"
+              class="marquee-logo-img h-14 w-auto max-w-[13rem] object-contain opacity-60 grayscale contrast-125 transition-opacity md:h-18 md:max-w-[17rem]"
               loading="eager"
               decoding="async"
             />
