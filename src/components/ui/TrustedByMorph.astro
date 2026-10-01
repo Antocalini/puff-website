@@ -41,7 +41,7 @@ const initialSlots = logoPool.slice(0, 5);
           <img
             src={item.src}
             alt={item.name}
-            class="trusted-morph-img h-9 sm:h-11 md:h-13 lg:h-15 w-auto max-w-[8.5rem] sm:max-w-[10.5rem] md:max-w-[12rem] lg:max-w-[13.5rem] object-contain opacity-60 grayscale contrast-125 transition-[filter,opacity] duration-300 will-change-transform"
+            class="trusted-morph-img h-9 sm:h-11 md:h-13 lg:h-15 w-auto max-w-[8.5rem] sm:max-w-[10.5rem] md:max-w-[12rem] lg:max-w-[13.5rem] object-contain opacity-60 brightness-0 transition-[filter,opacity] duration-300 will-change-transform"
             data-morph-img
           />
         </div>
@@ -51,9 +51,13 @@ const initialSlots = logoPool.slice(0, 5);
 </div>
 
 <style>
+  .trusted-morph-img {
+    filter: brightness(0);
+  }
+
   .trusted-morph-img:hover {
     opacity: 1 !important;
-    filter: grayscale(0%) contrast(100%) !important;
+    filter: none !important;
   }
 </style>
 

@@ -37,7 +37,7 @@ const track = [...logos, ...logos];
             <Image
               src={item.image}
               alt={item.name}
-              class="marquee-logo-img h-12 sm:h-14 md:h-16 w-auto max-w-[9.5rem] sm:max-w-[12rem] md:max-w-[15rem] object-contain opacity-70 grayscale contrast-125 transition-opacity"
+              class="marquee-logo-img h-12 sm:h-14 md:h-16 w-auto max-w-[9.5rem] sm:max-w-[12rem] md:max-w-[15rem] object-contain opacity-70 brightness-0 transition-opacity"
               loading="eager"
               decoding="async"
             />
@@ -50,7 +50,7 @@ const track = [...logos, ...logos];
             <Image
               src={item.image}
               alt=""
-              class="marquee-logo-img h-12 sm:h-14 md:h-16 w-auto max-w-[9.5rem] sm:max-w-[12rem] md:max-w-[15rem] object-contain opacity-70 grayscale contrast-125 transition-opacity"
+              class="marquee-logo-img h-12 sm:h-14 md:h-16 w-auto max-w-[9.5rem] sm:max-w-[12rem] md:max-w-[15rem] object-contain opacity-70 brightness-0 transition-opacity"
               loading="eager"
               decoding="async"
             />
@@ -62,6 +62,10 @@ const track = [...logos, ...logos];
 </div>
 
 <style>
+  .marquee-logo-img {
+    filter: brightness(0);
+  }
+
   .trusted-marquee-viewport {
     overflow: hidden;
     mask-image: linear-gradient(

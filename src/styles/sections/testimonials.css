@@ -61,3 +61,12 @@
 .testimonial-dot:not(.is-active):hover .testimonial-dot__bar {
   background-color: rgb(26 26 26 / 0.4);
 }
+
+.marquee-content img {
+  filter: brightness(0);
+}
+
+.marquee-content img:hover {
+  filter: none;
+}
+
