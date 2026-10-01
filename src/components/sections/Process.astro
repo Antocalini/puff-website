@@ -63,7 +63,7 @@ const steps = [
       <div data-process-stage-1 class="col-start-1 row-start-1 flex flex-col items-center justify-center w-full">
         <div class="relative flex flex-col items-center justify-center">
           <!-- Top-left corner sticker -->
-          <div class="pointer-events-none absolute -top-5 -left-2 md:-top-8 md:-left-6 z-20 overflow-visible">
+          <div class="pointer-events-none absolute -top-10 sm:-top-11 md:-top-9 -left-1 sm:-left-3 md:-left-6 z-20 overflow-visible">
             <div data-process-sticker-1 class="will-change-transform">
               <PuffSticker tone="lime" rotate="-rotate-6" class="px-4 py-1.5 md:px-5 md:py-2 text-xs md:text-sm lg:text-base font-black tracking-wider uppercase font-display border-2 border-ink shadow-[4px_4px_0_#111111]">
                 BENEFITS & ADVANTAGES
@@ -72,7 +72,7 @@ const steps = [
           </div>
 
           <h2
-            class="font-display text-[clamp(2.75rem,7.5vw,6.75rem)] font-black uppercase leading-[0.86] tracking-tight text-charcoal"
+            class="font-display text-[clamp(3.35rem,11.5vw,6.75rem)] font-black uppercase leading-[0.86] tracking-tight text-charcoal"
           >
           <span class="block overflow-hidden pb-1"
             ><span class="block will-change-transform" data-process-line-1
@@ -81,13 +81,13 @@ const steps = [
           >
           <span class="block overflow-hidden pb-1"
             ><span class="block will-change-transform" data-process-line-1
-              ><span class="font-accent font-normal italic lowercase tracking-[-0.07em] text-charcoal inline-block -rotate-6 mr-4 md:mr-6">switching</span>TO PUFF.</span
+              ><span class="font-accent font-normal italic lowercase tracking-[-0.07em] text-charcoal inline-block -rotate-6 mr-3 sm:mr-4 md:mr-6">switching</span>TO PUFF.</span
             ></span
           >
         </h2>
         </div>
 
-        <div class="w-full flex justify-center mt-2 overflow-hidden py-2">
+        <div class="w-[calc(100%+var(--spacing-gutter)*2)] -mx-[var(--spacing-gutter)] md:w-full md:mx-0 flex justify-center mt-2 overflow-hidden py-2">
           <div data-deck-mask-inner class="w-full flex justify-center will-change-transform">
             <BenefitsDeck />
           </div>

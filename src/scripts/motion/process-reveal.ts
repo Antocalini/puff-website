@@ -42,10 +42,7 @@ function buildTimeline(
   badges: HTMLElement[],
   options: { pin: boolean; end: string },
 ) {
-  const isMobile = window.matchMedia("(max-width: 767px)").matches;
-  const deckCards = isMobile ? [] : section.querySelectorAll<HTMLElement>("[data-deck-card]");
-  const mobileTrack = section.querySelector<HTMLElement>("[data-mobile-cards-track]");
-  const mobileDots = section.querySelectorAll<HTMLElement>("[data-dot-index]");
+  const deckCards = Array.from(section.querySelectorAll<HTMLElement>("[data-deck-card]"));
 
   // Stage 1 initial state (completely hidden before scroll entry, NO pre-leak)
   gsap.set(lines1, {
@@ -77,20 +74,15 @@ function buildTimeline(
   }
 
   if (deckCards.length) {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const stackScale = isMobile ? 0.3 : 1;
+
     gsap.set(deckCards, {
-      x: (_i, el) => parseFloat(el.dataset.stackX || "0"),
-      y: (_i, el) => parseFloat(el.dataset.stackY || "0"),
+      x: (_i, el) => parseFloat(el.dataset.stackX || "0") * stackScale,
+      y: (_i, el) => parseFloat(el.dataset.stackY || "0") * stackScale,
       rotation: (_i, el) => parseFloat(el.dataset.stackRot || "0"),
       autoAlpha: 1,
       scale: 1,
-      force3D: true,
-    });
-  }
-
-  if (mobileTrack) {
-    gsap.set([mobileTrack, ...mobileDots], {
-      y: 40,
-      autoAlpha: 0,
       force3D: true,
     });
   }
@@ -186,13 +178,16 @@ function buildTimeline(
   }
 
   if (deckCards.length) {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const spreadScale = isMobile ? Math.min(0.24, (window.innerWidth - 32) / 1250) : 1;
+
     // Simultaneously as deck rises, cards smoothly fan out into their arc
     tl.to(
       deckCards,
       {
-        x: (_i, el) => parseFloat(el.dataset.spreadX || "0"),
-        y: (_i, el) => parseFloat(el.dataset.spreadY || "0"),
-        rotation: (_i, el) => parseFloat(el.dataset.spreadRot || "0"),
+        x: (_i, el) => parseFloat(el.dataset.spreadX || "0") * spreadScale,
+        y: (_i, el) => parseFloat(el.dataset.spreadY || "0") * (isMobile ? 0.4 : 1),
+        rotation: (_i, el) => parseFloat(el.dataset.spreadRot || "0") * (isMobile ? 0.7 : 1),
         ease: "power3.out",
         duration: 0.95,
         stagger: 0.04,
@@ -210,19 +205,6 @@ function buildTimeline(
         duration: 0.7,
       },
       "<0.2",
-    );
-  }
-
-  if (mobileTrack) {
-    tl.to(
-      [mobileTrack, ...mobileDots],
-      {
-        y: 0,
-        autoAlpha: 1,
-        ease: "power3.out",
-        duration: 0.8,
-      },
-      "<",
     );
   }
 
@@ -286,18 +268,7 @@ function buildTimeline(
     );
   }
 
-  if (mobileTrack) {
-    tl.to(
-      [mobileTrack, ...mobileDots],
-      {
-        y: -50,
-        autoAlpha: 0,
-        ease: "power2.in",
-        duration: 0.55,
-      },
-      "<",
-    );
-  }
+
 
   if (stage1) {
     tl.to(
