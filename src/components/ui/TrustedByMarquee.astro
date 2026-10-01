@@ -10,7 +10,7 @@ interface Props {
 }
 
 const {
-  label = "Trusted By Teams At",
+  label = "Over 40+ fast-growing brands & creative teams use Puff",
   logos = clientLogos,
   maskColor = "var(--color-brand-yellow)",
   class: className = "",
@@ -20,37 +20,37 @@ const track = [...logos, ...logos];
 ---
 
 <div
-  class:list={["trusted-marquee mx-auto w-full max-w-lg md:max-w-xl lg:max-w-2xl", className]}
+  class:list={["trusted-marquee mx-auto w-full select-none", className]}
   style={`--trusted-marquee-mask: ${maskColor}`}
 >
   <p
-    class="mb-3.5 text-center font-label text-xs font-semibold normal-case tracking-normal text-charcoal/65 sm:text-sm md:mb-4 md:text-base"
+    class="mb-3 px-4 text-center font-label text-xs sm:text-sm font-semibold normal-case tracking-normal text-charcoal/75 text-balance"
   >
     {label}
   </p>
 
-  <div class="trusted-marquee-viewport relative overflow-hidden">
+  <div class="trusted-marquee-viewport relative overflow-hidden py-1">
     <div class="flex overflow-hidden whitespace-nowrap select-none" aria-hidden="false">
-      <div class="trusted-marquee-track flex shrink-0 items-center gap-6 pr-6 md:gap-8 md:pr-8">
+      <div class="trusted-marquee-track flex shrink-0 items-center gap-8 pr-8 sm:gap-11 sm:pr-11">
         {
           track.map((item) => (
             <Image
               src={item.image}
               alt={item.name}
-              class="marquee-logo-img h-14 w-auto max-w-[13rem] object-contain opacity-60 grayscale contrast-125 transition-opacity md:h-18 md:max-w-[17rem]"
+              class="marquee-logo-img h-12 sm:h-14 md:h-16 w-auto max-w-[9.5rem] sm:max-w-[12rem] md:max-w-[15rem] object-contain opacity-70 grayscale contrast-125 transition-opacity"
               loading="eager"
               decoding="async"
             />
           ))
         }
       </div>
-      <div class="trusted-marquee-track flex shrink-0 items-center gap-6 pr-6 md:gap-8 md:pr-8" aria-hidden="true">
+      <div class="trusted-marquee-track flex shrink-0 items-center gap-8 pr-8 sm:gap-11 sm:pr-11" aria-hidden="true">
         {
           track.map((item) => (
             <Image
               src={item.image}
               alt=""
-              class="marquee-logo-img h-14 w-auto max-w-[13rem] object-contain opacity-60 grayscale contrast-125 transition-opacity md:h-18 md:max-w-[17rem]"
+              class="marquee-logo-img h-12 sm:h-14 md:h-16 w-auto max-w-[9.5rem] sm:max-w-[12rem] md:max-w-[15rem] object-contain opacity-70 grayscale contrast-125 transition-opacity"
               loading="eager"
               decoding="async"
             />
@@ -67,21 +67,25 @@ const track = [...logos, ...logos];
     mask-image: linear-gradient(
       to right,
       transparent 0%,
-      black 15%,
-      black 85%,
+      black 10%,
+      black 90%,
       transparent 100%
     );
     -webkit-mask-image: linear-gradient(
       to right,
       transparent 0%,
-      black 15%,
-      black 85%,
+      black 10%,
+      black 90%,
       transparent 100%
     );
   }
 
   .trusted-marquee-track {
-    animation: trusted-marquee 90s linear infinite;
+    animation: trusted-marquee 135s linear infinite;
+  }
+
+  .trusted-marquee-viewport:hover .trusted-marquee-track {
+    animation-play-state: paused;
   }
 
   @keyframes trusted-marquee {

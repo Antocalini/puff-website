@@ -7,7 +7,7 @@ import epaBurguerStorefront from "../assets/images/projects/epa-burguer/epa-burg
 import epaBurguerPackaging from "../assets/images/projects/epa-burguer/epa-burguer-packaging.webp";
 import epaBurguerLogo from "../assets/images/logos/epa-burguer-logo.png";
 import ogiThumb from "../assets/images/ogi-thumbnail.webp";
-import ogiLogo from "../assets/images/logos/ogi-logo.png";
+import ogiLogo from "../assets/images/logos/ogi-logo-no-circle.png";
 import ogiBox from "../assets/images/projects/ogi/ogi-box.webp";
 import ogiMatcha from "../assets/images/projects/ogi/ogi-matcha.webp";
 import ogiPlace from "../assets/images/projects/ogi/ogi-place.webp";
