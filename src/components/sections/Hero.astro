@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import { landingContent } from "../../content/landing";
 import TrustedByMorph from "../ui/TrustedByMorph.astro";
+import TrustedByMarquee from "../ui/TrustedByMarquee.astro";
 import workSticker from "../../assets/images/stickers/work.webp";
 import cloudSticker from "../../assets/images/stickers/cloud.webp";
 import numberOneSticker from "../../assets/images/stickers/number-one.webp";
@@ -41,6 +42,8 @@ const heroStickers: HeroSticker[] = [
 ---
 
 <section
+  id="hero"
+  data-hero-section
   data-nav-tone="yellow"
   class="pointer-events-none relative z-20 min-h-dvh overflow-hidden bg-transparent text-charcoal"
 >
@@ -54,17 +57,38 @@ const heroStickers: HeroSticker[] = [
         <h1
           class="hero-title relative w-full font-display font-black uppercase tracking-tight text-charcoal"
         >
-          <span class="relative z-10 block whitespace-nowrap">YOUR ENTIRE CREATIVE</span>
-          <span class="relative z-20 mt-1 block whitespace-nowrap md:mt-2.5">TEAM IN A BOX</span>
+          <!-- Mobile (3 punchy lines for gigantic Jitter-scale typography) -->
+          <div class="block md:hidden">
+            <span class="block overflow-hidden pb-1">
+              <span data-hero-title-line class="relative z-10 block whitespace-nowrap will-change-transform">YOUR ENTIRE</span>
+            </span>
+            <span class="block overflow-hidden mt-1 pb-1">
+              <span data-hero-title-line class="relative z-20 block whitespace-nowrap will-change-transform">CREATIVE TEAM</span>
+            </span>
+            <span class="block overflow-hidden mt-1 pb-1">
+              <span data-hero-title-line class="relative z-30 block whitespace-nowrap will-change-transform">IN A BOX</span>
+            </span>
+          </div>
+
+          <!-- Desktop (2 wide lines) -->
+          <div class="hidden md:block">
+            <span class="block overflow-hidden pb-1">
+              <span data-hero-title-line class="relative z-10 block whitespace-nowrap will-change-transform">YOUR ENTIRE CREATIVE</span>
+            </span>
+            <span class="block overflow-hidden mt-2.5 pb-1">
+              <span data-hero-title-line class="relative z-20 block whitespace-nowrap will-change-transform">TEAM IN A BOX</span>
+            </span>
+          </div>
         </h1>
       </div>
 
-      <p class="relative z-[12] mt-6 max-w-[22rem] text-pretty text-lg leading-relaxed text-charcoal/85 sm:max-w-xl md:mt-8 md:max-w-2xl md:text-xl lg:text-[1.35rem]">
+      <p data-hero-body class="relative z-[12] mt-4 max-w-[19rem] text-pretty text-sm leading-relaxed text-charcoal/75 sm:mt-6 sm:max-w-xl sm:text-base md:mt-8 md:max-w-2xl md:text-xl lg:text-[1.35rem] will-change-transform">
         {body}
       </p>
 
       <a
-        class="group btn-3d-skeuo btn-shine pointer-events-auto relative z-[12] mt-7 inline-flex min-h-14 items-center justify-center gap-4 rounded-full px-9 py-4 text-paper md:mt-8"
+        data-hero-cta
+        class="group btn-3d-skeuo btn-shine pointer-events-auto relative z-[12] mt-7 inline-flex min-h-14 items-center justify-center gap-4 rounded-full px-9 py-4 text-paper md:mt-8 will-change-transform"
         href={primaryCta.href}
       >
         <span class="font-label text-base font-bold tracking-wide md:text-lg">
@@ -77,9 +101,16 @@ const heroStickers: HeroSticker[] = [
         </div>
       </a>
 
-      <!-- Jitter-style Client Proof Bar: Full divider line + big morphing logos -->
-      <div data-hero-morph-wrap class="pointer-events-auto w-full mt-10 md:mt-14">
-        <TrustedByMorph />
+      <!-- Jitter-style Client Proof Bar: Marquee on mobile, Morph Grid on desktop -->
+      <div data-hero-morph-wrap class="pointer-events-auto w-full mt-8 md:mt-14 will-change-transform">
+        <div class="block md:hidden w-[calc(100%+var(--spacing-gutter)*2)] -mx-[var(--spacing-gutter)]">
+          <TrustedByMarquee
+            label="Over 40+ fast-growing brands & creative teams use Puff"
+          />
+        </div>
+        <div class="hidden md:block">
+          <TrustedByMorph />
+        </div>
       </div>
     </div>
   </div>
@@ -88,6 +119,8 @@ const heroStickers: HeroSticker[] = [
   {
     heroStickers.map((sticker) => (
       <div
+        data-hero-sticker
+        data-sticker-pos={sticker.pos}
         class:list={[
           "hero-sticker-wrap pointer-events-auto absolute z-30",
           `hero-sticker-wrap--peel-${sticker.peel}`,
@@ -98,18 +131,38 @@ const heroStickers: HeroSticker[] = [
         ]}
         aria-hidden="true"
       >
-        <Image
-          src={sticker.src}
-          alt=""
-          class="hero-sticker"
-          widths={[120, 180, 240, 320, 480]}
-          sizes="(max-width: 767px) 42vw, (max-width: 1023px) 18vw, 300px"
-          loading="eager"
-          decoding="async"
-          fetchpriority={sticker.pos === "cloud" ? "high" : "auto"}
-        />
+        <div data-hero-sticker-inner class="hero-sticker-inner will-change-transform">
+          <Image
+            src={sticker.src}
+            alt=""
+            class="hero-sticker"
+            widths={[120, 180, 240, 320, 480]}
+            sizes="(max-width: 767px) 42vw, (max-width: 1023px) 18vw, 300px"
+            loading="eager"
+            decoding="async"
+            fetchpriority={sticker.pos === "cloud" ? "high" : "auto"}
+          />
+        </div>
       </div>
     ))
   }
 </section>
+
+<script>
+  import { initHeroMotion } from "../../scripts/motion/hero-motion";
+
+  let motionInstance: ReturnType<typeof initHeroMotion> = null;
+
+  function setup() {
+    motionInstance = initHeroMotion();
+  }
+
+  function teardown() {
+    motionInstance?.kill();
+    motionInstance = null;
+  }
+
+  document.addEventListener("astro:page-load", setup);
+  document.addEventListener("astro:before-swap", teardown);
+</script>
 

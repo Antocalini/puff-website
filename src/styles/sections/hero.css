@@ -15,14 +15,14 @@
     width: calc(100% + var(--spacing-gutter) * 2);
     max-width: none;
     margin-inline: calc(var(--spacing-gutter) * -1);
-    padding-inline: clamp(1.875rem, 9vw, 2.75rem);
+    padding-inline: clamp(0.25rem, 2vw, 0.75rem);
   }
 
   .hero-title {
     width: 100%;
-    font-size: clamp(3.25rem, 15cqi, 5.5rem);
+    font-size: clamp(4.15rem, 19.5cqi, 5.75rem);
     letter-spacing: -0.015em;
-    line-height: 0.88;
+    line-height: 0.82;
   }
 
   @media (min-width: 768px) {
@@ -62,102 +62,77 @@
     transform: rotate(-4.5deg);
   }
 
+  .hero-sticker-inner {
+    display: block;
+    transform-origin: center center;
+    will-change: transform, opacity;
+  }
+
   .hero-sticker {
     display: block;
     width: clamp(8.5rem, 24vw, 13rem);
     height: auto;
     filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.18));
     transition:
-      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-      filter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
-    animation: hero-sticker-rock 8.5s ease-in-out infinite;
   }
 
-  /* Subtle float — bob on wrap + rock on sticker (mobile + desktop) */
   .hero-sticker-wrap {
     cursor: grab;
-    animation: hero-sticker-bob 6s ease-in-out infinite;
     will-change: transform;
+  }
+
+  .hero-sticker-wrap:hover .hero-sticker {
+    transform: scale(1.06) rotate(3deg);
+    filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.28));
   }
 
   .hero-sticker-pos--work {
-    left: clamp(0.5rem, 2.5vw, 3rem);
-    top: 13%;
-    animation-delay: 0s;
+    left: clamp(0.75rem, 3.5vw, 2rem);
+    top: clamp(6.5rem, 16dvh, 10.5rem);
   }
 
   .hero-sticker-pos--cloud {
-    right: clamp(0.5rem, 2.5vw, 3rem);
-    top: 8%;
-    animation-delay: -2s;
+    right: clamp(0.75rem, 3.5vw, 2rem);
+    top: clamp(5.75rem, 14dvh, 9.5rem);
   }
 
   .hero-sticker-pos--one {
-    left: clamp(0.5rem, 3vw, 4rem);
-    bottom: 18%;
-    animation-delay: -3.6s;
+    left: clamp(0.5rem, 3vw, 1.75rem);
+    bottom: clamp(14.5rem, 29dvh, 19rem);
   }
 
-  .hero-sticker-pos--work .hero-sticker {
-    animation-delay: -0.4s;
+  /* Mobile sticker sizes: bolder, fill the spacious areas comfortably */
+  .hero-sticker-wrap--size-lg .hero-sticker {
+    width: clamp(9rem, 28vw, 12rem);
   }
 
-  .hero-sticker-pos--cloud .hero-sticker {
-    animation-delay: -2.3s;
+  .hero-sticker-wrap--size-md .hero-sticker {
+    width: clamp(7.5rem, 23vw, 9.75rem);
   }
 
-  .hero-sticker-pos--one .hero-sticker {
-    animation-delay: -4.1s;
-  }
-
-  @keyframes hero-sticker-bob {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0);
-    }
-
-    50% {
-      transform: translate3d(0, -0.45rem, 0);
-    }
-  }
-
-  @keyframes hero-sticker-rock {
-    0%,
-    100% {
-      transform: rotate(var(--hero-peel-tilt, 0deg));
-    }
-
-    50% {
-      transform: rotate(calc(var(--hero-peel-tilt, 0deg) + 2deg));
-    }
+  .hero-sticker-wrap--size-sm .hero-sticker {
+    width: clamp(7rem, 22vw, 9.25rem);
   }
 
   @media (min-width: 768px) {
-    @keyframes hero-sticker-bob {
-      0%,
-      100% {
-        transform: translate3d(0, 0, 0);
-      }
-
-      50% {
-        transform: translate3d(0, -0.65rem, 0);
-      }
-    }
-
-    @keyframes hero-sticker-rock {
-      0%,
-      100% {
-        transform: rotate(var(--hero-peel-tilt, 0deg));
-      }
-
-      50% {
-        transform: rotate(calc(var(--hero-peel-tilt, 0deg) + 2deg));
-      }
-    }
 
     .hero-sticker {
       width: clamp(10rem, 15vw, 16rem);
+    }
+
+    .hero-sticker-wrap--size-lg .hero-sticker {
+      width: clamp(13rem, 18.5vw, 21rem);
+    }
+
+    .hero-sticker-wrap--size-md .hero-sticker {
+      width: clamp(9.5rem, 13.5vw, 14.5rem);
+    }
+
+    .hero-sticker-wrap--size-sm .hero-sticker {
+      width: clamp(12.5rem, 17.5vw, 19rem);
     }
 
     /* Work Play Create Repeat: moved a bit closer toward the center */
@@ -177,18 +152,6 @@
       left: clamp(2.75rem, 6.2vw, 8rem);
       bottom: clamp(9.5rem, 23vh, 16.5rem);
     }
-  }
-
-  .hero-sticker-wrap--size-lg .hero-sticker {
-    width: clamp(13rem, 18.5vw, 21rem);
-  }
-
-  .hero-sticker-wrap--size-md .hero-sticker {
-    width: clamp(9.5rem, 13.5vw, 14.5rem);
-  }
-
-  .hero-sticker-wrap--size-sm .hero-sticker {
-    width: clamp(12.5rem, 17.5vw, 19rem);
   }
 
   /* Peel from anchored corner — tilt base + hover lift */
