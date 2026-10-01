@@ -58,11 +58,11 @@ export function initSmartNav() {
     progress = p;
     pills.forEach((pill) => {
       pill.style.setProperty("--nav-compact", p.toFixed(4));
-      pill.classList.toggle("is-compact", p > 0.92);
-      pill.setAttribute("data-compact", p > 0.92 ? "true" : "false");
+      pill.classList.toggle("is-compact", p > 0.96);
+      pill.setAttribute("data-compact", p > 0.96 ? "true" : "false");
       const collapse = pill.querySelector<HTMLElement>(".nav-pill-collapse");
       if (collapse) {
-        collapse.style.pointerEvents = p > 0.85 ? "none" : "";
+        collapse.style.pointerEvents = p > 0.45 ? "none" : "";
       }
     });
   };

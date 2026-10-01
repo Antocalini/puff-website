@@ -94,12 +94,12 @@
 
     const counterObj = { value: 0 };
 
-    // 0. Animate Counter 0 to 100 (fast loading)
+    // 0. Animate Counter 0 to 100 (crisp, snappy loading)
     tl.to(
       counterObj,
       {
         value: 100,
-        duration: 1.0,
+        duration: 0.8,
         ease: "power2.out",
         onUpdate: () => {
           counterEl.textContent = Math.round(counterObj.value) + "%";
@@ -112,7 +112,7 @@
       ".preloader-logo-outline path",
       {
         strokeDashoffset: 0,
-        duration: 1.6,
+        duration: 1.1,
         ease: "power2.inOut",
       },
       0
@@ -122,29 +122,29 @@
       ".preloader-logo-fill",
       {
         clipPath: "inset(0% 0 0 0)",
-        duration: 1.2,
+        duration: 0.8,
         ease: "power2.inOut",
       },
-      "-=0.4"
+      "-=0.3"
     )
     // 3. Hide outline stroke
     .to(
       ".preloader-logo-outline",
       {
         opacity: 0,
-        duration: 0.4,
+        duration: 0.25,
       },
-      "-=0.4"
+      "-=0.25"
     )
-    // 4. Pause for a split second
-    .to({}, { duration: 0.25 })
+    // 4. Brief hold
+    .to({}, { duration: 0.12 })
     // 5. Stagger columns sliding up
     .to(
       ".preloader-col",
       {
         yPercent: -100,
-        duration: 1.2,
-        stagger: 0.1,
+        duration: 0.9,
+        stagger: 0.04,
         ease: "power4.inOut",
       }
     )
@@ -154,10 +154,18 @@
       {
         yPercent: -100,
         opacity: 0,
-        duration: 1.0,
+        duration: 0.75,
         ease: "power4.inOut",
       },
-      "-=1.2"
+      "<"
+    )
+    // Trigger hero entrance immediately as the curtain clears the top edge
+    .call(
+      () => {
+        document.dispatchEvent(new CustomEvent("preloader:reveal"));
+      },
+      undefined,
+      "-=0.45"
     );
   }
 
