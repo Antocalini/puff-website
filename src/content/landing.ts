@@ -172,7 +172,7 @@ export const landingContent = {
     heading: "Choose a starting point.",
     intro: "The plan names and monthly price points below reflect the current site and remain draft terms.",
     tiers: [
-      { name: "Graphic Lite", monthlyPrice: "$500", summary: "Graphic Design Service", inclusions: ["10 projects", "One request at a time"] },
+      { name: "Graphic Lite", monthlyPrice: "$200", summary: "Graphic Design Service", inclusions: ["2 projects", "One request at a time"] },
       { name: "Graphic", monthlyPrice: "$1,000", summary: "Graphic + Web Design Service", inclusions: ["20 projects", "One request at a time"] },
       { name: "Web", monthlyPrice: "$1,500", summary: "Graphic + Web Design Service", inclusions: ["Unlimited projects", "Simultaneous requests"] },
       { name: "Video", monthlyPrice: "$1,500", summary: "Graphic + Video Design & Editing", inclusions: ["Unlimited projects", "Simultaneous requests"] },
