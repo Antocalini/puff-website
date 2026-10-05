@@ -4,8 +4,8 @@ import type { ImageMetadata } from "astro";
 import { landingContent } from "../../content/landing";
 import TrustedByMorph from "../ui/TrustedByMorph.astro";
 import TrustedByMarquee from "../ui/TrustedByMarquee.astro";
-import workSticker from "../../assets/images/stickers/work.webp";
 import cloudSticker from "../../assets/images/stickers/cloud.webp";
+import workSticker from "../../assets/images/stickers/work.webp";
 import numberOneSticker from "../../assets/images/stickers/number-one.webp";
 import "../../styles/sections/hero.css";
 
@@ -18,23 +18,22 @@ type HeroSticker = {
   pos: "work" | "cloud" | "one";
 };
 
-/** Sit at the edges, z below the headline so copy stays readable. */
 const heroStickers: HeroSticker[] = [
   {
     src: workSticker,
     peel: "tl",
-    size: "md",
+    size: "lg",
     pos: "work",
   },
   {
     src: cloudSticker,
     peel: "tr",
-    size: "lg",
+    size: "md",
     pos: "cloud",
   },
   {
     src: numberOneSticker,
-    peel: "bl",
+    peel: "tr",
     size: "sm",
     pos: "one",
   },
@@ -45,77 +44,98 @@ const heroStickers: HeroSticker[] = [
   id="hero"
   data-hero-section
   data-nav-tone="yellow"
-  class="pointer-events-none relative z-20 min-h-dvh overflow-hidden bg-transparent text-charcoal"
+  class="pointer-events-none relative z-20 min-h-dvh overflow-hidden bg-transparent text-charcoal flex flex-col justify-between"
 >
-
   <div
-    class="hero-shell pointer-events-none relative z-10 mx-auto flex min-h-dvh max-w-content flex-col items-center justify-between px-gutter text-center pt-[calc(var(--site-header-h,5.5rem)+clamp(1.75rem,4.5vh,3.5rem))] pb-4 md:pb-6"
+    class="hero-shell pointer-events-none relative z-20 mx-auto flex w-full max-w-content flex-1 flex-col justify-between px-gutter pt-[calc(var(--site-header-h,5.5rem)+clamp(1.25rem,3.2vh,2.5rem))] pb-3 md:pb-5"
   >
-    <!-- Center Cluster: Headline + Body + CTA + Logos (Jitter hierarchy) -->
-    <div class="pointer-events-none my-auto flex flex-col items-center w-full pt-4 md:pt-6">
-      <div class="hero-title-wrap relative z-20 mx-auto w-full">
-        <h1
-          class="hero-title relative w-full font-display font-black uppercase tracking-tight text-charcoal"
-        >
-          <!-- Mobile (3 punchy lines for gigantic Jitter-scale typography) -->
-          <div class="block md:hidden">
-            <span class="block overflow-hidden pb-1">
-              <span data-hero-title-line class="relative z-10 block whitespace-nowrap will-change-transform">YOUR ENTIRE</span>
+    <!-- Stepped Editorial Typography (ONLY the title container, matched with navbar) -->
+    <div class="pointer-events-none relative my-auto w-full max-w-[61rem] mx-auto py-2 md:py-4">
+      <div class="hero-stepped-wrap relative w-full">
+        <!-- Top Step: your entire (Offset to the left of center, handwritten font, uncropped) -->
+        <div class="hero-step-line hero-step-line--top relative z-20">
+          <h1 class="font-accent font-bold text-charcoal leading-[0.7] tracking-normal">
+            <span class="block overflow-hidden pt-1 pb-10 pl-0 pr-4 text-[clamp(3rem,7vw,5.75rem)]">
+              <span data-hero-title-line class="block whitespace-nowrap will-change-transform -rotate-1">your entire</span>
             </span>
-            <span class="block overflow-hidden mt-1 pb-1">
-              <span data-hero-title-line class="relative z-20 block whitespace-nowrap will-change-transform">CREATIVE TEAM</span>
-            </span>
-            <span class="block overflow-hidden mt-1 pb-1">
-              <span data-hero-title-line class="relative z-30 block whitespace-nowrap will-change-transform">IN A BOX</span>
-            </span>
-          </div>
+          </h1>
+        </div>
 
-          <!-- Desktop (2 wide lines) -->
-          <div class="hidden md:block">
-            <span class="block overflow-hidden pb-1">
-              <span data-hero-title-line class="relative z-10 block whitespace-nowrap will-change-transform">YOUR ENTIRE CREATIVE</span>
-            </span>
-            <span class="block overflow-hidden mt-2.5 pb-1">
-              <span data-hero-title-line class="relative z-20 block whitespace-nowrap will-change-transform">TEAM IN A BOX</span>
+        <!-- Middle Step: CREATIVE (Dead center anchor in the hero, balanced monumental scale) -->
+        <div class="hero-step-line hero-step-line--center relative z-10">
+          <div class="font-display font-black uppercase text-charcoal leading-[0.78] tracking-tight">
+            <span class="block overflow-hidden pt-1 pb-2 text-[clamp(8.5rem,21.5vw,21rem)]" aria-label="CREATIVE">
+              <span class="inline-flex whitespace-nowrap will-change-transform" data-hero-creative-wrap aria-hidden="true">
+                {
+                  "CREATIVE".split("").map((letter) => (
+                    <span
+                      data-hero-creative-letter
+                      class="inline-block will-change-transform"
+                    >
+                      {letter}
+                    </span>
+                  ))
+                }
+              </span>
             </span>
           </div>
-        </h1>
+        </div>
+
+        <!-- Lower Step: TEAM in a BOX (Offset to the right, in a in handwritten font) -->
+        <div class="hero-step-line hero-step-line--bottom">
+          <div class="font-display font-black uppercase text-charcoal leading-[0.85] tracking-tight">
+            <span class="block overflow-hidden pb-1 text-[clamp(4.25rem,10vw,8.5rem)]">
+              <span data-hero-title-line class="inline-flex items-baseline gap-2.5 sm:gap-4 whitespace-nowrap will-change-transform">
+                <span>TEAM</span>
+                <span class="font-accent font-bold normal-case text-[0.9em] -rotate-2 inline-block px-1 text-charcoal">in a</span>
+                <span>BOX</span>
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Bottom Left: Description + Single Primary CTA (See Plans) - Lower and further to the left -->
+        <div class="hero-desc-cta-wrap pointer-events-auto z-20">
+          <p
+            data-hero-body
+            class="max-w-[17.5rem] sm:max-w-[19rem] font-body font-medium text-xs sm:text-sm md:text-[0.925rem] leading-relaxed text-charcoal/85 will-change-transform"
+          >
+            {body}
+          </p>
+
+          <div data-hero-cta class="mt-3.5 sm:mt-4 flex items-center will-change-transform">
+            <a
+              class="group btn-3d-skeuo btn-shine inline-flex min-h-12 items-center justify-center gap-3 rounded-full px-6 py-2.5 text-paper cursor-pointer shadow-md"
+              href={primaryCta.href}
+            >
+              <span class="font-label text-sm sm:text-base font-bold tracking-wide">
+                {primaryCta.label}
+              </span>
+              <div class="flex size-7 items-center justify-center rounded-full bg-paper/15 text-paper transition-all duration-300 group-hover:translate-x-1 group-hover:bg-brand-yellow group-hover:text-charcoal shadow-sm">
+                <svg class="size-3.5 stroke-[2.5]" fill="none" viewBox="0 0 16 16">
+                  <path d="M3 8h9M8 3.5 12.5 8 8 12.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <p data-hero-body class="relative z-[12] mt-4 max-w-[19rem] text-pretty text-sm leading-relaxed text-charcoal/75 sm:mt-6 sm:max-w-xl sm:text-base md:mt-8 md:max-w-2xl md:text-xl lg:text-[1.35rem] will-change-transform">
-        {body}
-      </p>
-
-      <a
-        data-hero-cta
-        class="group btn-3d-skeuo btn-shine pointer-events-auto relative z-[12] mt-7 inline-flex min-h-14 items-center justify-center gap-4 rounded-full px-9 py-4 text-paper md:mt-8 will-change-transform"
-        href={primaryCta.href}
-      >
-        <span class="font-label text-base font-bold tracking-wide md:text-lg">
-          {primaryCta.label}
-        </span>
-        <div class="flex size-9 items-center justify-center rounded-full bg-paper/15 text-paper transition-all duration-300 group-hover:translate-x-1 group-hover:bg-brand-yellow group-hover:text-charcoal shadow-sm">
-          <svg class="size-4.5 stroke-[2.5]" fill="none" viewBox="0 0 16 16">
-            <path d="M3 8h9M8 3.5 12.5 8 8 12.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </div>
-      </a>
-
-      <!-- Jitter-style Client Proof Bar: Marquee on mobile, Morph Grid on desktop -->
-      <div data-hero-morph-wrap class="pointer-events-auto w-full mt-8 md:mt-14 will-change-transform">
-        <div class="block md:hidden w-[calc(100%+var(--spacing-gutter)*2)] -mx-[var(--spacing-gutter)]">
-          <TrustedByMarquee
-            label="Over 40+ fast-growing brands & creative teams use Puff"
-          />
-        </div>
-        <div class="hidden md:block">
-          <TrustedByMorph />
-        </div>
+    <!-- Centered Logo Marquee (Always maintained in the center) -->
+    <div data-hero-morph-wrap class="pointer-events-auto w-full mt-6 md:mt-8 will-change-transform relative z-20">
+      <div class="block md:hidden w-[calc(100%+var(--spacing-gutter)*2)] -mx-[var(--spacing-gutter)]">
+        <TrustedByMarquee
+          label="Over 40+ fast-growing brands & creative teams use Puff"
+        />
+      </div>
+      <div class="hidden md:block">
+        <TrustedByMorph />
       </div>
     </div>
   </div>
 
-  <!-- Floating Stickers placed on full canvas edges outside max-w-content -->
+  <!-- Floating Stickers dispersed across the hero canvas -->
   {
     heroStickers.map((sticker) => (
       <div
@@ -165,4 +185,3 @@ const heroStickers: HeroSticker[] = [
   document.addEventListener("astro:page-load", setup);
   document.addEventListener("astro:before-swap", teardown);
 </script>
-

@@ -50,6 +50,89 @@
     }
   }
 
+  /* Stepped Editorial Typography (Desfasado Layout - 100% Symmetric with Nav Pill) */
+  .hero-stepped-wrap {
+    --hero-gap-y: 0.25rem;
+    position: relative;
+    width: 100%;
+    max-width: 61rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero-stepped-wrap {
+      --hero-gap-y: 0.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-stepped-wrap {
+      --hero-gap-y: 0.65rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .hero-stepped-wrap {
+      --hero-gap-y: 0.75rem;
+    }
+  }
+
+  .hero-step-line {
+    width: 100%;
+    display: flex;
+  }
+
+  .hero-step-line--top {
+    justify-content: flex-start;
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .hero-step-line--center {
+    justify-content: center;
+    text-align: center;
+    transform: translateX(0);
+    margin-top: calc(var(--hero-gap-y) - clamp(0.75rem, 1.8vw, 2rem));
+  }
+
+  .hero-step-line--bottom {
+    justify-content: flex-end;
+    padding-right: 0;
+    text-align: right;
+    margin-top: var(--hero-gap-y);
+  }
+
+  /* Description + Single Primary CTA (See Plans) - Aligned to left edge of container */
+  .hero-desc-cta-wrap {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-desc-cta-wrap {
+      position: absolute;
+      left: clamp(-16rem, -13vw, -9rem);
+      bottom: clamp(-2.5rem, -3.5vh, -1rem);
+      max-width: 19.5rem;
+      margin-top: 0;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .hero-desc-cta-wrap {
+      left: clamp(-19rem, -15vw, -12rem);
+      bottom: clamp(-3.25rem, -4.5vh, -1.5rem);
+      max-width: 21rem;
+    }
+  }
+
   .hero-media {
     box-shadow: var(--shadow-ambient);
   }
@@ -90,27 +173,29 @@
   }
 
   .hero-sticker-pos--work {
-    left: clamp(0.75rem, 3.5vw, 2rem);
-    top: clamp(6.5rem, 16dvh, 10.5rem);
+    left: clamp(0.75rem, 2.5vw, 1.5rem);
+    top: clamp(4.75rem, 10.5dvh, 6.25rem);
   }
 
   .hero-sticker-pos--cloud {
-    right: clamp(0.75rem, 3.5vw, 2rem);
-    top: clamp(5.75rem, 14dvh, 9.5rem);
+    right: clamp(0.5rem, 2.5vw, 1.5rem);
+    top: clamp(4.75rem, 10.5dvh, 6.5rem);
   }
 
   .hero-sticker-pos--one {
-    left: clamp(0.5rem, 3vw, 1.75rem);
+    right: clamp(0.75rem, 3vw, 1.75rem);
+    left: auto;
     bottom: clamp(14.5rem, 29dvh, 19rem);
   }
 
   /* Mobile sticker sizes: bolder, fill the spacious areas comfortably */
   .hero-sticker-wrap--size-lg .hero-sticker {
-    width: clamp(9rem, 28vw, 12rem);
+    width: clamp(8.5rem, 26vw, 11.5rem);
   }
 
+  /* Cloud sticker: significantly larger and prominent */
   .hero-sticker-wrap--size-md .hero-sticker {
-    width: clamp(7.5rem, 23vw, 9.75rem);
+    width: clamp(9rem, 29vw, 12.5rem);
   }
 
   .hero-sticker-wrap--size-sm .hero-sticker {
@@ -127,30 +212,33 @@
       width: clamp(13rem, 18.5vw, 21rem);
     }
 
+    /* Cloud sticker on desktop: bold, expressive, and larger */
     .hero-sticker-wrap--size-md .hero-sticker {
-      width: clamp(9.5rem, 13.5vw, 14.5rem);
+      width: clamp(14rem, 19vw, 21rem);
     }
 
     .hero-sticker-wrap--size-sm .hero-sticker {
       width: clamp(12.5rem, 17.5vw, 19rem);
     }
 
-    /* Work Play Create Repeat: moved a bit closer toward the center */
+    /* Work Play Create Repeat: framed cleanly to the left without obscuring text */
     .hero-sticker-pos--work {
-      left: clamp(3rem, 6.8vw, 8.75rem);
-      top: clamp(8.5rem, 19vh, 14.5rem);
+      left: clamp(0.75rem, 2.2vw, 3rem);
+      top: clamp(6.25rem, 14.5vh, 11rem);
+      z-index: 15;
     }
 
-    /* Cloud: moved slightly inward from the right edge */
+    /* Cloud: moved slightly inward from the right edge with generous sizing */
     .hero-sticker-pos--cloud {
       right: clamp(1.25rem, 3.2vw, 4.75rem);
-      top: clamp(11rem, 25vh, 18.5rem);
+      top: clamp(9rem, 20vh, 16rem);
     }
 
-    /* Foam Finger (#1 Glove): moved a bit closer toward the center */
+    /* Foam Finger (#1 Glove): placed on the right side of the screen */
     .hero-sticker-pos--one {
-      left: clamp(2.75rem, 6.2vw, 8rem);
-      bottom: clamp(9.5rem, 23vh, 16.5rem);
+      right: clamp(0.75rem, 2.5vw, 3.5rem);
+      left: auto;
+      bottom: clamp(4.5rem, 12vh, 8.5rem);
     }
   }
 

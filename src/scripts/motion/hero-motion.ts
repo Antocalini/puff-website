@@ -25,25 +25,31 @@ export function initHeroMotion(): HeroMotionInstance | null {
   const titleLines = Array.from(heroSection.querySelectorAll<HTMLElement>("[data-hero-title-line]")).filter(
     (el) => el.offsetParent !== null
   );
+  const creativeLetters = Array.from(
+    heroSection.querySelectorAll<HTMLElement>("[data-hero-creative-letter]")
+  );
   const bodyText = heroSection.querySelector<HTMLElement>("[data-hero-body]");
   const ctaBtn = heroSection.querySelector<HTMLElement>("[data-hero-cta]");
   const morphWrap = heroSection.querySelector<HTMLElement>("[data-hero-morph-wrap]");
   const stickers = Array.from(heroSection.querySelectorAll<HTMLElement>("[data-hero-sticker]"));
   const stickerInners = Array.from(heroSection.querySelectorAll<HTMLElement>("[data-hero-sticker-inner]"));
 
-  if (!titleLines.length) return null;
+  if (!titleLines.length && !creativeLetters.length) return null;
 
   const cleanups: (() => void)[] = [];
 
   // Set initial states for clean, smooth entrance
-  gsap.set(titleLines, { yPercent: 100, opacity: 0 });
-  if (bodyText) gsap.set(bodyText, { y: 22, opacity: 0 });
-  if (ctaBtn) gsap.set(ctaBtn, { scale: 0.94, y: 16, opacity: 0 });
+  gsap.set(titleLines, { yPercent: 110, opacity: 0 });
+  if (creativeLetters.length) {
+    gsap.set(creativeLetters, { yPercent: -130, opacity: 0 });
+  }
+  if (bodyText) gsap.set(bodyText, { y: 24, opacity: 0 });
+  if (ctaBtn) gsap.set(ctaBtn, { scale: 0.92, y: 16, opacity: 0 });
   if (morphWrap) gsap.set(morphWrap, { y: 16, opacity: 0 });
   if (stickerInners.length) {
     gsap.set(stickerInners, {
-      scale: 0.75,
-      rotation: (i) => [-8, 7, -6][i] ?? 5,
+      scale: 0.65,
+      rotation: (i) => [-12, 10, -8][i] ?? 6,
       opacity: 0,
       transformOrigin: "center center",
     });
@@ -51,26 +57,83 @@ export function initHeroMotion(): HeroMotionInstance | null {
 
   const startTimeline = () => {
     const tl = gsap.timeline({
-      defaults: { ease: "power3.out" },
+      defaults: { ease: "power4.out" },
       onComplete: () => {
         setupContinuousMotion();
       },
     });
 
-    // 1. Kinetic headline reveal (Split lines rising with silky power3 ease)
-    tl.to(
-      titleLines,
-      {
-        yPercent: 0,
-        opacity: 1,
-        duration: 0.9,
-        stagger: 0.06,
-        ease: "power3.out",
-      },
-      0
-    );
+    // Act 1: Kinetic headline reveal with falling stagger for CREATIVE
+    if (titleLines[0]) {
+      tl.to(
+        titleLines[0],
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power4.out",
+        },
+        0
+      );
+    }
 
-    // 2. Stickers glide in with smooth, cushioned settle (no cartoon bounce)
+    if (creativeLetters.length) {
+      tl.to(
+        creativeLetters,
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.85,
+          stagger: 0.045,
+          ease: "back.out(1.2)",
+        },
+        0.1
+      );
+    }
+
+    if (titleLines[1]) {
+      tl.to(
+        titleLines[1],
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power4.out",
+        },
+        0.36
+      );
+    }
+
+    // Act 2: Supporting Content & Conversion (Bottom-Left)
+    if (bodyText) {
+      tl.to(
+        bodyText,
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.85,
+          ease: "power3.out",
+        },
+        0.42
+      );
+    }
+
+    if (ctaBtn) {
+      tl.to(
+        ctaBtn,
+        {
+          scale: 1,
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "back.out(1.2)",
+        },
+        0.52
+      );
+    }
+
+    // Act 3: Physicality & Personality (Stickers slap onto the canvas in natural reading order)
+    // 0: Work (top-left) -> 1: Cloud (top-right) -> 2: #1 Glove (bottom-right)
     if (stickerInners.length) {
       tl.to(
         stickerInners,
@@ -79,53 +142,24 @@ export function initHeroMotion(): HeroMotionInstance | null {
           rotation: 0,
           opacity: 1,
           duration: 0.85,
-          stagger: 0.06,
-          ease: "power3.out",
+          stagger: 0.14,
+          ease: "back.out(1.25)",
         },
-        0.06
+        0.65
       );
     }
 
-    // 3. Body text smooth reveal
-    if (bodyText) {
-      tl.to(
-        bodyText,
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.75,
-          ease: "power3.out",
-        },
-        0.12
-      );
-    }
-
-    // 4. CTA button smooth snap
-    if (ctaBtn) {
-      tl.to(
-        ctaBtn,
-        {
-          scale: 1,
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power3.out",
-        },
-        0.16
-      );
-    }
-
-    // 5. Morph client proof bar
+    // Act 4: Base Foundation & Social Proof Marquee
     if (morphWrap) {
       tl.to(
         morphWrap,
         {
           y: 0,
           opacity: 1,
-          duration: 0.65,
+          duration: 0.8,
           ease: "power3.out",
         },
-        0.2
+        1.05
       );
     }
   };
@@ -201,7 +235,6 @@ export function initHeroMotion(): HeroMotionInstance | null {
       scrollTweens.push(
         gsap.to(centerCluster, {
           y: 70,
-          opacity: 0.15,
           ease: "none",
           scrollTrigger: {
             trigger: heroSection,
@@ -223,7 +256,6 @@ export function initHeroMotion(): HeroMotionInstance | null {
           yPercent: yOut,
           xPercent: xOut,
           rotation: rotOut,
-          opacity: 0.2,
           ease: "none",
           scrollTrigger: {
             trigger: heroSection,
