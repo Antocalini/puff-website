@@ -75,16 +75,27 @@ function buildTimeline(
 
   if (deckCards.length) {
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const stackScale = isMobile ? 0.3 : 1;
-
-    gsap.set(deckCards, {
-      x: (_i, el) => parseFloat(el.dataset.stackX || "0") * stackScale,
-      y: (_i, el) => parseFloat(el.dataset.stackY || "0") * stackScale,
-      rotation: (_i, el) => parseFloat(el.dataset.stackRot || "0"),
-      autoAlpha: 1,
-      scale: 1,
-      force3D: true,
-    });
+    if (isMobile) {
+      // Mobile: cards are already fanned out and OPEN from the start
+      gsap.set(deckCards, {
+        x: (_i, el) => parseFloat(el.dataset.spreadX || "0") * 0.42,
+        y: (_i, el) => parseFloat(el.dataset.spreadY || "0") * 0.5,
+        rotation: (_i, el) => parseFloat(el.dataset.spreadRot || "0") * 0.85,
+        autoAlpha: 1,
+        scale: 1,
+        force3D: true,
+      });
+    } else {
+      // Desktop: starts stacked, fans out in arc
+      gsap.set(deckCards, {
+        x: (_i, el) => parseFloat(el.dataset.stackX || "0"),
+        y: (_i, el) => parseFloat(el.dataset.stackY || "0"),
+        rotation: (_i, el) => parseFloat(el.dataset.stackRot || "0"),
+        autoAlpha: 1,
+        scale: 1,
+        force3D: true,
+      });
+    }
   }
 
   if (stage1) {
@@ -179,21 +190,21 @@ function buildTimeline(
 
   if (deckCards.length) {
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const spreadScale = isMobile ? Math.min(0.24, (window.innerWidth - 32) / 1250) : 1;
-
-    // Simultaneously as deck rises, cards smoothly fan out into their arc
-    tl.to(
-      deckCards,
-      {
-        x: (_i, el) => parseFloat(el.dataset.spreadX || "0") * spreadScale,
-        y: (_i, el) => parseFloat(el.dataset.spreadY || "0") * (isMobile ? 0.4 : 1),
-        rotation: (_i, el) => parseFloat(el.dataset.spreadRot || "0") * (isMobile ? 0.7 : 1),
-        ease: "power3.out",
-        duration: 0.95,
-        stagger: 0.04,
-      },
-      "<0.1",
-    );
+    if (!isMobile) {
+      // Desktop only: fan out into arc during scroll
+      tl.to(
+        deckCards,
+        {
+          x: (_i, el) => parseFloat(el.dataset.spreadX || "0"),
+          y: (_i, el) => parseFloat(el.dataset.spreadY || "0"),
+          rotation: (_i, el) => parseFloat(el.dataset.spreadRot || "0"),
+          ease: "power3.out",
+          duration: 0.95,
+          stagger: 0.04,
+        },
+        "<0.1",
+      );
+    }
   }
 
   if (hint) {

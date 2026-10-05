@@ -217,11 +217,12 @@ const benefits = [
   let activeCard: HTMLElement | null = null;
 
   function getMobileRestTransforms(card: HTMLElement) {
-    const spreadScale = Math.min(0.24, (window.innerWidth - 32) / 1250);
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const spreadScale = isMobile ? 0.42 : 1;
     return {
       spreadX: parseFloat(card.dataset.spreadX || "0") * spreadScale,
-      spreadY: parseFloat(card.dataset.spreadY || "0") * 0.4,
-      spreadRot: parseFloat(card.dataset.spreadRot || "0") * 0.7,
+      spreadY: parseFloat(card.dataset.spreadY || "0") * (isMobile ? 0.5 : 1),
+      spreadRot: parseFloat(card.dataset.spreadRot || "0") * (isMobile ? 0.85 : 1),
       z: card.dataset.cardZ || "10",
     };
   }
@@ -235,7 +236,7 @@ const benefits = [
       scale: 1,
       zIndex: z,
       boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
-      duration: 0.4,
+      duration: 0.38,
       ease: "power2.out",
       overwrite: "auto",
     });
@@ -246,9 +247,9 @@ const benefits = [
       x: 0,
       y: -36,
       rotation: 0,
-      scale: 1.08,
+      scale: 1.1,
       zIndex: 100,
-      boxShadow: "0 20px 30px -8px rgba(0, 0, 0, 0.45)",
+      boxShadow: "0 22px 35px -8px rgba(0, 0, 0, 0.45)",
       duration: 0.45,
       ease: "back.out(1.2)",
       overwrite: "auto",
@@ -264,6 +265,18 @@ const benefits = [
 
     const { gsap } = ensureGsap();
     const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
+
+    if (isMobile()) {
+      cards.forEach((card) => {
+        const { spreadX, spreadY, spreadRot, z } = getMobileRestTransforms(card);
+        gsap.set(card, {
+          x: spreadX,
+          y: spreadY,
+          rotation: spreadRot,
+          zIndex: z,
+        });
+      });
+    }
 
     cards.forEach((card) => {
       // Desktop hover interaction

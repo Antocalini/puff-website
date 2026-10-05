@@ -158,7 +158,7 @@ export const landingContent = {
   }),
   process: draft({
     heading: "A simple rhythm for creative work.",
-    intro: "A draft outline of the Puff flow—final operating terms are pending confirmation.",
+    intro: "A draft outline of the Puff flow. Final operating terms are pending confirmation.",
     steps: [
       { number: "01", title: "Choose your direction", body: "Pick the draft plan that matches the kind of work you need." },
       { number: "02", title: "Share the brief", body: "Send the next priority so the work can move into the queue." },
@@ -168,7 +168,7 @@ export const landingContent = {
     previewDescription: "A future workflow preview will live here. This is not a client portal or dashboard.",
   }),
   pricing: draft({
-    disclosure: "Draft pricing — pending confirmation",
+    disclosure: "Draft pricing (pending confirmation)",
     heading: "Choose a starting point.",
     intro: "The plan names and monthly price points below reflect the current site and remain draft terms.",
     tiers: [
@@ -182,7 +182,7 @@ export const landingContent = {
     eyebrow: "Sample work / Draft",
     heading: "A few ways a good idea can show up.",
     body: "Art-directed sample compositions stand in for approved portfolio assets.",
-    collectionLabel: "Sample work — no client attribution",
+    collectionLabel: "Sample work (no client attribution)",
   }),
   portfolio: [
     { category: "graphic", title: draft("Brand system"), media: needsClientInput, ratio: "square" },

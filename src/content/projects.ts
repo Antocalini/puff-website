@@ -110,7 +110,7 @@ export const projects: readonly Project[] = [
       "Custom Printed Napkins",
     ],
     gallery: [
-      { label: "Cover — Takeaway Collateral", ratio: "standard", span: "full", src: epaBurguerThumb.src },
+      { label: "Cover: Takeaway Collateral", ratio: "standard", span: "full", src: epaBurguerThumb.src },
       {
         label: "Color Palette & Print Specs",
         ratio: "wide",
@@ -162,7 +162,7 @@ export const projects: readonly Project[] = [
       "Spatial Store Signage",
     ],
     gallery: [
-      { label: "Cover — Product Packaging", ratio: "standard", span: "full", src: ogiThumb.src },
+      { label: "Cover: Product Packaging", ratio: "standard", span: "full", src: ogiThumb.src },
       {
         label: "Color Palette & Specs",
         ratio: "wide",
@@ -215,7 +215,7 @@ export const projects: readonly Project[] = [
       "Print Product Catalogs",
     ],
     gallery: [
-      { label: "Cover — Corporate Kit", ratio: "standard", span: "full", src: ravagoThumb.src },
+      { label: "Cover: Corporate Kit", ratio: "standard", span: "full", src: ravagoThumb.src },
       {
         label: "Color Palette & Print Specs",
         ratio: "wide",
@@ -266,7 +266,7 @@ export const projects: readonly Project[] = [
       "Custom Screen-Printed T-Shirts",
     ],
     gallery: [
-      { label: "Cover — Hospitality Collateral", ratio: "standard", span: "full", src: spanishFlowersThumb.src },
+      { label: "Cover: Hospitality Collateral", ratio: "standard", span: "full", src: spanishFlowersThumb.src },
       {
         label: "Color Palette & Print Specs",
         ratio: "wide",
