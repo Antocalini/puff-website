@@ -234,8 +234,35 @@ export function initSmartNav() {
     if (event.key === "Escape" && menuOpen) closeMobileNav();
   };
 
+  const onAnchorClick = (event: MouseEvent) => {
+    const target = event.target as HTMLElement | null;
+    const anchor = target?.closest<HTMLAnchorElement>("a[href^='#']");
+    if (!anchor) return;
+
+    const href = anchor.getAttribute("href");
+    if (!href || href === "#") return;
+
+    const destination = document.querySelector<HTMLElement>(href);
+    if (!destination) return;
+
+    event.preventDefault();
+    closeMobileNav();
+
+    const siteHeader = document.querySelector<HTMLElement>("[data-site-header]");
+    const headerHeight = siteHeader ? siteHeader.offsetHeight : 88;
+    const targetY = destination.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
+
+    window.scrollTo({
+      top: Math.max(0, targetY),
+      behavior: REDUCED_MOTION.matches ? "auto" : "smooth",
+    });
+
+    history.pushState(null, "", href);
+  };
+
   mobileToggle?.addEventListener("click", onToggleClick);
   document.addEventListener("click", onDocumentClick);
+  document.addEventListener("click", onAnchorClick);
   document.addEventListener("keydown", onKeyDown);
   document.querySelectorAll("[data-mobile-nav-link]").forEach((link) => {
     link.addEventListener("click", closeMobileNav);
@@ -248,6 +275,7 @@ export function initSmartNav() {
     window.removeEventListener("puff:nav-tone", onToneSync);
     mobileToggle?.removeEventListener("click", onToggleClick);
     document.removeEventListener("click", onDocumentClick);
+    document.removeEventListener("click", onAnchorClick);
     document.removeEventListener("keydown", onKeyDown);
     document.querySelectorAll("[data-mobile-nav-link]").forEach((link) => {
       link.removeEventListener("click", closeMobileNav);

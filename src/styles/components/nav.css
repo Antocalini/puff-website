@@ -203,7 +203,7 @@
     min-width: 0;
     overflow: hidden;
     opacity: calc(1 - var(--nav-compact, 0));
-    max-width: calc((1 - var(--nav-compact, 0)) * 52rem);
+    max-width: calc((1 - var(--nav-compact, 0)) * 100rem);
     will-change: opacity, max-width;
   }
 
@@ -230,6 +230,9 @@
   [data-nav-pill] {
     height: 3.75rem;
     max-height: 3.75rem;
+    width: 100%;
+    max-width: calc((1 - var(--nav-compact, 0)) * 61rem + var(--nav-compact, 0) * 5.75rem);
+    margin-inline: auto;
   }
 
   [data-nav-pill-mobile] {

@@ -20,60 +20,65 @@ const mobilePanelLinkClass =
 
 <header class="pointer-events-none fixed inset-x-0 top-0 z-50" data-site-header>
   <div class="pointer-events-none mx-auto flex w-full max-w-content justify-center px-gutter py-3 md:py-5">
-    <!-- Desktop / tablet smart pill -->
-    <nav
-      class="nav-pill-3d pointer-events-auto relative hidden items-center rounded-full md:flex"
-      data-nav-pill
-      aria-label="Primary navigation"
-    >
-      <a class="nav-pill-logo-link relative z-10 shrink-0" href="/" data-nav-logo>
-        <img
-          src={logoPuff.src}
-          alt={brandName}
-          class="nav-pill-logo"
-          width={73}
-          height={35}
-          decoding="async"
-        />
-      </a>
+    <!-- Desktop / tablet smart pill: aligned with ONLY the title container -->
+    <div class="pointer-events-none hidden md:flex w-full max-w-[61rem] mx-auto justify-center">
+      <nav
+        class="nav-pill-3d pointer-events-auto relative flex w-full items-center rounded-full"
+        data-nav-pill
+        aria-label="Primary navigation"
+      >
+        <a class="nav-pill-logo-link relative z-10 shrink-0" href="/" data-nav-logo>
+          <img
+            src={logoPuff.src}
+            alt={brandName}
+            class="nav-pill-logo"
+            width={73}
+            height={35}
+            decoding="async"
+          />
+        </a>
 
-      <div class="nav-pill-collapse w-full" data-nav-collapse>
-        <div class="nav-pill-collapse-inner w-full">
-          <div class="nav-pill-collapse-content flex w-full items-center justify-between">
-            <ul class="flex items-center mx-auto">
-              {
-                items.map(({ href, label }) => (
-                  <li>
-                    <a class={navLinkClass} href={href}>
-                      {label}
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
+        <div class="nav-pill-collapse flex-1 min-w-0" data-nav-collapse>
+          <div class="nav-pill-collapse-inner w-full">
+            <div class="nav-pill-collapse-content flex w-full items-center justify-between">
+              <!-- Balancer block matching CTA visual weight so the nav links sit dead-center -->
+              <div class="hidden lg:block w-24 shrink-0" aria-hidden="true"></div>
 
-            <a
-              class="group btn-3d-skeuo btn-shine nav-pill-cta shrink-0 my-auto inline-flex items-center justify-center gap-2 rounded-full py-1.5 pl-4 pr-1.5"
-              href={primaryCta.href}
-              data-nav-cta
-            >
-              <span class="nav-pill-cta-label font-label text-xs font-bold tracking-wide md:text-[0.8125rem]">
-                {primaryCta.label}
-              </span>
-              <div class="nav-pill-cta-arrow flex size-6 shrink-0 items-center justify-center rounded-full shadow-sm">
-                <svg class="size-3 stroke-[2.5]" fill="none" viewBox="0 0 16 16" aria-hidden="true">
-                  <path
-                    d="M3 8h9M8 3.5 12.5 8 8 12.5"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"></path>
-                </svg>
-              </div>
-            </a>
+              <ul class="flex items-center mx-auto">
+                {
+                  items.map(({ href, label }) => (
+                    <li>
+                      <a class={navLinkClass} href={href}>
+                        {label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+
+              <a
+                class="group btn-3d-skeuo btn-shine nav-pill-cta shrink-0 my-auto inline-flex items-center justify-center gap-2 rounded-full py-1.5 pl-4 pr-1.5"
+                href={primaryCta.href}
+                data-nav-cta
+              >
+                <span class="nav-pill-cta-label font-label text-xs font-bold tracking-wide md:text-[0.8125rem]">
+                  {primaryCta.label}
+                </span>
+                <div class="nav-pill-cta-arrow flex size-6 shrink-0 items-center justify-center rounded-full shadow-sm">
+                  <svg class="size-3 stroke-[2.5]" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+                    <path
+                      d="M3 8h9M8 3.5 12.5 8 8 12.5"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </svg>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
 
     <!-- Mobile: smart pill — logo left + menu right; panel sits outside overflow:hidden -->
     <div class="pointer-events-auto relative w-full md:hidden" data-mobile-nav-shell>
