@@ -26,15 +26,24 @@ export function setupTestimonials() {
 
   if (!quoteEl || !authorEl || !companyEl || !metaEl || dots.length === 0) return;
 
+  const quoteWrap =
+    section.querySelector<HTMLElement>("[data-testimonial-quote-wrap]") ||
+    (quoteEl.parentElement as HTMLElement | null);
+
   function goToSlide(index: number) {
     if (isAnimating || index === currentIndex) return;
 
     isAnimating = true;
 
+    const startHeight = quoteWrap ? quoteWrap.offsetHeight : 0;
+    if (quoteWrap) {
+      quoteWrap.style.height = `${startHeight}px`;
+    }
+
     gsap.to([quoteEl, metaEl], {
-      yPercent: -120,
+      y: -14,
       opacity: 0,
-      duration: 0.35,
+      duration: 0.28,
       ease: "power2.in",
       onComplete: () => {
         currentIndex = index;
@@ -44,13 +53,28 @@ export function setupTestimonials() {
         authorEl!.textContent = data.author;
         companyEl!.textContent = data.company;
 
-        gsap.set([quoteEl, metaEl], { yPercent: 120, opacity: 0 });
+        if (quoteWrap) {
+          quoteWrap.style.height = "auto";
+          const targetHeight = quoteWrap.offsetHeight;
+          quoteWrap.style.height = `${startHeight}px`;
+
+          gsap.to(quoteWrap, {
+            height: targetHeight,
+            duration: 0.42,
+            ease: "power2.out",
+            onComplete: () => {
+              if (quoteWrap) quoteWrap.style.height = "auto";
+            },
+          });
+        }
+
+        gsap.set([quoteEl, metaEl], { y: 14, opacity: 0 });
 
         gsap.to([quoteEl, metaEl], {
-          yPercent: 0,
+          y: 0,
           opacity: 1,
-          duration: 0.45,
-          stagger: 0.05,
+          duration: 0.4,
+          stagger: 0.04,
           ease: "power3.out",
           onComplete: () => {
             isAnimating = false;
