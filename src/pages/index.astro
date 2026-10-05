@@ -6,12 +6,11 @@ import HeroMediaSequence from "../components/sections/HeroMediaSequence.astro";
 import Pricing from "../components/sections/Pricing.astro";
 import Process from "../components/sections/Process.astro";
 import Testimonials from "../components/sections/Testimonials.astro";
-import { landingContent } from "../content/landing";
 import Services from "../components/sections/Services.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title={landingContent.hero.value.heading} description={landingContent.hero.value.body} showPreloader={true}>
+<BaseLayout showPreloader={true}>
   <HeroMediaSequence />
   <Process />
   <Services />

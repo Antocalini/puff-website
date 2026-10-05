@@ -1,18 +1,19 @@
 ---
+import { getTranslations, type SupportedLocale } from "../../i18n";
+
+const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
+const t = getTranslations(currentLocale);
+
 /**
  * Benefits Presentation:
  * - Desktop: GSAP-driven deck that enters stacked with ScrollTrigger,
  *   fans out automatically into an arc spread, and enables focused hover inspection.
  * - Mobile: Ultra-smooth touch swipeable snap carousel with active pagination dots.
  */
-const benefits = [
+const rawBenefits = [
   {
     icon: "lightbulb",
     num: "01",
-    tag: "UNLIMITED",
-    title: "Unlimited Requests",
-    description:
-      "Submit as many packaging, branding, and web tasks as you need. We work through your queue continuously with zero hidden fees.",
     bg: "bg-paper text-charcoal border-charcoal",
     iconColor: "text-charcoal",
     stackX: -48,
@@ -26,10 +27,6 @@ const benefits = [
   {
     icon: "lightning",
     num: "02",
-    tag: "SPEED",
-    title: "48-Hour Turnaround",
-    description:
-      "Get complete production-ready packaging mockups, marketing collateral, and web updates delivered in 48 hours or less.",
     bg: "bg-brand-yellow text-charcoal border-charcoal",
     iconColor: "text-charcoal",
     stackX: -24,
@@ -43,10 +40,6 @@ const benefits = [
   {
     icon: "brain",
     num: "03",
-    tag: "SENIOR TALENT",
-    title: "Dedicated Designers",
-    description:
-      "Work with experienced senior creative talent dedicated to your brand identity. Consistent aesthetic without rotating freelancers.",
     bg: "bg-accent-pink text-charcoal border-charcoal",
     iconColor: "text-charcoal",
     stackX: -4,
@@ -60,10 +53,6 @@ const benefits = [
   {
     icon: "infinity",
     num: "04",
-    tag: "PERFECTION",
-    title: "Unlimited Revisions",
-    description:
-      "Not 100% in love with the first draft? We revise, refine, and iterate on every single detail until it aligns with your exact vision.",
     bg: "bg-accent-lime text-charcoal border-charcoal",
     iconColor: "text-charcoal",
     stackX: 12,
@@ -77,10 +66,6 @@ const benefits = [
   {
     icon: "chat",
     num: "05",
-    tag: "WORKFLOW",
-    title: "Direct Communication",
-    description:
-      "No bureaucratic ticketing systems. Message your creative team directly via your private dashboard for fast and crystal-clear feedback.",
     bg: "bg-accent-cobalt text-paper border-charcoal",
     iconColor: "text-paper",
     stackX: 32,
@@ -94,10 +79,6 @@ const benefits = [
   {
     icon: "check",
     num: "06",
-    tag: "FLEXIBILITY",
-    title: "Pause or Cancel Anytime",
-    description:
-      "Scale up when launching a new product line, pause during quiet quarters, or cancel whenever needed with just one click.",
     bg: "bg-ink text-paper border-charcoal",
     iconColor: "text-brand-yellow",
     stackX: 56,
@@ -108,7 +89,14 @@ const benefits = [
     spreadRot: 15,
     z: 60,
   },
-] as const;
+];
+
+const benefits = rawBenefits.map((item, idx) => ({
+  ...item,
+  tag: t.process.deck[idx].tag,
+  title: t.process.deck[idx].title,
+  description: t.process.deck[idx].description,
+}));
 ---
 
 <div

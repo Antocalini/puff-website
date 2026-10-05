@@ -1,6 +1,10 @@
 ---
 import logoPuff from "../../assets/images/logo-puff-completo.svg";
 import PuffSticker from "../ui/PuffSticker.astro";
+import { getTranslations, type SupportedLocale } from "../../i18n";
+
+const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
+const t = getTranslations(currentLocale);
 ---
 
 <section
@@ -16,7 +20,7 @@ import PuffSticker from "../ui/PuffSticker.astro";
           rotate="-rotate-[11deg]"
           class="px-8 py-3.5 text-lg md:px-12 md:py-4 md:text-2xl"
         >
-          Free intro
+          {t.cta.sticker}
         </PuffSticker>
       </div>
 
@@ -39,14 +43,14 @@ import PuffSticker from "../ui/PuffSticker.astro";
           />
 
           <h2 class="font-display text-[clamp(2.85rem,6.5vw,5.5rem)] font-black uppercase leading-[0.88] tracking-tight text-paper">
-            See if Puff is the right fit for you
+            {t.cta.heading}
             <span class="text-highlight mt-1 block text-[0.62em] font-semibold normal-case leading-[0.95] tracking-normal text-brand-yellow">
-              (it totally is)
+              {t.cta.headingHighlight}
             </span>
           </h2>
 
           <p class="mt-6 max-w-lg font-body font-medium text-lg leading-relaxed text-paper md:text-xl">
-            Schedule a quick, 15 minute guided tour through Puff.
+            {t.cta.description}
           </p>
         </div>
 
@@ -56,25 +60,25 @@ import PuffSticker from "../ui/PuffSticker.astro";
             <div class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-yellow/15 blur-3xl" aria-hidden="true"></div>
 
             <span class="font-label text-[0.7rem] font-bold uppercase tracking-[0.25em] text-paper/50">
-              Next step
+              {t.cta.panelTag}
             </span>
 
             <h3 class="relative font-display text-[clamp(2.25rem,4.5vw,3.25rem)] font-black uppercase leading-[0.88] tracking-tight text-paper">
-              Pick a time that works for you
+              {t.cta.panelTitle}
             </h3>
 
             <p class="relative max-w-sm font-body text-base leading-relaxed text-paper/80 md:text-lg">
-              Opens a calendar overlay. Pick a day, choose a slot, and you're set.
+              {t.cta.panelDesc}
             </p>
 
             <ul class="relative flex flex-col gap-3 font-body text-sm text-paper/80 md:text-base">
               <li class="flex items-center gap-2.5">
                 <span class="h-1.5 w-1.5 rounded-full bg-brand-yellow"></span>
-                15 minutes · Cal Video
+                {currentLocale === "es" ? "15 minutos · Video en Cal" : "15 minutes · Cal Video"}
               </li>
               <li class="flex items-center gap-2.5">
                 <span class="h-1.5 w-1.5 rounded-full bg-brand-yellow"></span>
-                Free · no commitment
+                {currentLocale === "es" ? "Gratis · Sin compromiso" : "Free · no commitment"}
               </li>
             </ul>
 
@@ -84,7 +88,7 @@ import PuffSticker from "../ui/PuffSticker.astro";
               data-cal-config='{"layout":"month_view","theme":"dark"}'
               class="btn-3d-skeuo-yellow btn-shine relative mt-2 inline-flex min-h-14 items-center justify-center rounded-full px-9 py-4 font-label text-base font-bold tracking-wide text-ink md:text-lg"
             >
-              Book 15 Min Intro
+              {t.cta.panelButton}
             </button>
           </div>
         </div>

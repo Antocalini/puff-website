@@ -4,45 +4,40 @@ import SiteFooter from "../components/common/SiteFooter.astro";
 import SiteHeader from "../components/common/SiteHeader.astro";
 import Preloader from "../components/ui/Preloader.astro";
 import SmartCursor from "../components/ui/SmartCursor.astro";
-import {
-  landingContent,
-  needsClientInput,
-  type Approval,
-} from "../content/landing";
+import { getTranslations, type SupportedLocale } from "../i18n";
 import "../styles/global.css";
 
 type Props = {
-  title?: Approval<string>;
-  description?: Approval<string>;
+  title?: string;
+  description?: string;
   showPreloader?: boolean;
 };
 
+const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
+const t = getTranslations(currentLocale);
+
 const {
-  description = landingContent.metadata.description,
-  title = landingContent.metadata.title,
+  description = t.metadata.description,
+  title = t.metadata.title,
   showPreloader = false,
 } = Astro.props;
 
 const FONT_URL =
   "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Inter:wght@400;500;600;700&display=swap";
 
-const pageTitle =
-  title === needsClientInput
-    ? "Puff Cross Media | On-Demand Design Subscription for Growing Brands"
-    : title;
+const pageTitle = title;
+const pageDesc = description;
 
-const pageDesc =
-  description === needsClientInput
-    ? "Scale your brand with senior-level packaging, branding, and digital design delivered in 48 hours. Flat monthly pricing. Pause or cancel anytime."
-    : description;
+const siteUrl = "https://puffcrossmedia.com";
+const canonicalUrl = currentLocale === "es" ? `${siteUrl}/es/` : `${siteUrl}/`;
 
 const schemaData = {
   "@context": "https://schema.org",
   "@type": ["ProfessionalService", "Organization"],
   name: "Puff Cross Media",
-  url: "https://puffcrossmedia.com",
-  description:
-    "On-demand design subscription service delivering high-converting packaging, brand identity, and marketing assets with 48-hour turnarounds.",
+  url: siteUrl,
+  inLanguage: t.langTag,
+  description: t.metadata.schemaDescription,
   areaServed: [
     { "@type": "Country", "name": "United States" },
     { "@type": "State", "name": "Texas" },
@@ -57,7 +52,7 @@ const schemaData = {
   ],
 };
 ---
-<html lang="en" data-hero-option="2">
+<html lang={t.htmlLang} data-hero-option="2">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -67,10 +62,18 @@ const schemaData = {
     <meta name="robots" content="index, follow" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={`${siteUrl}/`} />
+    <link rel="alternate" hreflang="es" href={`${siteUrl}/es/`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}/`} />
+
     <!-- OpenGraph / Social -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDesc} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={t.ogLocale} />
+    <meta property="og:locale:alternate" content={currentLocale === "es" ? "en_US" : "es_LA"} />
     <meta property="og:site_name" content="Puff Cross Media" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
@@ -103,9 +106,9 @@ const schemaData = {
       class="sr-only z-50 bg-brand-yellow px-5 py-3 font-label text-label font-bold uppercase tracking-widest text-ink focus:fixed focus:left-gutter focus:top-4 focus:not-sr-only"
       href="#main-content"
     >
-      Skip to main content
+      {t.hero.skipLink}
     </a>
-    <SiteHeader items={landingContent.primaryNavigation} />
+    <SiteHeader />
     <main id="main-content">
       <slot />
     </main>

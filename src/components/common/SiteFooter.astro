@@ -3,19 +3,13 @@ import { landingContent } from "../../content/landing";
 import FloatingSticker from "../ui/FloatingSticker.astro";
 import footerSticker from "../../assets/images/stickers/footer.webp";
 import "../../styles/components/footer.css";
+import { getTranslations, type SupportedLocale } from "../../i18n";
 
-const navLinks = [
-  { label: "How it Works", href: "#how-it-works" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Work", href: "#work" },
-  { label: "FAQ", href: "#faq" },
-];
+const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
+const t = getTranslations(currentLocale);
 
-const legalLinks = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms & Conditions", href: "/terms" },
-];
-
+const navLinks = t.footer.navLinks;
+const legalLinks = t.footer.legalLinks;
 const socialLinks = landingContent.header.value.socialLinks;
 ---
 
@@ -57,7 +51,7 @@ const socialLinks = landingContent.header.value.socialLinks;
         <p
           class="font-label text-xs sm:text-sm font-bold uppercase tracking-[0.22em] text-ink/65 mb-2"
         >
-          Contact
+          {t.footer.contactTag}
         </p>
         <a
           href="mailto:info@puffcrossmedia.com"
@@ -68,8 +62,7 @@ const socialLinks = landingContent.header.value.socialLinks;
         <p
           class="mt-3 max-w-sm font-body font-medium text-xs sm:text-sm md:text-base leading-relaxed text-ink"
         >
-          Async-first design on demand. Drop us a line or schedule an intro
-          call.
+          {t.footer.contactText}
         </p>
       </div>
 
@@ -222,7 +215,7 @@ const socialLinks = landingContent.header.value.socialLinks;
     <p
       class="footer-bleed-title font-display font-black text-ink uppercase tracking-[-0.03em] leading-[0.74] text-center w-full whitespace-nowrap text-[clamp(2.4rem,13vw,17.5rem)] translate-y-[13%] m-0 p-0"
     >
-      LET'S WORK TOGETHER
+      {currentLocale === "es" ? "TRABAJEMOS JUNTOS" : "LET'S WORK TOGETHER"}
     </p>
   </div>
 </footer>

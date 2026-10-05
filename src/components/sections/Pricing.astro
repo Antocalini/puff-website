@@ -3,83 +3,48 @@ import fuelSticker from "../../assets/images/stickers/fuel.webp";
 import passSticker from "../../assets/images/stickers/pass.webp";
 import FloatingSticker from "../ui/FloatingSticker.astro";
 import PuffSticker from "../ui/PuffSticker.astro";
+import { getTranslations, type SupportedLocale } from "../../i18n";
+
+const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
+const t = getTranslations(currentLocale);
 
 const starterPlan = {
-  name: "Graphic Lite",
-  tag: "Starter",
-  price: "$200",
-  period: "/month",
-  summary: "Graphic Design Service for 2 dedicated projects.",
-  inclusions: [
-    "2 active projects",
-    "One request at a time",
-    "Avg. 48 hour delivery",
-    "Unlimited brands",
-    "Pause or cancel anytime",
-  ],
-  cta: "Get Graphic Lite",
+  name: t.pricing.starterPlan.name,
+  tag: t.pricing.starterPlan.tag,
+  price: t.pricing.starterPlan.price,
+  period: t.pricing.starterPlan.period,
+  promoNote: t.pricing.starterPlan.promoNote,
+  summary: t.pricing.starterPlan.summary,
+  inclusions: t.pricing.starterPlan.inclusions,
+  cta: t.pricing.starterPlan.cta,
 };
 
-const plans = [
+const rawPlans = [
   {
-    name: "Graphic",
-    tag: "Essential",
-    price: "$1,000",
-    period: "/month",
-    summary: "Graphic Design Service for fast-moving visual assets.",
     featured: false,
-    inclusions: [
-      "20 active projects",
-      "One request at a time",
-      "Avg. 48 hour delivery",
-      "Unlimited brands",
-      "Pause or cancel anytime",
-    ],
-    cta: "Get Graphic",
     cardStyle: "bg-ink/70 border border-paper/10 text-paper hover:border-paper/30",
     priceColor: "text-paper",
     bulletColor: "bg-brand-yellow",
   },
   {
-    name: "Web & UI",
-    tag: "MOST POPULAR",
-    price: "$1,500",
-    period: "/month",
-    summary: "Graphic + Full Web & UI/UX Design System.",
     featured: true,
-    inclusions: [
-      "Unlimited active projects",
-      "Simultaneous active requests",
-      "Full Web & UI/UX Design",
-      "Astro & Webflow development",
-      "Priority 48h delivery",
-    ],
-    cta: "Get Web & UI",
     cardStyle: "bg-brand-yellow text-charcoal border-2 border-charcoal shadow-2xl scale-[1.02] z-10",
     priceColor: "text-charcoal font-black",
     bulletColor: "bg-charcoal",
     tagStyle: "bg-charcoal text-brand-yellow",
   },
   {
-    name: "Full Scale",
-    tag: "All-In-One",
-    price: "$2,500",
-    period: "/month",
-    summary: "Graphic + Web + Video Design & 3D Motion editing.",
     featured: false,
-    inclusions: [
-      "Everything in Web & UI, plus:",
-      "Full Video Editing & Motion",
-      "3D Assets & Animations",
-      "Unlimited stock videos",
-      "Dedicated creative director",
-    ],
-    cta: "Get Full Scale",
     cardStyle: "bg-ink/70 border border-paper/10 text-paper hover:border-paper/30",
     priceColor: "text-paper",
     bulletColor: "bg-brand-yellow",
   },
 ];
+
+const plans = rawPlans.map((cfg, idx) => ({
+  ...cfg,
+  ...t.pricing.plans[idx],
+}));
 ---
 
 <section
@@ -92,11 +57,9 @@ const plans = [
     <!-- Compact Section Header -->
     <div class="relative z-20 mx-auto flex max-w-3xl flex-col items-center text-center">
       <PuffSticker tone="pink" rotate="-rotate-[4deg]">
-        Pricing & Membership
+        {t.pricing.sticker}
       </PuffSticker>
-      <h2 class="mt-4 font-display text-[clamp(3.25rem,8vw,6.75rem)] font-black uppercase leading-[0.86] tracking-tight text-charcoal">
-        One Subscription,<br />
-        Endless Possibilities
+      <h2 class="mt-4 font-display text-[clamp(3.25rem,8vw,6.75rem)] font-black uppercase leading-[0.86] tracking-tight text-charcoal" set:html={t.pricing.heading}>
       </h2>
     </div>
 
@@ -129,15 +92,14 @@ const plans = [
           <!-- Start today pill -->
           <div class="btn-3d-skeuo btn-shine inline-flex items-center gap-2 rounded-full px-4 py-2 text-paper bg-charcoal border border-paper/20">
             <span class="size-2 shrink-0 rounded-full bg-brand-yellow shadow-[0_0_6px_rgba(255,209,0,0.6)]"></span>
-            <span class="font-label text-xs font-bold uppercase tracking-wider">Start today</span>
+            <span class="font-label text-xs font-bold uppercase tracking-wider">{t.pricing.joinCard.pill}</span>
           </div>
 
           <!-- Join Puff Title (Enlarged) -->
           <h3
             class="mt-5 font-display text-[clamp(3.25rem,7vw,4.75rem)] font-black uppercase leading-[0.88] tracking-tight text-paper"
+            set:html={t.pricing.joinCard.title}
           >
-            Join Puff<br />
-            Monthly
           </h3>
         </div>
       </div>
@@ -147,10 +109,10 @@ const plans = [
         <!-- Header Row -->
         <div class="relative z-10 flex items-center justify-between border-b border-paper/15 pb-4">
           <h3 class="font-display text-2xl font-black uppercase tracking-tight text-paper md:text-3xl">
-            CHOOSE YOUR LEVEL
+            {t.pricing.subgridHeader.title}
           </h3>
           <span class="rounded-md border border-paper/20 px-2.5 py-0.5 font-label text-[0.6rem] font-bold uppercase tracking-[0.16em] text-paper/70">
-            PAUSE OR CANCEL ANYTIME
+            {t.pricing.subgridHeader.badge}
           </span>
         </div>
 
@@ -248,12 +210,17 @@ const plans = [
 
           <!-- Right Action: Price + Title Case CTA Button -->
           <div class="flex items-center justify-between md:justify-end gap-5 w-full md:w-auto shrink-0 border-t md:border-t-0 border-paper/10 pt-3 md:pt-0">
-            <div class="flex items-baseline gap-1">
-              <span class="font-display text-3xl font-black text-paper tracking-tight">
-                {starterPlan.price}
-              </span>
-              <span class="font-label text-[0.65rem] font-bold uppercase tracking-widest text-paper/60">
-                {starterPlan.period}
+            <div class="flex flex-col items-start md:items-end">
+              <div class="flex items-baseline gap-1">
+                <span class="font-display text-3xl font-black text-paper tracking-tight">
+                  {starterPlan.price}
+                </span>
+                <span class="font-label text-[0.65rem] font-bold uppercase tracking-widest text-paper/60">
+                  {starterPlan.period}
+                </span>
+              </div>
+              <span class="font-label text-[0.6rem] font-bold uppercase tracking-wider text-paper/50 whitespace-nowrap">
+                {starterPlan.promoNote}
               </span>
             </div>
             <a 
@@ -270,15 +237,19 @@ const plans = [
     </div>
 
     <!-- Bottom Guarantee Capsule Pill -->
-    <div class="mt-8 flex w-full items-center justify-center md:mt-10">
+    <div class="mt-8 flex flex-col items-center justify-center gap-2.5 md:mt-10 text-center">
       <div
         class="btn-3d-skeuo btn-shine inline-flex items-center justify-center rounded-full px-8 py-3.5 text-paper transition-transform duration-200 hover:scale-[1.03] md:px-10 md:py-4"
       >
         <span class="font-label text-xs font-black tracking-wide md:text-sm">
-          Try Puff free for 7 days +
-          <span class="text-brand-yellow"> 20% OFF</span> for 3 months
+          {t.pricing.guarantee.pillPrefix}
+          <span class="text-brand-yellow">{t.pricing.guarantee.pillHighlight}</span>
+          {t.pricing.guarantee.pillSuffix}
         </span>
       </div>
+      <p class="font-label text-[0.68rem] font-bold uppercase tracking-wider text-charcoal/70">
+        {t.pricing.guarantee.disclaimer}
+      </p>
     </div>
 
   </div>

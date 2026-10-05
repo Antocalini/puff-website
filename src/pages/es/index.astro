@@ -1,0 +1,20 @@
+---
+import Cta from "../../components/sections/Cta.astro";
+import Faq from "../../components/sections/Faq.astro";
+import HeroMediaSequence from "../../components/sections/HeroMediaSequence.astro";
+import Pricing from "../../components/sections/Pricing.astro";
+import Process from "../../components/sections/Process.astro";
+import Testimonials from "../../components/sections/Testimonials.astro";
+import Services from "../../components/sections/Services.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout showPreloader={false}>
+  <HeroMediaSequence />
+  <Process />
+  <Services />
+  <Testimonials />
+  <Pricing />
+  <Faq />
+  <Cta />
+</BaseLayout>

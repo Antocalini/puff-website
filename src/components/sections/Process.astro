@@ -1,13 +1,16 @@
 ---
 import BenefitsDeck from "../ui/BenefitsDeck.astro";
 import PuffSticker from "../ui/PuffSticker.astro";
+import { getTranslations, type SupportedLocale } from "../../i18n";
+
+const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
+const t = getTranslations(currentLocale);
 
 const steps = [
   {
     number: "1",
-    title: "Choose your plan",
-    description:
-      "Select the plan that best fits for your needs Lite, Pro or Premium.",
+    title: t.process.steps[0].title,
+    description: t.process.steps[0].description,
     cardClass: "border-charcoal/10 bg-accent-lime text-charcoal",
     bodyClass: "text-charcoal",
     badgeClass: "border-charcoal/20 bg-paper text-charcoal",
@@ -18,8 +21,8 @@ const steps = [
   },
   {
     number: "2",
-    title: "Request your designs",
-    description: "Send your briefs directly from your dashboards.",
+    title: t.process.steps[1].title,
+    description: t.process.steps[1].description,
     cardClass: "border-paper/10 bg-accent-cobalt text-paper",
     bodyClass: "text-paper",
     badgeClass: "border-charcoal/20 bg-paper text-charcoal",
@@ -30,9 +33,8 @@ const steps = [
   },
   {
     number: "3",
-    title: "Receive them in 48h",
-    description:
-      "Your Puff team designs and delivers unlimited requests, revisions included.",
+    title: t.process.steps[2].title,
+    description: t.process.steps[2].description,
     cardClass: "border-charcoal/10 bg-accent-pink text-charcoal",
     bodyClass: "text-charcoal",
     badgeClass: "border-charcoal/20 bg-paper text-charcoal",
@@ -66,7 +68,7 @@ const steps = [
           <div class="pointer-events-none absolute -top-10 sm:-top-11 md:-top-9 -left-1 sm:-left-3 md:-left-6 z-20 overflow-visible">
             <div data-process-sticker-1 class="will-change-transform">
               <PuffSticker tone="lime" rotate="-rotate-6" class="px-4 py-1.5 md:px-5 md:py-2 text-xs md:text-sm lg:text-base font-black tracking-wider uppercase font-display border-2 border-ink shadow-[4px_4px_0_#111111]">
-                BENEFITS & ADVANTAGES
+                {t.process.sticker}
               </PuffSticker>
             </div>
           </div>
@@ -76,12 +78,12 @@ const steps = [
           >
           <span class="block overflow-hidden pb-1"
             ><span class="block will-change-transform" data-process-line-1
-              >Why everyone's</span
+              >{t.process.titleLine1}</span
             ></span
           >
           <span class="block overflow-hidden pb-1"
             ><span class="block will-change-transform" data-process-line-1
-              ><span class="font-accent font-normal italic lowercase tracking-[-0.07em] text-charcoal inline-block -rotate-6 mr-3 sm:mr-4 md:mr-6">switching</span>TO PUFF.</span
+              ><span class="font-accent font-normal italic lowercase tracking-[-0.07em] text-charcoal inline-block -rotate-6 mr-3 sm:mr-4 md:mr-6">{t.process.titleLine2Accent}</span>{t.process.titleLine2End}</span
             ></span
           >
         </h2>
@@ -101,16 +103,16 @@ const steps = [
         >
           <span class="block overflow-hidden pb-1"
             ><span class="block will-change-transform" data-process-line-2
-              >Designs at your pace,</span
+              >{t.process.titleDark1}</span
             ></span
           >
           <span class="block overflow-hidden pb-1"
-            ><span class="block will-change-transform" data-process-line-2>without</span
+            ><span class="block will-change-transform" data-process-line-2>{t.process.titleDark2}</span
             ></span
           >
           <span class="block overflow-hidden pb-1"
             ><span class="block will-change-transform" data-process-line-2
-              >complications.</span
+              >{t.process.titleDark3}</span
             ></span
           >
         </h2>
@@ -120,11 +122,11 @@ const steps = [
             data-process-line-2
             class="max-w-3xl will-change-transform text-pretty font-body font-medium text-base leading-relaxed text-paper md:text-xl"
           >
-            With Puff, having a <strong>design team</strong> is
-            <span
-              class="text-highlight mt-1 block text-[clamp(1.75rem,4.5vw,2.5rem)] font-bold leading-[0.95] text-brand-yellow"
-              >as easy as requesting it</span
-            >
+            {currentLocale === "es" ? (
+              <>Con Puff, tener un <strong>equipo de diseño</strong> es <span class="text-highlight mt-1 block text-[clamp(1.75rem,4.5vw,2.5rem)] font-bold leading-[0.95] text-brand-yellow">tan fácil como pedirlo</span></>
+            ) : (
+              <>With Puff, having a <strong>design team</strong> is <span class="text-highlight mt-1 block text-[clamp(1.75rem,4.5vw,2.5rem)] font-bold leading-[0.95] text-brand-yellow">as easy as requesting it</span></>
+            )}
           </p>
         </div>
       </div>

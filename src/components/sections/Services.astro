@@ -7,14 +7,15 @@ import mascot3d from "../../assets/images/stickers/3d-mascot.webp";
 import clickMascot from "../../assets/images/stickers/click-mascot.webp";
 import voiceMascot from "../../assets/images/stickers/voice-mascot.webp";
 import type { ImageMetadata } from "astro";
+import { getTranslations, type SupportedLocale } from "../../i18n";
+
+const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
+const t = getTranslations(currentLocale);
 
 type ServiceIcon = "image" | "layout" | "cube" | "grid" | "photo";
 
-type ServiceCard = {
+type RawServiceCard = {
   num: string;
-  category: string;
-  title: string;
-  description: string;
   cols: string;
   minHeight: string;
   bgClass: string;
@@ -29,13 +30,9 @@ type ServiceCard = {
   icon: ServiceIcon;
 };
 
-const services: ServiceCard[] = [
+const rawServices: RawServiceCard[] = [
   {
     num: "01",
-    category: "BRANDING",
-    title: "BRAND IDENTITY & ART DIRECTION",
-    description:
-      "Typography systems, color strategy, and complete visual guidelines.",
     cols: "lg:col-span-6",
     minHeight: "min-h-[14.5rem] md:min-h-[20rem]",
     bgClass: "bg-[#2447F5] text-white",
@@ -51,9 +48,6 @@ const services: ServiceCard[] = [
   },
   {
     num: "02",
-    category: "WEB DESIGN",
-    title: "MODERN & BESPOKE WEBSITES",
-    description: "Custom code, sub-second load times, and interactive responsive layouts.",
     cols: "lg:col-span-6",
     minHeight: "min-h-[14.5rem] md:min-h-[20rem]",
     bgClass: "bg-brand-yellow text-charcoal",
@@ -69,10 +63,6 @@ const services: ServiceCard[] = [
   },
   {
     num: "03",
-    category: "PACKAGING & MERCH",
-    title: "CUSTOM PACKAGING & MERCH",
-    description:
-      "Structural boxes, product labels, tissue wraps, and physical unboxing experiences.",
     cols: "lg:col-span-4",
     minHeight: "min-h-[13rem] md:min-h-[18rem]",
     bgClass: "bg-accent-pink text-charcoal",
@@ -85,10 +75,6 @@ const services: ServiceCard[] = [
   },
   {
     num: "04",
-    category: "PRINT & COLLATERAL",
-    title: "PRINT & SPATIAL COLLATERAL",
-    description:
-      "Storefront signage, menus, tactile stationery, and marketing collaterals.",
     cols: "lg:col-span-4",
     minHeight: "min-h-[13rem] md:min-h-[18rem]",
     bgClass: "bg-accent-lime text-charcoal",
@@ -101,9 +87,6 @@ const services: ServiceCard[] = [
   },
   {
     num: "05",
-    category: "CAMPAIGNS",
-    title: "HIGH-VELOCITY CREATIVE CONTENT",
-    description: "Performance ad creatives and promotional design at scale.",
     cols: "lg:col-span-4",
     minHeight: "min-h-[13rem] md:min-h-[18rem]",
     bgClass: "bg-[#FF5500] text-black",
@@ -115,6 +98,13 @@ const services: ServiceCard[] = [
     icon: "photo",
   },
 ];
+
+const services = rawServices.map((card, idx) => ({
+  ...card,
+  category: t.services.items[idx].category,
+  title: t.services.items[idx].title,
+  description: t.services.items[idx].description,
+}));
 ---
 
 <section
@@ -128,20 +118,19 @@ const services: ServiceCard[] = [
     >
       <div>
         <PuffSticker tone="lime" rotate="-rotate-[6deg]">
-          Capabilities & Services
+          {t.services.sticker}
         </PuffSticker>
         <h2
           class="mt-4 font-display text-[clamp(3.25rem,8vw,6.75rem)] font-black uppercase leading-[0.86] tracking-tight text-brand-yellow"
         >
-          What We Do Best
+          {t.services.title}
         </h2>
       </div>
 
       <p
         class="max-w-lg font-body font-medium text-base leading-relaxed text-paper md:pb-1 md:text-lg lg:text-xl"
       >
-        Full-stack creative execution delivered through a seamless subscription
-        model. Design, code, motion, and brand strategy under one roof.
+        {t.services.intro}
       </p>
     </div>
 

@@ -6,6 +6,10 @@ import PuffSticker from "../ui/PuffSticker.astro";
 import { testimonials } from "../../content/testimonials";
 import { clientLogosRow1 } from "../../content/clientLogos";
 import "../../styles/sections/testimonials.css";
+import { getTranslations, type SupportedLocale } from "../../i18n";
+
+const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
+const t = getTranslations(currentLocale);
 
 const logosRow1 = [...clientLogosRow1, ...clientLogosRow1];
 ---
@@ -21,13 +25,13 @@ const logosRow1 = [...clientLogosRow1, ...clientLogosRow1];
     <!-- Section Header (Tighter top spacing) -->
     <div class="mx-auto flex max-w-3xl flex-col items-center text-center pb-4 md:pb-8">
       <PuffSticker tone="lavender" rotate="rotate-[5deg]">
-        Client Proof & Reviews
+        {t.testimonials.sticker}
       </PuffSticker>
       <h2 class="mt-3 font-display text-[clamp(3.25rem,8vw,6.75rem)] font-black uppercase leading-[0.86] tracking-tight text-charcoal md:mt-4">
-        Stand With Clients
+        {t.testimonials.heading}
       </h2>
       <p class="mt-3 max-w-2xl font-body font-medium text-base leading-relaxed text-charcoal md:mt-4 md:text-lg">
-        From product teams to marketing leaders, brands trust Puff to move fast without sacrificing craft. Hear how they ship design, motion, and campaigns on a subscription that scales with them, with no retainers, no scope creep, and no agency runaround.
+        {t.testimonials.subheading}
       </p>
     </div>
 

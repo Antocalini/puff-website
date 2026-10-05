@@ -41,7 +41,7 @@ Registry completo: `.atl/skill-registry.md`
 
 ### ✅ Pertenece aquí
 
-- Landing marketing pública
+- Landing marketing pública (multi-idioma EN en `/` y ES en `/es/`)
 - Secciones de conversión (hero, pricing, FAQ, portfolio, testimonials)
 - Artefactos SDD de planificación
 - Skills y convenciones del proyecto
@@ -53,7 +53,6 @@ Registry completo: `.atl/skill-registry.md`
 - Sistema de entrega de diseños
 - CRM / ticketing
 - Blog completo (v1)
-- Multi-idioma (v1)
 
 ## Prohibido sin aprobación explícita
 
