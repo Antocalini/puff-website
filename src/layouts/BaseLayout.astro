@@ -52,7 +52,7 @@ const schemaData = {
   ],
 };
 ---
-<html lang={t.htmlLang} data-hero-option="2">
+<html lang={t.htmlLang} data-hero-option="2" data-nav-surface="yellow">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -61,11 +61,13 @@ const schemaData = {
     <meta name="theme-color" content="#ffd100" />
     <meta name="robots" content="index, follow" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" />
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="en" href={`${siteUrl}/`} />
     <link rel="alternate" hreflang="es" href={`${siteUrl}/es/`} />
     <link rel="alternate" hreflang="x-default" href={`${siteUrl}/`} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- OpenGraph / Social -->
     <meta property="og:type" content="website" />
@@ -75,9 +77,14 @@ const schemaData = {
     <meta property="og:locale" content={t.ogLocale} />
     <meta property="og:locale:alternate" content={currentLocale === "es" ? "en_US" : "es_LA"} />
     <meta property="og:site_name" content="Puff Cross Media" />
+    <meta property="og:image" content={`${siteUrl}/og-image.jpg`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Puff Cross Media — On-Demand Design Subscription" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:image" content={`${siteUrl}/og-image.jpg`} />
 
     <!-- Geographic metadata for Texas & US local trust -->
     <meta name="geo.region" content="US-TX" />

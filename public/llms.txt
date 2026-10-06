@@ -1,0 +1,106 @@
+# Puff Cross Media — llms.txt
+# AI-readable context file | https://llmstxt.org
+# Last updated: 2026-10
+
+> Puff Cross Media is an on-demand design subscription service for growing brands. Senior-level packaging, branding, web, and motion design — delivered in 48 hours. Flat monthly pricing. Pause or cancel anytime.
+
+## What We Do
+
+Puff Cross Media operates as a Design-as-a-Service (DaaS) company. Brands subscribe to one of our plans and get access to a dedicated senior creative team that executes design requests with 48-hour turnaround times. There are no hiring costs, no freelancer management, and no long-term agency contracts.
+
+### Core Services
+- **Brand Identity & Art Direction** — Typography systems, color strategy, visual guidelines
+- **Custom Packaging & Merchandise** — Structural boxes, product labels, tissue wraps, physical unboxing experiences
+- **Web & UI Design** — Astro and Webflow development, custom responsive layouts, sub-second load times
+- **Print & Spatial Collateral** — Storefront signage, menus, tactile stationery, marketing collaterals
+- **High-Velocity Creative Content** — Performance ad creatives, promotional design at scale
+- **Video Editing & 3D Motion** — Video editing, 3D assets and animations (Full Scale plan)
+
+## Pricing
+
+### Graphic Lite — $200/month
+- 2 active projects
+- One request at a time
+- Avg. 48-hour delivery
+- Unlimited brands
+- Pause or cancel anytime
+- Note: 20% promotional discount excluded from this plan
+
+### Graphic — $1,000/month
+- 20 active projects
+- One request at a time
+- Avg. 48-hour delivery
+- Unlimited brands
+- Pause or cancel anytime
+
+### Web & UI — $1,500/month (Most Popular)
+- Unlimited active projects
+- Simultaneous active requests
+- Full Web & UI/UX Design
+- Astro & Webflow development
+- Priority 48-hour delivery
+- Everything in Graphic, plus web
+
+### Full Scale — $2,500/month
+- Everything in Web & UI, plus:
+- Full video editing & motion
+- 3D assets & animations
+- Unlimited stock videos
+- Dedicated creative director
+
+**Introductory offer:** 7-day free trial + 20% off for 3 months on quarterly plans (excludes Graphic Lite).
+
+## How It Works
+
+1. **Choose your plan** — Select Graphic Lite, Graphic, Web & UI, or Full Scale
+2. **Request your designs** — Send briefs directly from your private dashboard
+3. **Receive in 48h** — Your Puff team designs and delivers; unlimited revisions included
+
+## Key Differentiators
+
+- **Senior talent only** — Dedicated senior art directors and experienced brand designers; no junior temps or rotating outsourced freelancers
+- **48-hour turnaround** — Most requests delivered within 48 business hours; complex multi-stage projects delivered in milestones every 48 hours
+- **Truly unlimited requests** — No hidden caps; work through your queue sequentially or simultaneously (plan-dependent)
+- **Pause-and-resume billing** — 31-day billing cycles; unused days bank indefinitely when paused
+- **Direct communication** — No ticketing bureaucracy; message your creative team directly
+
+## What We Don't Cover
+
+- Complex 3D character rigging
+- Native mobile app engineering (Swift/Kotlin)
+- Large-scale document typesetting (50+ pages)
+
+## Business Context
+
+- **Founded:** Texas, USA
+- **Serves:** US-based and international growing brands in FMCG, DTC, food & beverage, hospitality, and e-commerce
+- **Website:** https://puffcrossmedia.com
+- **Languages:** English (puffcrossmedia.com), Spanish (puffcrossmedia.com/es/)
+
+## Pages
+
+- [Home (EN)](https://puffcrossmedia.com/)
+- [Home (ES)](https://puffcrossmedia.com/es/)
+- [Pricing](https://puffcrossmedia.com/#pricing)
+- [How It Works](https://puffcrossmedia.com/#how-it-works)
+- [FAQ](https://puffcrossmedia.com/#faq)
+- [Privacy Policy](https://puffcrossmedia.com/privacy)
+- [Terms & Conditions](https://puffcrossmedia.com/terms)
+- [Pricing (machine-readable)](https://puffcrossmedia.com/pricing.md)
+
+## Frequently Asked Questions
+
+**How fast will I receive my designs?**
+Most requests are delivered within 48 business hours. Complex tasks like full multi-page websites, detailed 3D packaging mockups, or comprehensive brand identity manuals are broken into milestones delivered every 48 hours.
+
+**How does the pause feature work?**
+Billing cycles are based on a 31-day period. If you sign up, use the service for 21 days, and decide to pause, the remaining 10 days stay banked in your account indefinitely until you are ready to resume.
+
+**Is there really no limit on design requests?**
+None at all. Once subscribed, you can add as many design requests to your queue as you like. We work through them sequentially, one by one (or simultaneously depending on your plan tier).
+
+**Who will actually be designing my assets?**
+You will work directly with our dedicated senior creative team led by senior art directors and experienced brand designers. No junior temps or rotating outsourced freelancers.
+
+**What if I do not like the design?**
+We will continuously revise and iterate on the design until you are 100% satisfied with the outcome.
