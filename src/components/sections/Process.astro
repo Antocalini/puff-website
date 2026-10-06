@@ -15,8 +15,8 @@ const steps = [
     bodyClass: "text-charcoal",
     badgeClass: "border-charcoal/20 bg-paper text-charcoal",
     rotation: "-rotate-6",
-    desktopClass: "top-[28%] left-[1%] lg:left-[3%]",
-    mobileClass: "bottom-[6%] left-[-2%] w-[9.75rem]",
+    desktopClass: "top-[25%] left-[0%] lg:left-[2%]",
+    mobileClass: "bottom-[5%] left-[-2%] w-[11.25rem]",
     zClass: "z-30",
   },
   {
@@ -27,8 +27,8 @@ const steps = [
     bodyClass: "text-paper",
     badgeClass: "border-charcoal/20 bg-paper text-charcoal",
     rotation: "rotate-2",
-    desktopClass: "top-0 lg:top-1 left-1/2 -translate-x-1/2 w-64",
-    mobileClass: "top-1 left-1/2 w-[10.5rem] -translate-x-1/2",
+    desktopClass: "-top-2 lg:top-0 left-1/2 -translate-x-1/2",
+    mobileClass: "top-1 left-1/2 w-[12rem] -translate-x-1/2",
     zClass: "z-30",
   },
   {
@@ -39,8 +39,8 @@ const steps = [
     bodyClass: "text-charcoal",
     badgeClass: "border-charcoal/20 bg-paper text-charcoal",
     rotation: "-rotate-3",
-    desktopClass: "bottom-[14%] right-[2%] lg:right-[5%]",
-    mobileClass: "bottom-[4%] right-[-2%] w-[9.75rem]",
+    desktopClass: "bottom-[10%] right-[0%] lg:right-[2%]",
+    mobileClass: "bottom-[3%] right-[-2%] w-[11.25rem]",
     zClass: "z-30",
   },
 ];
@@ -145,25 +145,25 @@ const steps = [
               >
                 <div
                   data-sticker-face
-                  class={`relative h-full w-full overflow-hidden rounded-2xl border p-3.5 shadow-float ${step.cardClass}`}
+                  class={`relative h-full w-full overflow-hidden rounded-2xl border p-4 shadow-float ${step.cardClass}`}
                 >
                   <div
                     data-sticker-overlay
                     class="absolute inset-0 z-40 bg-[#c8c8c8]"
                     style="box-shadow: inset 0 -8px 16px rgba(0,0,0,0.12);"
                   />
-                  <h3 class="relative z-10 text-center font-display text-lg uppercase leading-none tracking-tight">
+                  <h3 class="relative z-10 text-center font-display text-xl uppercase leading-none tracking-tight">
                     {step.title}
                   </h3>
                   <p
-                    class={`relative z-10 mt-1.5 text-center text-[0.7rem] font-medium leading-tight ${step.bodyClass}`}
+                    class={`relative z-10 mt-1.5 text-center text-xs font-medium leading-snug ${step.bodyClass}`}
                   >
                     {step.description}
                   </p>
                 </div>
                 <div
                   data-sticker-badge
-                  class={`absolute -top-3 left-1/2 z-50 flex size-7 -translate-x-1/2 items-center justify-center rounded-full border font-display text-base font-bold ${step.badgeClass}`}
+                  class={`absolute -top-3.5 left-1/2 z-50 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border font-display text-base font-bold ${step.badgeClass}`}
                 >
                   {step.number}
                 </div>
@@ -178,7 +178,7 @@ const steps = [
         {
           steps.map((step) => (
             <div
-              class={`absolute w-64 pointer-events-auto ${step.zClass} ${step.desktopClass} ${step.rotation}`}
+              class={`absolute w-72 lg:w-80 pointer-events-auto ${step.zClass} ${step.desktopClass} ${step.rotation}`}
             >
               <div
                 data-process-sticker-wrapper
@@ -187,7 +187,7 @@ const steps = [
               >
                 <div
                   data-sticker-face
-                  class={`relative h-full w-full overflow-hidden rounded-2xl border p-6 shadow-float ${step.cardClass}`}
+                  class={`relative h-full w-full overflow-hidden rounded-2xl border p-6 lg:p-7 shadow-float ${step.cardClass}`}
                 >
                   <!-- Backing paper that peels top → bottom as the sticker sticks -->
                   <div
@@ -195,18 +195,18 @@ const steps = [
                     class="absolute inset-0 z-40 bg-[#c8c8c8]"
                     style="box-shadow: inset 0 -8px 16px rgba(0,0,0,0.12);"
                   />
-                  <h3 class="relative z-10 text-center font-display text-3xl uppercase leading-none tracking-tight">
+                  <h3 class="relative z-10 text-center font-display text-3xl lg:text-[2.25rem] uppercase leading-none tracking-tight">
                     {step.title}
                   </h3>
                   <p
-                    class={`relative z-10 mt-2 text-center text-sm font-medium leading-tight ${step.bodyClass}`}
+                    class={`relative z-10 mt-2.5 text-center text-sm lg:text-[0.9375rem] font-medium leading-snug ${step.bodyClass}`}
                   >
                     {step.description}
                   </p>
                 </div>
                 <div
                   data-sticker-badge
-                  class={`absolute -top-4 left-1/2 z-50 flex size-8 -translate-x-1/2 items-center justify-center rounded-full border font-display text-lg font-bold ${step.badgeClass}`}
+                  class={`absolute -top-4.5 lg:-top-5 left-1/2 z-50 flex size-9 lg:size-10 -translate-x-1/2 items-center justify-center rounded-full border font-display text-lg lg:text-xl font-bold shadow-sm ${step.badgeClass}`}
                 >
                   {step.number}
                 </div>

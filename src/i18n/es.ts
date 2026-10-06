@@ -38,9 +38,9 @@ export const es: typeof en = {
     titleLine1: "Por qué todos eligen",
     titleLine2Accent: "sumarse",
     titleLine2End: "A PUFF.",
-    titleDark1: "Diseños a tu ritmo,",
-    titleDark2: "sin",
-    titleDark3: "complicaciones.",
+    titleDark1: "Diseño de primer nivel,",
+    titleDark2: "a demanda y",
+    titleDark3: "sin límites.",
     darkDescription:
       "Decile adiós a freelancers informales y agencias lentas. Accedé a talento creativo senior con precios transparentes y cero fricción.",
     deck: [
@@ -227,7 +227,7 @@ export const es: typeof en = {
       pillHighlight: " 20% OFF",
       pillSuffix: " por 3 meses*",
       disclaimer:
-        "*El 20% de descuento aplica a planes trimestrales Graphic, Web & UI y Full Scale. No aplica para el plan Graphic Lite de $200.",
+        "*Válido en planes trimestrales. Excluye Graphic Lite de $200.",
     },
   },
   faq: {

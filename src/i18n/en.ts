@@ -36,9 +36,9 @@ export const en = {
     titleLine1: "Why everyone's",
     titleLine2Accent: "switching",
     titleLine2End: "TO PUFF.",
-    titleDark1: "Designs at your pace,",
-    titleDark2: "without",
-    titleDark3: "complications.",
+    titleDark1: "World-class design,",
+    titleDark2: "on demand &",
+    titleDark3: "on repeat.",
     darkDescription:
       "Say goodbye to flaky freelancers and slow agencies. Get senior design talent with transparent pricing and zero friction.",
     deck: [
@@ -225,7 +225,7 @@ export const en = {
       pillHighlight: " 20% OFF",
       pillSuffix: " for 3 months*",
       disclaimer:
-        "*20% discount applies to Graphic, Web & UI, and Full Scale quarterly plans. Excludes $200 Graphic Lite starter plan.",
+        "*Valid on quarterly plans. Excludes $200 Graphic Lite.",
     },
   },
   faq: {
