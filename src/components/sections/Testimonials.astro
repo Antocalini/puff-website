@@ -95,13 +95,13 @@ const logosRow1 = [...clientLogosRow1, ...clientLogosRow1];
 
         </div>
 
-        <!-- Bulb Sticker moved higher up on the side -->
+        <!-- Bulb Sticker: bottom-right corner overlapping white card on mobile, side on desktop -->
         <FloatingSticker
           src={bulbSticker}
-          peel="bl"
+          peel="br"
           size="moment"
-          rotate={-24}
-          class="top-1/4 -left-6 z-20 -translate-x-[40%] -translate-y-1/2 md:-left-12 md:-translate-x-[55%]"
+          rotate={14}
+          class="top-auto left-auto -bottom-10 -right-4 sm:-bottom-12 sm:-right-6 z-20 [&_img]:w-[clamp(9.5rem,40vw,13.5rem)] md:[&_img]:w-[min(24vw,280px)] md:top-1/4 md:bottom-auto md:right-auto md:-left-12 md:-translate-x-[55%] md:-translate-y-1/2"
         />
 
       </div>

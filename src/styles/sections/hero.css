@@ -105,14 +105,14 @@
     margin-top: var(--hero-gap-y);
   }
 
-  /* Description + Single Primary CTA (See Plans) - Aligned to left edge of container */
+  /* Description + Single Primary CTA (See Plans) - Centered on mobile, aligned to left on desktop */
   .hero-desc-cta-wrap {
     width: 100%;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+    align-items: center;
+    text-align: center;
   }
 
   @media (min-width: 1024px) {
@@ -122,6 +122,8 @@
       bottom: clamp(-2.5rem, -3.5vh, -1rem);
       max-width: 19.5rem;
       margin-top: 0;
+      align-items: flex-start;
+      text-align: left;
     }
   }
 
@@ -185,7 +187,13 @@
   .hero-sticker-pos--one {
     right: clamp(0.75rem, 3vw, 1.75rem);
     left: auto;
-    bottom: clamp(14.5rem, 29dvh, 19rem);
+    bottom: clamp(7.5rem, 14.5dvh, 10.5rem);
+  }
+
+  @media (min-width: 1024px) {
+    .hero-sticker-pos--one {
+      bottom: clamp(14.5rem, 29dvh, 19rem);
+    }
   }
 
   /* Mobile sticker sizes: bolder, fill the spacious areas comfortably */
