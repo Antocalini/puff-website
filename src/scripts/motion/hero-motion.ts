@@ -38,10 +38,10 @@ export function initHeroMotion(): HeroMotionInstance | null {
 
   const cleanups: (() => void)[] = [];
 
-  // Set initial states for clean, smooth entrance
-  gsap.set(titleLines, { yPercent: 110, opacity: 0 });
+  // Set initial states for clean, physical entrance (title remains 100% opaque, revealed by overflow crop)
+  gsap.set(titleLines, { yPercent: 110, opacity: 1 });
   if (creativeLetters.length) {
-    gsap.set(creativeLetters, { yPercent: -130, opacity: 0 });
+    gsap.set(creativeLetters, { yPercent: -130, opacity: 1 });
   }
   if (bodyText) gsap.set(bodyText, { y: 24, opacity: 0 });
   if (ctaBtn) gsap.set(ctaBtn, { scale: 0.92, y: 16, opacity: 0 });
@@ -63,13 +63,12 @@ export function initHeroMotion(): HeroMotionInstance | null {
       },
     });
 
-    // Act 1: Kinetic headline reveal with falling stagger for CREATIVE
+    // Act 1: Kinetic headline reveal with physical sliding from behind overflow-hidden masks (100% opaque)
     if (titleLines[0]) {
       tl.to(
         titleLines[0],
         {
           yPercent: 0,
-          opacity: 1,
           duration: 0.9,
           ease: "power4.out",
         },
@@ -82,7 +81,6 @@ export function initHeroMotion(): HeroMotionInstance | null {
         creativeLetters,
         {
           yPercent: 0,
-          opacity: 1,
           duration: 0.85,
           stagger: 0.045,
           ease: "back.out(1.2)",
@@ -96,7 +94,6 @@ export function initHeroMotion(): HeroMotionInstance | null {
         titleLines[1],
         {
           yPercent: 0,
-          opacity: 1,
           duration: 0.9,
           ease: "power4.out",
         },
@@ -291,9 +288,11 @@ export function initHeroMotion(): HeroMotionInstance | null {
       document.removeEventListener("preloader:complete", triggerStart);
       startTimeline();
     };
+    const safetyTimer = setTimeout(triggerStart, 2000);
     document.addEventListener("preloader:reveal", triggerStart);
     document.addEventListener("preloader:complete", triggerStart);
     cleanups.push(() => {
+      clearTimeout(safetyTimer);
       document.removeEventListener("preloader:reveal", triggerStart);
       document.removeEventListener("preloader:complete", triggerStart);
     });

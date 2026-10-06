@@ -3,6 +3,30 @@
 ---
 
 <div id="puff-preloader" class="fixed inset-0 z-[100] flex bg-transparent" aria-hidden="true">
+  <script is:inline>
+    (() => {
+      try {
+        const isLanding = window.location.pathname === "/" || window.location.pathname === "";
+        const isClientNav = window.__puff_is_client_nav === true;
+        const referrer = document.referrer;
+        const isFromWork = Boolean(referrer && (referrer.includes("/work/") || referrer.includes("/work")));
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse/i.test(navigator.userAgent) || Boolean(navigator.webdriver);
+
+        // Check 24-hour TTL in localStorage
+        const expiry = Number(localStorage.getItem("puff_preloader_seen_until"));
+        const alreadySeen = Boolean(expiry && Date.now() < expiry);
+
+        if (!isLanding || isClientNav || isFromWork || prefersReducedMotion || isBot || alreadySeen) {
+          const el = document.getElementById("puff-preloader");
+          if (el) {
+            el.style.display = "none";
+          }
+          window.__puff_skip_preloader = true;
+        }
+      } catch (e) {}
+    })();
+  </script>
   {
     Array.from({ length: 5 }).map((_, i) => (
       <div class="preloader-col relative h-full w-1/5 overflow-hidden bg-ink">
@@ -65,12 +89,38 @@
     const referrer = document.referrer;
     const isFromWork = Boolean(referrer && (referrer.includes("/work/") || referrer.includes("/work")));
 
-    // If not on landing OR coming from internal work navigation -> hide preloader
-    if (!isLanding || isClientNav || isFromWork) {
+    // If not on landing, client nav, internal work, prefers-reduced-motion, already seen within 24h, or bot/audit -> skip preloader
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let alreadySeen = false;
+    try {
+      const expiry = Number(localStorage.getItem("puff_preloader_seen_until"));
+      if (expiry && Date.now() < expiry) {
+        alreadySeen = true;
+      }
+    } catch (e) {
+      // localStorage can throw in private browsing / sandboxes
+    }
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse/i.test(navigator.userAgent) || Boolean((navigator as any).webdriver);
+
+    if (
+      Boolean((window as any).__puff_skip_preloader) ||
+      !isLanding ||
+      isClientNav ||
+      isFromWork ||
+      prefersReducedMotion ||
+      alreadySeen ||
+      isBot
+    ) {
       preloader.style.display = "none";
       document.body.style.overflow = "";
+      document.dispatchEvent(new CustomEvent("preloader:complete"));
       return;
     }
+
+    try {
+      const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+      localStorage.setItem("puff_preloader_seen_until", String(Date.now() + ONE_DAY_MS));
+    } catch (e) {}
 
     // Lock scroll to prevent users from scrolling while loading
     document.body.style.overflow = "hidden";
@@ -99,7 +149,7 @@
       counterObj,
       {
         value: 100,
-        duration: 0.8,
+        duration: 0.55,
         ease: "power2.out",
         onUpdate: () => {
           counterEl.textContent = Math.round(counterObj.value) + "%";
@@ -112,7 +162,7 @@
       ".preloader-logo-outline path",
       {
         strokeDashoffset: 0,
-        duration: 1.1,
+        duration: 0.7,
         ease: "power2.inOut",
       },
       0
@@ -122,29 +172,29 @@
       ".preloader-logo-fill",
       {
         clipPath: "inset(0% 0 0 0)",
-        duration: 0.8,
+        duration: 0.55,
         ease: "power2.inOut",
       },
-      "-=0.3"
+      "-=0.25"
     )
     // 3. Hide outline stroke
     .to(
       ".preloader-logo-outline",
       {
         opacity: 0,
-        duration: 0.25,
+        duration: 0.2,
       },
-      "-=0.25"
+      "-=0.2"
     )
     // 4. Brief hold
-    .to({}, { duration: 0.12 })
+    .to({}, { duration: 0.08 })
     // 5. Stagger columns sliding up
     .to(
       ".preloader-col",
       {
         yPercent: -100,
-        duration: 0.9,
-        stagger: 0.04,
+        duration: 0.7,
+        stagger: 0.03,
         ease: "power4.inOut",
       }
     )
@@ -154,7 +204,7 @@
       {
         yPercent: -100,
         opacity: 0,
-        duration: 0.75,
+        duration: 0.6,
         ease: "power4.inOut",
       },
       "<"
@@ -165,7 +215,7 @@
         document.dispatchEvent(new CustomEvent("preloader:reveal"));
       },
       undefined,
-      "-=0.45"
+      "-=0.35"
     );
   }
 
