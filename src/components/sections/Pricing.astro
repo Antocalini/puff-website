@@ -8,6 +8,13 @@ import { getTranslations, type SupportedLocale } from "../../i18n";
 const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
 const t = getTranslations(currentLocale);
 
+const STRIPE_LINKS = {
+  starter: "https://buy.stripe.com/6oU3cvaaT3WY5K2c1CdIA00",
+  graphic: "https://buy.stripe.com/5kQ6oH96P0KM4FY6HidIA01",
+  webUi: "https://buy.stripe.com/aFa7sL0Aj5123BU4zadIA02",
+  fullScale: "https://buy.stripe.com/28E28rbeX512c8q0iUdIA03",
+};
+
 const starterPlan = {
   name: t.pricing.starterPlan.name,
   tag: t.pricing.starterPlan.tag,
@@ -17,6 +24,7 @@ const starterPlan = {
   summary: t.pricing.starterPlan.summary,
   inclusions: t.pricing.starterPlan.inclusions,
   cta: t.pricing.starterPlan.cta,
+  href: STRIPE_LINKS.starter,
 };
 
 const rawPlans = [
@@ -25,6 +33,7 @@ const rawPlans = [
     cardStyle: "bg-ink/70 border border-paper/10 text-paper hover:border-paper/30",
     priceColor: "text-paper",
     bulletColor: "bg-brand-yellow",
+    href: STRIPE_LINKS.graphic,
   },
   {
     featured: true,
@@ -32,12 +41,14 @@ const rawPlans = [
     priceColor: "text-charcoal font-black",
     bulletColor: "bg-charcoal",
     tagStyle: "bg-charcoal text-brand-yellow",
+    href: STRIPE_LINKS.webUi,
   },
   {
     featured: false,
     cardStyle: "bg-ink/70 border border-paper/10 text-paper hover:border-paper/30",
     priceColor: "text-paper",
     bulletColor: "bg-brand-yellow",
+    href: STRIPE_LINKS.fullScale,
   },
 ];
 
@@ -172,7 +183,9 @@ const plans = rawPlans.map((cfg, idx) => ({
 
               <!-- CTA -->
               <a 
-                href="#faq"
+                href={plan.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 class:list={[
                   "btn-shine mt-6 inline-flex w-full items-center justify-center rounded-full px-4 py-3 text-center font-label text-[0.7rem] font-bold tracking-wide transition-all duration-200 active:scale-95",
                   plan.featured 
@@ -209,7 +222,7 @@ const plans = rawPlans.map((cfg, idx) => ({
           </div>
 
           <!-- Right Action: Price + Title Case CTA Button -->
-          <div class="flex items-center justify-between md:justify-end gap-5 w-full md:w-auto shrink-0 border-t md:border-t-0 border-paper/10 pt-3 md:pt-0">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between md:justify-end gap-3.5 sm:gap-5 w-full md:w-auto border-t md:border-t-0 border-paper/10 pt-3 md:pt-0">
             <div class="flex flex-col items-start md:items-end">
               <div class="flex items-baseline gap-1">
                 <span class="font-display text-3xl font-black text-paper tracking-tight">
@@ -219,13 +232,15 @@ const plans = rawPlans.map((cfg, idx) => ({
                   {starterPlan.period}
                 </span>
               </div>
-              <span class="font-label text-[0.6rem] font-bold uppercase tracking-wider text-paper/50 whitespace-nowrap">
+              <span class="font-label text-[0.6rem] font-bold uppercase tracking-wider text-paper/50">
                 {starterPlan.promoNote}
               </span>
             </div>
             <a 
-              href="#faq"
-              class="btn-shine btn-3d-skeuo-yellow inline-flex items-center justify-center rounded-full px-6 py-2.5 text-center font-label text-xs font-bold tracking-wide text-charcoal transition-all duration-200 active:scale-95 shrink-0"
+              href={starterPlan.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-shine btn-3d-skeuo-yellow inline-flex w-full sm:w-auto items-center justify-center rounded-full px-6 py-2.5 text-center font-label text-xs font-bold tracking-wide text-charcoal transition-all duration-200 active:scale-95 shrink-0"
             >
               {starterPlan.cta}
             </a>
