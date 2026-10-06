@@ -2,8 +2,8 @@ import { setNavSurface, type NavSurface } from "./nav-surface";
 
 const COMPACT_AFTER = 64;
 const ACC_TRIGGER = 20;
-/** Seconds to approach ~63% of remaining distance — same both directions */
-const MORPH_TAU = 0.28;
+/** Seconds to approach ~63% of remaining distance — responsive silky finish */
+const MORPH_TAU = 0.2;
 const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 export function syncSiteHeaderHeight() {
@@ -58,11 +58,11 @@ export function initSmartNav() {
     progress = p;
     pills.forEach((pill) => {
       pill.style.setProperty("--nav-compact", p.toFixed(4));
-      pill.classList.toggle("is-compact", p > 0.96);
-      pill.setAttribute("data-compact", p > 0.96 ? "true" : "false");
+      pill.classList.toggle("is-compact", p >= 0.999);
+      pill.setAttribute("data-compact", p >= 0.999 ? "true" : "false");
       const collapse = pill.querySelector<HTMLElement>(".nav-pill-collapse");
       if (collapse) {
-        collapse.style.pointerEvents = p > 0.45 ? "none" : "";
+        collapse.style.pointerEvents = p > 0.15 ? "none" : "";
       }
     });
   };
@@ -90,7 +90,7 @@ export function initSmartNav() {
     const alpha = 1 - Math.exp(-dt / MORPH_TAU);
     const next = progress + (target - progress) * alpha;
 
-    if (Math.abs(target - next) < 0.001) {
+    if (Math.abs(target - next) < 0.002) {
       applyProgress(target);
       stopMorph();
       return;

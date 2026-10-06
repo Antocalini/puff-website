@@ -171,7 +171,9 @@
     align-items: center;
     justify-content: center;
     line-height: 0;
-    padding: 0.125rem 0.625rem;
+    flex-shrink: 0;
+    padding: 0.125rem 0.25rem;
+    margin: 0;
   }
 
   .nav-pill-logo--mobile {
@@ -182,29 +184,22 @@
     filter: brightness(0) invert(1);
   }
 
-  html[data-nav-surface="yellow"] [data-nav-pill].is-compact,
-  html[data-nav-surface="yellow"] [data-nav-pill-mobile].is-compact {
-    box-shadow:
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.5),
-      inset 0 -2px 4px rgba(0, 0, 0, 0.85);
-    filter:
-      drop-shadow(0 5px 10px rgba(0, 0, 0, 0.35))
-      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-  }
-
   /*
    * Smart nav collapse — layout driven by --nav-compact (0→1).
-   * JS lerps the variable every frame so scroll-up/down is the same
-   * continuous morph and can reverse mid-flight without CSS restart snaps.
+   * Continuous morph without abrupt snaps or hard layout breaks.
    */
   .nav-pill-collapse {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
     min-width: 0;
     overflow: hidden;
-    opacity: calc(1 - var(--nav-compact, 0));
-    max-width: calc((1 - var(--nav-compact, 0)) * 100rem);
-    will-change: opacity, max-width;
+    flex-grow: calc(1 - var(--nav-compact, 0));
+    flex-shrink: 1;
+    flex-basis: 0%;
+    max-width: calc((1 - var(--nav-compact, 0)) * 55rem);
+    opacity: clamp(0, calc(1 - var(--nav-compact, 0) * 2.8), 1);
+    transform: scale(calc(1 - var(--nav-compact, 0) * 0.08));
+    transform-origin: center right;
+    will-change: opacity, max-width, flex-grow;
   }
 
   .nav-pill-collapse-inner {
@@ -216,65 +211,39 @@
   .nav-pill-collapse-content {
     padding: 0.125rem 0.375rem 0.125rem 0.5rem;
     width: 100%;
+    min-width: max-content;
   }
 
   [data-nav-pill],
   [data-nav-pill-mobile] {
     --nav-compact: 0;
-    gap: calc(0.375rem * (1 - var(--nav-compact)));
-    padding-block: 0;
-    padding-inline: calc(1.125rem * (1 - var(--nav-compact)) + 1.125rem * var(--nav-compact));
+    justify-content: center;
     box-sizing: border-box;
+    padding-block: 0;
+    gap: calc(0.375rem * (1 - var(--nav-compact)));
   }
 
   [data-nav-pill] {
     height: 3.75rem;
     max-height: 3.75rem;
     width: 100%;
-    max-width: calc((1 - var(--nav-compact, 0)) * 61rem + var(--nav-compact, 0) * 5.75rem);
+    max-width: calc((1 - var(--nav-compact, 0)) * 61rem + var(--nav-compact, 0) * 6.85rem);
     margin-inline: auto;
+    padding-inline: 1.125rem;
   }
 
   [data-nav-pill-mobile] {
     height: 3.375rem;
     max-height: 3.375rem;
+    width: 100%;
+    max-width: calc((1 - var(--nav-compact, 0)) * 100% + var(--nav-compact, 0) * 5.75rem);
+    margin-inline: auto;
+    padding-inline: 1rem;
   }
 
-  [data-nav-pill] .nav-pill-logo-link {
-    padding-inline: calc(0.75rem * (1 - var(--nav-compact)));
-  }
-
-  [data-nav-pill].is-compact,
-  [data-nav-pill-mobile].is-compact,
-  [data-nav-pill][data-compact="true"],
-  [data-nav-pill-mobile][data-compact="true"] {
-    justify-content: center;
-    box-shadow:
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.85),
-      inset 0 -2px 3px rgba(180, 130, 0, 0.4);
-    filter:
-      drop-shadow(0 5px 10px rgba(0, 0, 0, 0.22))
-      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
-  }
-
-  [data-nav-pill].is-compact .nav-pill-logo-link,
-  [data-nav-pill-mobile].is-compact .nav-pill-logo-link,
-  [data-nav-pill][data-compact="true"] .nav-pill-logo-link,
-  [data-nav-pill-mobile][data-compact="true"] .nav-pill-logo-link {
-    margin: 0 auto;
-    padding: 0;
-  }
-
-  [data-nav-pill].is-compact .nav-pill-collapse,
-  [data-nav-pill-mobile].is-compact .nav-pill-collapse,
   [data-nav-pill][data-compact="true"] .nav-pill-collapse,
   [data-nav-pill-mobile][data-compact="true"] .nav-pill-collapse {
-    display: none !important;
-    width: 0 !important;
-    max-width: 0 !important;
-    flex: 0 0 0px !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    visibility: hidden;
   }
 
   /* Nav CTA: inset 3D only — no drop shadow at rest, hover, or active */
@@ -342,6 +311,109 @@
   html[data-nav-surface="yellow"] .nav-pill-cta:hover .nav-pill-cta-arrow {
     background: #1a1a1a;
     color: #ffd100;
+  }
+
+  /* Language Switcher Tactile Pill — Dual-layer GPU accelerated crossfade to yellow */
+  .nav-lang-switch {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: rgba(26, 26, 26, 0.08);
+    border: 1px solid rgba(26, 26, 26, 0.14);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+    transition:
+      border-color 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Yellow 3D skin layer — cross-fades via GPU opacity for 100% smooth transition */
+  .nav-lang-switch::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(180deg, #ffe033 0%, #ffd100 50%, #e6bc00 100%);
+    box-shadow:
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.8),
+      inset 0 -1.5px 2.5px rgba(180, 130, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Language Switcher Buttons (sit above the ::before skin) */
+  .nav-lang-btn {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(26, 26, 26, 0.65);
+    background-color: transparent;
+    transition:
+      background-color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-lang-btn:hover {
+    color: #1a1a1a;
+  }
+
+  .nav-lang-btn.is-active {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  }
+
+  /* When navbar is dark/black (html[data-nav-surface="yellow"]): switcher skin turns YELLOW */
+  html[data-nav-surface="yellow"] .nav-lang-switch {
+    border-color: rgba(180, 130, 0, 0.8);
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.7),
+      0 2px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  html[data-nav-surface="yellow"] .nav-lang-switch::before {
+    opacity: 1;
+  }
+
+  html[data-nav-surface="yellow"] .nav-lang-btn {
+    color: rgba(26, 26, 26, 0.75);
+  }
+
+  html[data-nav-surface="yellow"] .nav-lang-btn:hover {
+    color: #000000;
+  }
+
+  html[data-nav-surface="yellow"] .nav-lang-btn.is-active {
+    background-color: #1a1a1a;
+    color: #ffd100;
+    box-shadow: 0 1.5px 3.5px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Mobile Language row panel styling */
+  .nav-mobile-lang-row {
+    background: rgba(26, 26, 26, 0.08);
+    border-color: rgba(26, 26, 26, 0.12);
+    transition:
+      background-color 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-mobile-lang-label {
+    color: rgba(26, 26, 26, 0.65);
+    transition: color 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html[data-nav-surface="yellow"] .nav-mobile-lang-row {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  html[data-nav-surface="yellow"] .nav-mobile-lang-label {
+    color: rgba(255, 255, 255, 0.75);
   }
 
   /* Skeuomorphic / Neumorphic 3D Tactile Capsule Button (Exact match to reference) */

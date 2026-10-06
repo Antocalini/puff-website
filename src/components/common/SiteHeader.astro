@@ -30,7 +30,12 @@ const mobilePanelLinkClass =
         data-nav-pill
         aria-label="Primary navigation"
       >
-        <a class="nav-pill-logo-link relative z-10 shrink-0" href={homeUrl} data-nav-logo>
+        <a
+          class="nav-pill-logo-link relative z-10 shrink-0"
+          href={homeUrl}
+          aria-label={brandName}
+          data-nav-logo
+        >
           <img
             src={logoPuff.src}
             alt={brandName}
@@ -41,19 +46,17 @@ const mobilePanelLinkClass =
           />
         </a>
 
-        <div class="nav-pill-collapse flex-1 min-w-0" data-nav-collapse>
+        <div class="nav-pill-collapse min-w-0" data-nav-collapse>
           <div class="nav-pill-collapse-inner w-full">
             <div class="nav-pill-collapse-content flex w-full items-center justify-between">
               <!-- Balancer block with tactile language switcher pill -->
               <div class="hidden lg:flex items-center justify-start shrink-0">
-                <div class="inline-flex items-center rounded-full bg-charcoal/8 p-0.5 text-[0.68rem] font-bold uppercase tracking-wider font-label border border-charcoal/10">
+                <div class="nav-lang-switch inline-flex items-center rounded-full p-0.5 text-[0.68rem] font-bold uppercase tracking-wider font-label" role="group" aria-label="Language switcher">
                   <a
                     href="/"
                     class:list={[
-                      "rounded-full px-2.5 py-0.5 transition-all duration-200",
-                      currentLocale === "en"
-                        ? "bg-charcoal text-paper shadow-xs"
-                        : "text-charcoal/65 hover:text-charcoal",
+                      "nav-lang-btn rounded-full px-2.5 py-0.5",
+                      currentLocale === "en" && "is-active",
                     ]}
                     aria-label="Switch to English"
                   >
@@ -62,10 +65,8 @@ const mobilePanelLinkClass =
                   <a
                     href="/es/"
                     class:list={[
-                      "rounded-full px-2.5 py-0.5 transition-all duration-200",
-                      currentLocale === "es"
-                        ? "bg-charcoal text-paper shadow-xs"
-                        : "text-charcoal/65 hover:text-charcoal",
+                      "nav-lang-btn rounded-full px-2.5 py-0.5",
+                      currentLocale === "es" && "is-active",
                     ]}
                     aria-label="Cambiar a Español"
                   >
@@ -117,7 +118,12 @@ const mobilePanelLinkClass =
         data-nav-pill-mobile
         aria-label="Primary navigation"
       >
-        <a class="nav-pill-logo-link relative z-10 shrink-0" href={homeUrl} data-nav-logo-mobile>
+        <a
+          class="nav-pill-logo-link relative z-10 shrink-0"
+          href={homeUrl}
+          aria-label={brandName}
+          data-nav-logo-mobile
+        >
           <img
             src={logoPuff.src}
             alt={brandName}
@@ -171,16 +177,14 @@ const mobilePanelLinkClass =
         </nav>
 
         <!-- Mobile Language Selector Row -->
-        <div class="mt-3 flex items-center justify-between px-3 py-1.5 rounded-full bg-charcoal/8 border border-charcoal/10">
-          <span class="font-label text-[0.65rem] font-bold uppercase tracking-widest text-charcoal/65">Language</span>
-          <div class="inline-flex items-center gap-1">
+        <div class="nav-mobile-lang-row mt-3 flex items-center justify-between px-3 py-1.5 rounded-full border">
+          <span class="nav-mobile-lang-label font-label text-[0.65rem] font-bold uppercase tracking-widest">Language</span>
+          <div class="nav-lang-switch inline-flex items-center rounded-full p-0.5 text-[0.7rem] font-bold uppercase tracking-wider font-label" role="group" aria-label="Language switcher">
             <a
               href="/"
               class:list={[
-                "rounded-full px-2.5 py-0.5 font-label text-[0.7rem] font-bold uppercase tracking-wider transition-all duration-200",
-                currentLocale === "en"
-                  ? "bg-charcoal text-paper shadow-xs"
-                  : "text-charcoal/65 hover:text-charcoal",
+                "nav-lang-btn rounded-full px-2.5 py-0.5",
+                currentLocale === "en" && "is-active",
               ]}
               aria-label="Switch to English"
             >
@@ -189,10 +193,8 @@ const mobilePanelLinkClass =
             <a
               href="/es/"
               class:list={[
-                "rounded-full px-2.5 py-0.5 font-label text-[0.7rem] font-bold uppercase tracking-wider transition-all duration-200",
-                currentLocale === "es"
-                  ? "bg-charcoal text-paper shadow-xs"
-                  : "text-charcoal/65 hover:text-charcoal",
+                "nav-lang-btn rounded-full px-2.5 py-0.5",
+                currentLocale === "es" && "is-active",
               ]}
               aria-label="Cambiar a Español"
             >
