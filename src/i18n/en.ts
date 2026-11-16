@@ -222,7 +222,7 @@ export const en = {
       cta: "Get Graphic Lite",
     },
     guarantee: {
-      pillPrefix: "Try Puff free for 7 days +",
+      pillPrefix: "Get",
       pillHighlight: " 50% OFF",
       pillSuffix: " your first month",
       disclaimer: "",

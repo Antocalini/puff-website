@@ -50,5 +50,4 @@
 - CTA: Get Full Scale — https://puffcrossmedia.com/#pricing
 
 ## Promotional Offer
-- 7-day free trial on all plans
 - 50% off the first month on all plans (code PUFF50 applied automatically at checkout)

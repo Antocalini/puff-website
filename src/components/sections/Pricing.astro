@@ -18,12 +18,22 @@ const applyDiscount = (price: string) => {
 const PROMO_CODE = "PUFF50";
 const withPromo = (url: string) => `${url}?prefilled_promo_code=${PROMO_CODE}`;
 
+// Links for the active promo: 50% off first month (PUFF50), NO free trial.
 const STRIPE_LINKS = {
-  starter: withPromo("https://buy.stripe.com/7sYbJ1beX0KMa0ighSdIA08"),
-  graphic: withPromo("https://buy.stripe.com/bJe7sLgzh1OQa0id5GdIA07"),
-  webUi: withPromo("https://buy.stripe.com/bJeeVdgzh9hi2xQd5GdIA06"),
-  fullScale: withPromo("https://buy.stripe.com/eVq14ner98de8We6HidIA05"),
+  starter: withPromo("https://buy.stripe.com/4gM9ATdn5alm3BU4zadIA0c"),
+  graphic: withPromo("https://buy.stripe.com/dRmbJ16YHbpqegy1mYdIA0b"),
+  webUi: withPromo("https://buy.stripe.com/5kQ28r0Ajalm1tM5DedIA0a"),
+  fullScale: withPromo("https://buy.stripe.com/aFa9ATbeX79a5K28PqdIA09"),
 };
+
+// Links for when there is NO promo: 7-day free trial, no discount.
+// Swap these into STRIPE_LINKS (without withPromo) when the promo ends.
+// const STRIPE_LINKS_TRIAL = {
+//   starter: "https://buy.stripe.com/7sYbJ1beX0KMa0ighSdIA08",
+//   graphic: "https://buy.stripe.com/bJe7sLgzh1OQa0id5GdIA07",
+//   webUi: "https://buy.stripe.com/bJeeVdgzh9hi2xQd5GdIA06",
+//   fullScale: "https://buy.stripe.com/eVq14ner98de8We6HidIA05",
+// };
 
 const starterPlan = {
   name: t.pricing.starterPlan.name,

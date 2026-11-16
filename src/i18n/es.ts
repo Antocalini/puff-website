@@ -224,7 +224,7 @@ export const es: typeof en = {
       cta: "Elegir Graphic Lite",
     },
     guarantee: {
-      pillPrefix: "Probá Puff gratis por 7 días +",
+      pillPrefix: "Conseguí",
       pillHighlight: " 50% OFF",
       pillSuffix: " tu primer mes",
       disclaimer: "",
