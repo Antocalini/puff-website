@@ -150,6 +150,7 @@ export const es: typeof en = {
   },
   pricing: {
     sticker: "Precios y Membresía",
+    firstMonthNote: "primer mes",
     heading: "Una Suscripción,<br />Infinitas Posibilidades",
     joinCard: {
       pill: "Empezá hoy",
@@ -211,7 +212,7 @@ export const es: typeof en = {
       name: "Graphic Lite",
       price: "$200",
       period: "/mes",
-      promoNote: "Tarifa fija • No aplica promo 20%",
+      promoNote: "",
       summary: "Servicio de diseño gráfico enfocado para 2 proyectos dedicados.",
       inclusions: [
         "2 proyectos activos",
@@ -224,10 +225,9 @@ export const es: typeof en = {
     },
     guarantee: {
       pillPrefix: "Probá Puff gratis por 7 días +",
-      pillHighlight: " 20% OFF",
-      pillSuffix: " por 3 meses*",
-      disclaimer:
-        "*Válido en planes trimestrales. Excluye Graphic Lite de $200.",
+      pillHighlight: " 50% OFF",
+      pillSuffix: " tu primer mes",
+      disclaimer: "",
     },
   },
   faq: {

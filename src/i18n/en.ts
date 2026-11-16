@@ -148,6 +148,7 @@ export const en = {
   },
   pricing: {
     sticker: "Pricing & Membership",
+    firstMonthNote: "first month",
     heading: "One Subscription,<br />Endless Possibilities",
     joinCard: {
       pill: "Start today",
@@ -209,7 +210,7 @@ export const en = {
       name: "Graphic Lite",
       price: "$200",
       period: "/month",
-      promoNote: "Fixed rate • 20% promo excluded",
+      promoNote: "",
       summary: "Graphic Design Service for 2 dedicated projects.",
       inclusions: [
         "2 active projects",
@@ -222,10 +223,9 @@ export const en = {
     },
     guarantee: {
       pillPrefix: "Try Puff free for 7 days +",
-      pillHighlight: " 20% OFF",
-      pillSuffix: " for 3 months*",
-      disclaimer:
-        "*Valid on quarterly plans. Excludes $200 Graphic Lite.",
+      pillHighlight: " 50% OFF",
+      pillSuffix: " your first month",
+      disclaimer: "",
     },
   },
   faq: {

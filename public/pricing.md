@@ -4,7 +4,7 @@
 # Source: https://puffcrossmedia.com/#pricing
 
 ## Graphic Lite
-- Price: $200/month
+- Price: $200/month ($100 first month with 50% off)
 - Billing: Monthly
 - Active projects: 2
 - Requests: One at a time
@@ -12,11 +12,10 @@
 - Revisions: Unlimited
 - Brands: Unlimited
 - Flexibility: Pause or cancel anytime
-- Note: 20% promotional discount excluded from this plan
 - CTA: Get Graphic Lite — https://puffcrossmedia.com/#pricing
 
 ## Graphic
-- Price: $1,000/month
+- Price: $1,000/month ($500 first month with 50% off)
 - Billing: Monthly
 - Active projects: 20
 - Requests: One at a time
@@ -27,7 +26,7 @@
 - CTA: Get Graphic — https://puffcrossmedia.com/#pricing
 
 ## Web & UI (Most Popular)
-- Price: $1,500/month
+- Price: $1,500/month ($750 first month with 50% off)
 - Billing: Monthly
 - Active projects: Unlimited
 - Requests: Simultaneous
@@ -39,7 +38,7 @@
 - CTA: Get Web & UI — https://puffcrossmedia.com/#pricing
 
 ## Full Scale
-- Price: $2,500/month
+- Price: $2,500/month ($1,250 first month with 50% off)
 - Billing: Monthly
 - Active projects: Unlimited
 - Requests: Simultaneous
@@ -52,5 +51,4 @@
 
 ## Promotional Offer
 - 7-day free trial on all plans
-- 20% off for first 3 months on quarterly billing
-- Exclusions: Graphic Lite plan excluded from 20% promo
+- 50% off the first month on all plans (code PUFF50 applied automatically at checkout)

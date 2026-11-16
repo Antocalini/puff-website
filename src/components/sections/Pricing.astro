@@ -8,17 +8,28 @@ import { getTranslations, type SupportedLocale } from "../../i18n";
 const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
 const t = getTranslations(currentLocale);
 
+const DISCOUNT_PERCENT = 50;
+const applyDiscount = (price: string) => {
+  const amount = Number(price.replace(/[^0-9.]/g, ""));
+  return "$" + (amount * (1 - DISCOUNT_PERCENT / 100)).toLocaleString("en-US");
+};
+
+// Auto-applies the Stripe promotion code (50% off the first month) at checkout.
+const PROMO_CODE = "PUFF50";
+const withPromo = (url: string) => `${url}?prefilled_promo_code=${PROMO_CODE}`;
+
 const STRIPE_LINKS = {
-  starter: "https://buy.stripe.com/6oU3cvaaT3WY5K2c1CdIA00",
-  graphic: "https://buy.stripe.com/5kQ6oH96P0KM4FY6HidIA01",
-  webUi: "https://buy.stripe.com/aFa7sL0Aj5123BU4zadIA02",
-  fullScale: "https://buy.stripe.com/28E28rbeX512c8q0iUdIA03",
+  starter: withPromo("https://buy.stripe.com/7sYbJ1beX0KMa0ighSdIA08"),
+  graphic: withPromo("https://buy.stripe.com/bJe7sLgzh1OQa0id5GdIA07"),
+  webUi: withPromo("https://buy.stripe.com/bJeeVdgzh9hi2xQd5GdIA06"),
+  fullScale: withPromo("https://buy.stripe.com/eVq14ner98de8We6HidIA05"),
 };
 
 const starterPlan = {
   name: t.pricing.starterPlan.name,
   tag: t.pricing.starterPlan.tag,
   price: t.pricing.starterPlan.price,
+  salePrice: applyDiscount(t.pricing.starterPlan.price),
   period: t.pricing.starterPlan.period,
   promoNote: t.pricing.starterPlan.promoNote,
   summary: t.pricing.starterPlan.summary,
@@ -55,6 +66,7 @@ const rawPlans = [
 const plans = rawPlans.map((cfg, idx) => ({
   ...cfg,
   ...t.pricing.plans[idx],
+  salePrice: applyDiscount(t.pricing.plans[idx].price),
 }));
 ---
 
@@ -162,11 +174,17 @@ const plans = rawPlans.map((cfg, idx) => ({
 
                 <!-- Price -->
                 <div class:list={["mt-4 flex items-baseline gap-1 border-b pb-4", plan.featured ? "border-charcoal/20" : "border-paper/15"]}>
-                  <span class:list={["font-display text-4xl font-black tracking-tight", plan.priceColor]}>
+                  <span class:list={["font-label text-sm font-bold line-through opacity-60 mr-1", plan.featured ? "text-charcoal" : "text-paper"]}>
                     {plan.price}
+                  </span>
+                  <span class:list={["font-display text-4xl font-black tracking-tight", plan.priceColor]}>
+                    {plan.salePrice}
                   </span>
                   <span class:list={["font-label text-[0.65rem] font-bold uppercase tracking-widest", plan.featured ? "text-charcoal" : "text-paper/65"]}>
                     {plan.period}
+                  </span>
+                  <span class:list={["ml-1 font-label text-[0.6rem] font-bold uppercase tracking-wider", plan.featured ? "text-charcoal/70" : "text-brand-yellow"]}>
+                    · {t.pricing.firstMonthNote}
                   </span>
                 </div>
 
@@ -225,16 +243,24 @@ const plans = rawPlans.map((cfg, idx) => ({
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between md:justify-end gap-3.5 sm:gap-5 w-full md:w-auto border-t md:border-t-0 border-paper/10 pt-3 md:pt-0">
             <div class="flex flex-col items-start md:items-end">
               <div class="flex items-baseline gap-1">
-                <span class="font-display text-3xl font-black text-paper tracking-tight">
+                <span class="font-label text-sm font-bold line-through text-paper/60 mr-1">
                   {starterPlan.price}
+                </span>
+                <span class="font-display text-3xl font-black text-paper tracking-tight">
+                  {starterPlan.salePrice}
                 </span>
                 <span class="font-label text-[0.65rem] font-bold uppercase tracking-widest text-paper/60">
                   {starterPlan.period}
                 </span>
+                <span class="ml-1 font-label text-[0.6rem] font-bold uppercase tracking-wider text-brand-yellow">
+                  · {t.pricing.firstMonthNote}
+                </span>
               </div>
-              <span class="font-label text-[0.6rem] font-bold uppercase tracking-wider text-paper/50">
-                {starterPlan.promoNote}
-              </span>
+              {starterPlan.promoNote && (
+                <span class="font-label text-[0.6rem] font-bold uppercase tracking-wider text-paper/50">
+                  {starterPlan.promoNote}
+                </span>
+              )}
             </div>
             <a 
               href={starterPlan.href}
@@ -262,9 +288,11 @@ const plans = rawPlans.map((cfg, idx) => ({
           {t.pricing.guarantee.pillSuffix}
         </span>
       </div>
-      <p class="mt-4 md:mt-5 font-label text-[0.625rem] md:text-[0.68rem] font-bold uppercase tracking-widest text-charcoal/65">
-        {t.pricing.guarantee.disclaimer}
-      </p>
+      {t.pricing.guarantee.disclaimer && (
+        <p class="mt-4 md:mt-5 font-label text-[0.625rem] md:text-[0.68rem] font-bold uppercase tracking-widest text-charcoal/65">
+          {t.pricing.guarantee.disclaimer}
+        </p>
+      )}
     </div>
 
   </div>
