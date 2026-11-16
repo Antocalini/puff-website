@@ -173,7 +173,7 @@ const plans = rawPlans.map((cfg, idx) => ({
                 </p>
 
                 <!-- Price -->
-                <div class:list={["mt-4 flex items-baseline gap-1 border-b pb-4", plan.featured ? "border-charcoal/20" : "border-paper/15"]}>
+                <div class:list={["mt-4 flex flex-wrap items-baseline gap-1 border-b pb-4", plan.featured ? "border-charcoal/20" : "border-paper/15"]}>
                   <span class:list={["font-label text-sm font-bold line-through opacity-60 mr-1", plan.featured ? "text-charcoal" : "text-paper"]}>
                     {plan.price}
                   </span>
@@ -183,8 +183,8 @@ const plans = rawPlans.map((cfg, idx) => ({
                   <span class:list={["font-label text-[0.65rem] font-bold uppercase tracking-widest", plan.featured ? "text-charcoal" : "text-paper/65"]}>
                     {plan.period}
                   </span>
-                  <span class:list={["ml-1 font-label text-[0.6rem] font-bold uppercase tracking-wider", plan.featured ? "text-charcoal/70" : "text-brand-yellow"]}>
-                    · {t.pricing.firstMonthNote}
+                  <span class:list={["basis-full font-label text-[0.6rem] font-bold uppercase tracking-wider", plan.featured ? "text-charcoal/70" : "text-brand-yellow"]}>
+                    {t.pricing.firstMonthNote}
                   </span>
                 </div>
 
@@ -242,7 +242,7 @@ const plans = rawPlans.map((cfg, idx) => ({
           <!-- Right Action: Price + Title Case CTA Button -->
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between md:justify-end gap-3.5 sm:gap-5 w-full md:w-auto border-t md:border-t-0 border-paper/10 pt-3 md:pt-0">
             <div class="flex flex-col items-start md:items-end">
-              <div class="flex items-baseline gap-1">
+              <div class="flex flex-wrap items-baseline gap-1 md:justify-end">
                 <span class="font-label text-sm font-bold line-through text-paper/60 mr-1">
                   {starterPlan.price}
                 </span>
@@ -252,8 +252,8 @@ const plans = rawPlans.map((cfg, idx) => ({
                 <span class="font-label text-[0.65rem] font-bold uppercase tracking-widest text-paper/60">
                   {starterPlan.period}
                 </span>
-                <span class="ml-1 font-label text-[0.6rem] font-bold uppercase tracking-wider text-brand-yellow">
-                  · {t.pricing.firstMonthNote}
+                <span class="basis-full font-label text-[0.6rem] font-bold uppercase tracking-wider text-brand-yellow md:text-right">
+                  {t.pricing.firstMonthNote}
                 </span>
               </div>
               {starterPlan.promoNote && (
