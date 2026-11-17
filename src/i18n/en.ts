@@ -148,7 +148,7 @@ export const en = {
   },
   promoBanner: {
     label: "Black Friday promotion",
-    text: "Black Friday · 50% off your first month",
+    text: "Black Friday: 50% off your first month",
   },
   pricing: {
     sticker: "Pricing & Membership",

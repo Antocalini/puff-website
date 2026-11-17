@@ -150,7 +150,7 @@ export const es: typeof en = {
   },
   promoBanner: {
     label: "Promoción de Black Friday",
-    text: "Black Friday · 50% off en tu primer mes",
+    text: "Black Friday: 50% off en tu primer mes",
   },
   pricing: {
     sticker: "Precios y Membresía",
