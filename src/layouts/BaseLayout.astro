@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import PromoBanner from "../components/common/PromoBanner.astro";
 import SiteFooter from "../components/common/SiteFooter.astro";
 import SiteHeader from "../components/common/SiteHeader.astro";
 import Preloader from "../components/ui/Preloader.astro";
@@ -115,6 +116,7 @@ const schemaData = {
     >
       {t.hero.skipLink}
     </a>
+    <PromoBanner />
     <SiteHeader />
     <main id="main-content">
       <slot />

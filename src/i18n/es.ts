@@ -148,6 +148,10 @@ export const es: typeof en = {
     heading: "Elegido por marcas ambiciosas",
     subheading: "Reseñas reales de Google de fundadores y directores que escalan con Puff Cross Media.",
   },
+  promoBanner: {
+    label: "Promoción de Black Friday",
+    text: "Black Friday · 50% off en tu primer mes",
+  },
   pricing: {
     sticker: "Precios y Membresía",
     firstMonthNote: "primer mes",
@@ -224,7 +228,7 @@ export const es: typeof en = {
       cta: "Elegir Graphic Lite",
     },
     guarantee: {
-      pillPrefix: "Conseguí",
+      pillPrefix: "Black Friday:",
       pillHighlight: " 50% OFF",
       pillSuffix: " tu primer mes",
       disclaimer: "",

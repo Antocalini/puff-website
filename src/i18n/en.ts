@@ -146,6 +146,10 @@ export const en = {
     heading: "Trusted by ambitious brands",
     subheading: "Real Google Reviews from founders and operators scaling with Puff Cross Media.",
   },
+  promoBanner: {
+    label: "Black Friday promotion",
+    text: "Black Friday · 50% off your first month",
+  },
   pricing: {
     sticker: "Pricing & Membership",
     firstMonthNote: "first month",
@@ -222,7 +226,7 @@ export const en = {
       cta: "Get Graphic Lite",
     },
     guarantee: {
-      pillPrefix: "Get",
+      pillPrefix: "Black Friday:",
       pillHighlight: " 50% OFF",
       pillSuffix: " your first month",
       disclaimer: "",

@@ -1,0 +1,79 @@
+---
+import { getTranslations, type SupportedLocale } from "../../i18n";
+
+const currentLocale = (Astro.currentLocale as SupportedLocale) || "en";
+const t = getTranslations(currentLocale);
+
+// Four copies per half keep the loop seamless on wide screens.
+const items = Array.from({ length: 4 }, () => t.promoBanner.text);
+---
+
+<div class="promo-banner" role="region" aria-label={t.promoBanner.label}>
+  <div class="promo-banner-track" aria-hidden="true">
+    {[0, 1].map(() => (
+      <div class="promo-banner-group">
+        {items.map((text) => (
+          <span class="promo-banner-item">
+            <span>{text}</span>
+            <span class="promo-banner-dot">✦</span>
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+  <span class="sr-only">{t.promoBanner.text}</span>
+</div>
+
+<style is:global>
+  :root {
+    --promo-h: 2rem;
+  }
+
+  .promo-banner {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    height: var(--promo-h);
+    overflow: hidden;
+    background: #1a1a1a;
+    color: #ffd400;
+    display: flex;
+    align-items: center;
+  }
+
+  .promo-banner-track {
+    display: flex;
+    width: max-content;
+    animation: promo-banner-scroll 28s linear infinite;
+  }
+
+  .promo-banner-group {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .promo-banner-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding-right: 1.25rem;
+    font-family: var(--font-label, inherit);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @keyframes promo-banner-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .promo-banner-track {
+      animation: none;
+    }
+  }
+</style>
